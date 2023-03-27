@@ -8,6 +8,7 @@ import { PlacesDetailComponent } from './places-detail/places-detail.component';
 import { FooterComponent } from './footer/footer.component';
 import { MapComponent } from './map/map.component';
 import { AppRoutingModule } from './app-routing.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { AppRoutingModule } from './app-routing.module';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,0 +1,9 @@
+{
+    "/places/": {
+        "target": "https://open-api.myhelsinki.fi/v2",
+        "secure": false,
+        "changeOrigin": true,
+        "logLevel": "debug"
+    }
+}
+
