@@ -7,6 +7,7 @@ import { PlacesComponent } from './places/places.component';
 import { PlacesDetailComponent } from './places-detail/places-detail.component';
 import { FooterComponent } from './footer/footer.component';
 import { MapComponent } from './map/map.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { MapComponent } from './map/map.component';
     MapComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
