@@ -7,18 +7,29 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./places-detail.component.css'],
 })
 export class PlacesDetailComponent {
-  receivedData?: { nimi: string; kuvaus: string; email: string };
+  receivedData?: {
+    nimi: string;
+    kuvaus: string;
+    email: string;
+    osoite: string;
+  };
   private subscription?: Subscription;
 
   constructor(private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.subscription = this.route.queryParams.subscribe((params) => {
-      if (params['nimi'] && params['kuvaus'] && params['email']) {
+      if (
+        params['nimi'] &&
+        params['kuvaus'] &&
+        params['email'] &&
+        params['osoite']
+      ) {
         this.receivedData = {
           nimi: params['nimi'],
           kuvaus: params['kuvaus'],
           email: params['email'],
+          osoite: params['osoite'],
         };
         console.log(this.receivedData);
       }
