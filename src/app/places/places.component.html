@@ -16,15 +16,14 @@
                 <p class="my-2 text-sm">{{ event.email }}</p>
                 <p class="text-sm">{{ event.luokka }}</p>
                 <p class="my-2 text-sm">{{ event.osoite }}</p>
+                <p class="text-sm">Location coordinates:</p>
+                <p class="text-sm">Latitude: {{ event.sijaintiLeveys }}</p>
+                <p class="text-sm">Longitude: {{ event.sijaintiPituus }}</p>
             </div>
-            <!-- <mat-icon
-                class="favorite-icon"
-                [ngClass]="{ 'favorite-filled': isFavorite }"
-                (click)="toggleFavorite()"
-                fontSet="material"
-                fontIcon="favorite">
-            </mat-icon> -->
-
+            <div class="flex justify-center items-center h-full my-10 mx-4">
+                <i class="fa-sharp fa-regular fa-heart fa-beat-fade fa-lg" style="color: #ff0066;"></i>
+              </div>
+              
         </div>
     </div>
 </div>
