@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import axios from 'axios';
 import { Tapahtuma } from 'src/shared/interfaces';
@@ -10,7 +10,6 @@ import { Router } from '@angular/router'
 })
 export class PlacesComponent implements OnInit {
   tapahtumat: Tapahtuma[] = [];
-  page = 1;
   
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -32,15 +31,19 @@ export class PlacesComponent implements OnInit {
         email: tapahtuma.info_url
       }));
       this.tapahtumat = tapahtumat;
-      console.log(this.tapahtumat);
+      // console.log(this.tapahtumat);
       
     } catch (error) {
       console.error(error);
     }
   }
+@Output() tapahtumatLahetetty = new EventEmitter<string>();
   
-  navigateToDetails() {
-    this.router.navigate(['/places-detail']);
-  }
-  
+navigateToDetails(nimi: string, kuvaus: string, email:string) {
+  const data = {nimi: nimi, kuvaus: kuvaus, email: email};
+  this.router.navigate(['/places-detail'], { queryParams: data });
+  this.tapahtumatLahetetty.emit(JSON.stringify(data));
+  // console.log(data);
+}
+
 }

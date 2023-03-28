@@ -9,7 +9,9 @@
                 </div>
             </div>
             <div class="max-w-[55%] m-2">
-                <h1 class="text-base mb-1 font-semibold" (click)="navigateToDetails()">{{ event.nimi }}</h1>
+                <h1 class="text-base mb-1 font-semibold" 
+                (click)="navigateToDetails(event.nimi, event.kuvaus, event.email)" >{{ event.nimi }}</h1>
+
                 <p class="text-sm">{{ event.kuvaus }}</p>
                 <p class="my-2 text-sm">{{ event.email }}</p>
                 <p class="text-sm">{{ event.luokka }}</p>
