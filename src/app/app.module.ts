@@ -12,6 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     HttpClientModule,
     BrowserAnimationsModule,
     MatCardModule,
-    InfiniteScrollModule
+    InfiniteScrollModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
