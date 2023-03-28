@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-header',
@@ -8,5 +9,6 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 })
 export class HeaderComponent {
   faMagnifyingGlass = faMagnifyingGlass;
+  faUser = faUser;
 
 }

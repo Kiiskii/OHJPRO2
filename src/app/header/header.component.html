@@ -1,13 +1,20 @@
-<div class="w-full mb-2 p-6 bg-gray-100 flex">
-    <h1 class="flex-1 text-4xl font-bold drop-shadow uppercase text-black">
+<div class="w-full mb-2 p-6 bg-gray-100 flex relative">
+  <a href="/">
+    <h1 class="flex-1 my-auto text-4xl font-bold drop-shadow uppercase text-black">
       LOGO
     </h1>
-    <div class="flex-1">
-      <div class="search-bar"><input
-        class="w-9/12 right-0 px-2 pt-2 bg-transparent border-b-4 border-black text-gray-500 border-"
+  </a>
+    <div class="flex-1 absolute right-4 my-auto">
+      <div class="search-bar flex">
+        <input
+        class="w-44 max-w-full m-1 p-1 bg-transparent border-b-2 border-black text-gray-500"
         type="text"
-      /> <fa-icon class="text-2xl p-2" [icon]="faMagnifyingGlass"></fa-icon>
+        placeholder="Search..."
+      /> 
+      <fa-icon class="text-2xl pt-2" [icon]="faMagnifyingGlass"></fa-icon>
+      <fa-icon class="text-2xl p-2 ml-2 hover:text-blue-800" [icon]="faUser"></fa-icon>
     </div>
+    
     </div>
   </div>
   
