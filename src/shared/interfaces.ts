@@ -5,6 +5,6 @@ export interface Tapahtuma {
     sijaintiLeveys: number;
     sijaintiPituus: number;
     luokka: string;
-    email: string;
+    homesite: string;
     osoite: string;
   }

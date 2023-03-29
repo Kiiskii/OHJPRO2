@@ -10,7 +10,7 @@ export class PlacesDetailComponent {
   receivedData?: {
     nimi: string;
     kuvaus: string;
-    email: string;
+    homesite: string;
     osoite: string;
   };
   private subscription?: Subscription;
@@ -22,13 +22,13 @@ export class PlacesDetailComponent {
       if (
         params['nimi'] &&
         params['kuvaus'] &&
-        params['email'] &&
+        params['homesite'] &&
         params['osoite']
       ) {
         this.receivedData = {
           nimi: params['nimi'],
           kuvaus: params['kuvaus'],
-          email: params['email'],
+          homesite: params['homesite'],
           osoite: params['osoite'],
         };
         console.log(this.receivedData);

@@ -39,7 +39,7 @@ export class PlacesComponent implements OnInit, OnDestroy {
           sijaintiLeveys: tapahtuma.location.lat,
           sijaintiPituus: tapahtuma.location.lon,
           luokka: tapahtuma.tags.map((tag: any) => tag.name),
-          email: tapahtuma.info_url,
+          homesite: tapahtuma.info_url,
           osoite: osoite
         };
       });
@@ -57,13 +57,13 @@ export class PlacesComponent implements OnInit, OnDestroy {
   navigateToDetails(
     nimi: string, 
     kuvaus: string, 
-    email:string, 
+    homesite:string, 
     osoite:string
     ){
     const data = {
       nimi: nimi, 
       kuvaus: kuvaus, 
-      email: email, 
+      homesite: homesite, 
       osoite: osoite
     };
     this.router.navigate(['/places-detail'], { queryParams: data });
