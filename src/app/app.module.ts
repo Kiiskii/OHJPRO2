@@ -13,6 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { GeolocationComponent } from './geolocation/geolocation.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     PlacesComponent,
     PlacesDetailComponent,
     FooterComponent,
-    MapComponent
+    MapComponent,
+    GeolocationComponent
   ],
   imports: [
     BrowserModule,
