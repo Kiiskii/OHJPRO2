@@ -1,5 +1,5 @@
 <div class="container max-w-xl mx-auto m-2">
-    <div *ngFor="let event of tapahtumat">
+    <div *ngFor="let event of tapahtumat | filter: searchTerm">
         <div 
         class="m-2 flex flex-wrap justify-content-between" 
         style="border: 1px solid black; border-radius: 5px;">

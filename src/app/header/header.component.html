@@ -10,6 +10,8 @@
         class="w-44 max-w-full m-1 p-1 bg-transparent border-b-2 border-black text-gray-500"
         type="text"
         placeholder="Search..."
+        [(ngModel)]="searchTerm"
+        (input)="newSearch()"
       /> 
       <fa-icon class="text-2xl pt-2" [icon]="faMagnifyingGlass"></fa-icon>
       <fa-icon class="text-2xl p-2 ml-2 hover:text-blue-800" [icon]="faUser"></fa-icon>

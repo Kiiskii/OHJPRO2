@@ -14,6 +14,8 @@ import { MatCardModule } from '@angular/material/card';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { GeolocationComponent } from './geolocation/geolocation.component';
+import { FormsModule } from '@angular/forms';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,9 @@ import { GeolocationComponent } from './geolocation/geolocation.component';
     BrowserAnimationsModule,
     MatCardModule,
     InfiniteScrollModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    FormsModule,
+    Ng2SearchPipeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

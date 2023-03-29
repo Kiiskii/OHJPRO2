@@ -1,20 +1,27 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import axios from 'axios';
 import { Tapahtuma } from 'src/shared/interfaces';
 import { Router } from '@angular/router'
+import { SearchService } from '../search.service';
+import { Subscription } from 'rxjs';
+
 @Component({
   selector: 'app-places',
   templateUrl: './places.component.html',
   styleUrls: ['./places.component.css']
 })
-export class PlacesComponent implements OnInit {
+export class PlacesComponent implements OnInit, OnDestroy {
   tapahtumat: Tapahtuma[] = [];
+
+  searchTerm!: string;
+  subscription!: Subscription;
   
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router, private search: SearchService) { }
 
   ngOnInit(): void {
     this.haeTapahtumat();
+    this.getSearch();
   }
 
   async haeTapahtumat(): Promise<void> {
@@ -64,4 +71,18 @@ export class PlacesComponent implements OnInit {
     // console.log(data);
   }
 
+  //for the search bar ->
+
+  getSearch() {
+    this.subscription = this.search.currentSearch.subscribe(searchTerm => this.searchTerm = searchTerm)
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+  newSearch() {
+    this.search.changeSearch(this.searchTerm)
+  }
+  //search end
 }
