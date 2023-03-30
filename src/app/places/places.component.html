@@ -7,11 +7,13 @@
                 </div>
             </div>
             <div class="w-[55%] m-2">
-                <h1 class="text-base mb-1 font-semibold" (click)="navigateToDetails(event.nimi, event.kuvaus, event.homesite, event.osoite)" >{{ event.nimi }}</h1>
+                <h1 class="places-header text-base mb-1 font-semibold cursor-pointer" (click)="navigateToDetails(event.nimi, event.kuvaus, event.homesite, event.osoite)" >{{ event.nimi }}</h1>
 
                 <!-- <p class="text-sm">{{ event.kuvaus }}</p> -->
                 <!-- <p class="my-2 text-sm">{{ event.id }}</p> -->
-                <p class="my-2 text-sm">{{ event.homesite }}</p>
+                <p class="my-2 text-sm">
+                    <a href="{{ event.homesite }}" target="_blank">{{ event.homesite }}</a>
+                  </p>
                 <p class="text-sm">{{ event.luokka }}</p>
                 <p class="my-2 text-sm">{{ event.osoite }}</p>
                 <!-- <p class="text-sm">Location coordinates:</p> -->
@@ -19,11 +21,11 @@
                 <p class="text-sm">Longitude: {{ event.sijaintiPituus }}</p> -->
             </div>
             <div (click)="changeIcon(event.id, $event.target, i)" class="w-[10%] mx-auto py-4" [class.active]="selectedItems[i]">
-                <i class="p-4 fa-lg"
+                <i class="p-4 fa-lg cursor-pointer"
                   style="color: #ff0066;"
                   [ngClass]="selectedItems[i] ? 'fa-heart fa-solid' : 'fa-heart fa-regular'">
                 </i>
-              </div>
+            </div>
               
               
      </div>
