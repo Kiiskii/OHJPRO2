@@ -13,6 +13,10 @@ import { Subscription } from 'rxjs';
 })
 export class PlacesComponent implements OnInit, OnDestroy {
   tapahtumat: Tapahtuma[] = [];
+  selectedItems: boolean[] = [];
+  items?: any;
+  showAnotherLogo = false;
+  activeIcon = Number;
 
   searchTerm!: string;
   subscription!: Subscription;
@@ -22,6 +26,7 @@ export class PlacesComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.haeTapahtumat();
     this.getSearch();
+    this.selectedItems = new Array(this.items).fill(false);
   }
 
   async haeTapahtumat(): Promise<void> {
@@ -34,6 +39,7 @@ export class PlacesComponent implements OnInit, OnDestroy {
         const osoite = `${street_address}, ${postal_code}, ${locality}`;
         
         return {
+          id: tapahtuma.id,
           nimi: tapahtuma.name?.fi ?? '',
           kuvaus: tapahtuma.description.body.split('.')[0],
           sijaintiLeveys: tapahtuma.location.lat,
@@ -70,6 +76,16 @@ export class PlacesComponent implements OnInit, OnDestroy {
     this.tapahtumatLahetetty.emit(JSON.stringify(data));
     // console.log(data);
   }
+
+  // käyttäjä voi lisätä suosikkeja funktio
+  changeIcon(id: any, target: any, index: number) {
+    if (this.selectedItems[index]) { // Tarkista, onko elementti jo valittu
+      this.showAnotherLogo = !this.showAnotherLogo; // Vaihda ikonin tila vain, jos elementti on jo valittu
+    }
+    this.selectedItems[index] = !this.selectedItems[index]; // Vaihda elementin tila
+    // console.log(this.selectedItems);
+  }
+
 
   //for the search bar ->
 
