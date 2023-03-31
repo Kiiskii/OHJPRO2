@@ -5,6 +5,7 @@ import { Tapahtuma } from 'src/shared/interfaces';
 import { Router } from '@angular/router'
 import { SearchService } from '../search.service';
 import { Subscription } from 'rxjs';
+import { ScrollTapahtuma } from 'src/shared/interfaces';
 
 @Component({
   selector: 'app-places',
@@ -13,6 +14,7 @@ import { Subscription } from 'rxjs';
 })
 export class PlacesComponent implements OnInit, OnDestroy {
   tapahtumat: Tapahtuma[] = [];
+  scrollTapahtumat: ScrollTapahtuma[] = [];
   selectedItems: boolean[] = [];
   items?: any;
   showAnotherLogo = false;
@@ -20,6 +22,7 @@ export class PlacesComponent implements OnInit, OnDestroy {
   searchTerm!: string;
   subscription!: Subscription;
   page = 1;
+  limit = 8;
   
   constructor(
     private http: HttpClient, 
@@ -33,12 +36,12 @@ export class PlacesComponent implements OnInit, OnDestroy {
     this.selectedItems = new Array(this.items).fill(false);
   }
 
-  async haeTapahtumat(page: number = 1): Promise<void> {
+  async haeTapahtumat(): Promise<void> {
     try {
       const response = 
-        await axios.get(`/places/?page=${page}&limit=8`);
+        await axios.get(`/places/`);
         // console.log(response);
-        const uudetTapahtumat = response.data.data.map((tapahtuma: any) => {
+        this.tapahtumat = response.data.data.map((tapahtuma: any) => {
         const { street_address, postal_code, locality } = tapahtuma.location.address;
         const osoite = `${street_address}, ${postal_code}, ${locality}`;
         
@@ -53,13 +56,19 @@ export class PlacesComponent implements OnInit, OnDestroy {
           osoite: osoite
         };
       });
-      
-      this.tapahtumat = this.tapahtumat.concat(uudetTapahtumat);
+      this.scrollTapahtumat = this.tapahtumat.slice(0, 8);
+      this.tapahtumat = this.tapahtumat;
       // console.log(this.tapahtumat);
       
     } catch (error) {
       console.error(error);
     }
+  }
+
+  onScrollDown(): void {
+    const startIndex = this.scrollTapahtumat.length;
+    const endIndex = startIndex + this.limit;
+    this.scrollTapahtumat = this.scrollTapahtumat.concat(this.tapahtumat.slice(startIndex, endIndex));
   }
 
   @Output() tapahtumatLahetetty = new EventEmitter<string>();
@@ -89,13 +98,6 @@ export class PlacesComponent implements OnInit, OnDestroy {
     this.selectedItems[index] = !this.selectedItems[index]; // Vaihda elementin tila
     // console.log(this.selectedItems);
   }
-
-  onScrollDown(): void {
-    this.page++;
-    this.haeTapahtumat(this.page);
-    // console.log(this.page)
-  }
-
 
   //for the search bar ->
 
