@@ -1,4 +1,7 @@
-<div class="container max-w-xl mx-auto m-2">
+<div class="container max-w-xl mx-auto m-2" infinite-scroll
+[infiniteScrollDistance]="2"
+[infiniteScrollThrottle]="500"
+(scrolled)="onScrollDown()">
     <div *ngFor="let i = index; let event of tapahtumat | filter: searchTerm">
         <div class="m-2 flex flex-wrap justify-content-between" style="border: 1px solid black; border-radius: 5px; justify-content: space-between;">
             <div class="w-[25%]">
