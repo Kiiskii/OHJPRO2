@@ -15,9 +15,9 @@ export class GeolocationComponent implements OnInit {
     navigator.geolocation.getCurrentPosition((position) => {
       this.latitude = position.coords.latitude;
       this.longitude = position.coords.longitude;
-      console.log(
-        `lat: ${position.coords.latitude}, lon: ${position.coords.longitude}`
-      )
+      // console.log(
+      //   `lat: ${position.coords.latitude}, lon: ${position.coords.longitude}`
+      // )
     })
   }
 }

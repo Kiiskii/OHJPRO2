@@ -44,6 +44,11 @@ export class PlacesComponent implements OnInit, OnDestroy {
         this.tapahtumat = response.data.data.map((tapahtuma: any) => {
         const { street_address, postal_code, locality } = tapahtuma.location.address;
         const osoite = `${street_address}, ${postal_code}, ${locality}`;
+
+      if(this.searchTerm){
+        this.tapahtumat = this.tapahtumat.filter(tapahtuma =>
+        tapahtuma.nimi.toLocaleLowerCase().includes(this.searchTerm.toLocaleLowerCase())
+        )};
         
         return {
           id: tapahtuma.id,
@@ -56,6 +61,7 @@ export class PlacesComponent implements OnInit, OnDestroy {
           osoite: osoite
         };
       });
+
       this.scrollTapahtumat = this.tapahtumat.slice(0, 8);
       this.tapahtumat = this.tapahtumat;
       // console.log(this.tapahtumat);
@@ -63,6 +69,18 @@ export class PlacesComponent implements OnInit, OnDestroy {
     } catch (error) {
       console.error(error);
     }
+  }
+
+  addSearchToScrollTapahtuma() {
+    if (this.searchTerm) {
+      const filteredTapahtumat = this.tapahtumat.filter((tapahtuma) =>
+        tapahtuma.nimi.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+      this.scrollTapahtumat = filteredTapahtumat.slice(0, this.limit);
+    } else {
+      this.scrollTapahtumat = this.tapahtumat.slice(0, this.limit);
+    }
+    console.log(this.searchTerm)
   }
 
   onScrollDown(): void {
