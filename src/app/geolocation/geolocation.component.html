@@ -1,0 +1,9 @@
+<div class="m-6">
+<p class="text-center" *ngIf="latitude && longitude">
+  Your current location is latitude: {{latitude}} and longitude: {{longitude}}
+</p>
+<p class="text-center" *ngIf="!latitude && !longitude">
+  Not found coordinates. Allow your browser location data.
+</p>
+</div>
+
