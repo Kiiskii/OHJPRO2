@@ -131,4 +131,8 @@ export class PlacesComponent implements OnInit, OnDestroy {
     this.search.changeSearch(this.searchTerm)
   }
   //search end
+
+  setFilter(value:string) {
+    this.searchTerm = value;
+  }
 }

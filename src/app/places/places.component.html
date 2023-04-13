@@ -1,3 +1,10 @@
+<div class="max-w-xl mx-auto m-4">
+      <button  (click)="setFilter('restaurant')" class="ml-6 m-2 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Ravintolat</button>
+      <button (click)="setFilter('shopping')" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Shoppailu</button>
+      <button (click)="setFilter('activity')" class="m-2 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Aktiviteetit</button>
+      <button (click)="setFilter('museum')" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Museot</button>
+      <button (click)="setFilter('cafe')" class="m-2 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Kahvilat</button>
+  </div>
 
 <div class="container max-w-xl mx-auto m-2" infinite-scroll
 [infiniteScrollDistance]="2"
