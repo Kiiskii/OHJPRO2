@@ -16,6 +16,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { GeolocationComponent } from './geolocation/geolocation.component';
 import { FormsModule } from '@angular/forms';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     PlacesDetailComponent,
     FooterComponent,
     MapComponent,
-    GeolocationComponent
+    GeolocationComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
