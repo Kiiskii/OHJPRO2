@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./signup.component.css'],
 })
 export class SignupComponent {
-  bgimg: string = 'bg-main-desktop.jpg';
+  bgimg: string = 'bg-login-desktop.jpg';
 }
