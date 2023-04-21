@@ -1,20 +1,23 @@
-<div class="w-full mb-2 p-6 bg-gray-100 flex relative">
+<div class="w-full pt-2 pb-4 px-6 bg-gray-50/70 fixed">
   <a href="/">
-    <h1 class="flex-1 my-auto text-4xl font-bold drop-shadow uppercase text-black">
-      LOGO
+    <h1 class="float-left text-2xl font-bold drop-shadow uppercase text-black">
+      LO/GO!
     </h1>
   </a>
-    <div class="flex-1 absolute right-4 my-auto">
-      <div class="search-bar flex">
+
+  <div class="float-right">
+    <div class="search-bar">
         <input
-        class="w-44 max-w-full m-1 p-1 bg-transparent border-b-2 border-black text-gray-500"
-        type="text"
+        class="text-sm bg-transparent border-b-2 border-gray-600 text-gray-500 p-1"
+        type="search"
         placeholder="Search..."
         [(ngModel)]="searchTerm"
         (input)="newSearch()"
       /> 
       <fa-icon class="text-2xl pt-2" [icon]="faMagnifyingGlass"></fa-icon>
-      <fa-icon class="text-2xl p-2 ml-2 hover:text-blue-800" [icon]="faUser"></fa-icon>
+      <a routerLink="{{ 'login' }}">
+        <fa-icon class="text-xl p-2 ml-2 hover:text-blue-800" [icon]="faUser"></fa-icon>
+      </a>
     </div>
     
     </div>

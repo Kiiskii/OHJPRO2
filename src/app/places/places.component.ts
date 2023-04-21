@@ -7,6 +7,15 @@ import { SearchService } from '../search.service';
 import { Subscription } from 'rxjs';
 import { ScrollTapahtuma } from 'src/shared/interfaces';
 
+import { faUtensils } from '@fortawesome/free-solid-svg-icons';
+import { faCamera } from '@fortawesome/free-solid-svg-icons';
+import { faBagShopping } from '@fortawesome/free-solid-svg-icons';
+import { faTicket } from '@fortawesome/free-solid-svg-icons';
+import { faMugSaucer } from '@fortawesome/free-solid-svg-icons';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
+import { faIcons } from '@fortawesome/free-solid-svg-icons';
+
 @Component({
   selector: 'app-places',
   templateUrl: './places.component.html',
@@ -23,6 +32,16 @@ export class PlacesComponent implements OnInit, OnDestroy {
   subscription!: Subscription;
   page = 1;
   limit = 8;
+
+  bgimg: string = 'bg-main-desktop.jpg'
+  faUtensils = faUtensils;
+  faCamera = faCamera;
+  faBagsShopping = faBagShopping;
+  faTicket = faTicket;
+  faMugSaucer = faMugSaucer;
+  faXmark = faXmark;
+  faLocationDot = faLocationDot;
+  faIcons = faIcons;
   
   constructor(
     private http: HttpClient, 
@@ -131,4 +150,12 @@ export class PlacesComponent implements OnInit, OnDestroy {
     this.search.changeSearch(this.searchTerm)
   }
   //search end
+
+  //gives searchTerm to filtter and changes bg image
+  setFilter(value:string) {
+    this.searchTerm = value;
+    this.bgimg = 'bg-' + value + '-desktop.jpg';
+    if (value === 'activity' || value === '') this.bgimg = 'bg-main-desktop.jpg';
+    if (value === '') this.ngOnDestroy();
+  }
 }
