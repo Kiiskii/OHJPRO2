@@ -18,6 +18,7 @@ import { FormsModule } from '@angular/forms';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
+import { WeatherComponent } from './weather/weather.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { SignupComponent } from './signup/signup.component';
     MapComponent,
     GeolocationComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    WeatherComponent
   ],
   imports: [
     BrowserModule,
