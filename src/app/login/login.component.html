@@ -1,3 +1,40 @@
-<p>login works!</p>
+<div id="bg-img" class="bg-white mb-4 drop-shadow-lg">
+  <img
+    src="assets/img/bg/{{ bgimg }}"
+    class="m-auto w-full md:w-4/6 lg:w-3/6"
+    alt="illustration to add color"
+  />
+</div>
 
-<a routerLink="{{ '../signup' }}" class="underline">Luo tunnus</a>
+<div class="container flex justify-center mx-auto mb-6 p-3">
+  <div class="flex flex-col w-full">
+    <h1 class="text-center font-bold text-2xl p-3 text-orange-400">
+      Kirjaudu sisään
+    </h1>
+    <div class="flex flex-col p-2 gap-3 w-72 mx-auto">
+      <input
+        type="text"
+        id="email"
+        placeholder="sähköposti"
+        class="border rounded-xl p-1 px-4 border-orange-400 italic"
+      />
+      <input
+        type="text"
+        id="salasana"
+        placeholder="salasana"
+        class="border rounded-xl p-1 px-4 border-orange-400 italic"
+      />
+    </div>
+    <div class="p-4 flex justify-center">
+      <button class="text-white bg-cyan-500 p-3 rounded-xl text-xl px-6">
+        Kirjaudu
+      </button>
+    </div>
+    <p class="text-center">
+      Jos et ole vielä luonut itsellesi profiilia voit tehdä sen helposti tästä
+    </p>
+    <a routerLink="{{ '../signup' }}" class="underline text-center"
+      >Luo tunnus</a
+    >
+  </div>
+</div>
