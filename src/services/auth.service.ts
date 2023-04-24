@@ -11,7 +11,7 @@ import { ErrorHandlerService } from './error-handler.service';
 type TokenAndId = {
   token: string;
   userId: Pick<User, "id">;
-  name: Pick<User, "name">
+  //name: Pick<User, "name">
 };
 
 @Injectable({
@@ -22,7 +22,7 @@ export class AuthService {
 
   isUserLoggedIn$ = new BehaviorSubject<boolean>(false);
 
-  userName!: Pick<User, "name">;
+  //userName!: Pick<User, "name">;
 
   userId!: Pick<User, "id">;
 
@@ -55,17 +55,17 @@ export class AuthService {
         first(),
         tap(( tokenObject: TokenAndId ) => {
           this.userId = tokenObject.userId;
-          this.userName = tokenObject.name;
-          console.log(this.userName);
+          //this.userName = tokenObject.name;
+          //console.log(this.userName);
           localStorage.setItem("token", tokenObject.token);
           this.isUserLoggedIn$.next(true);
-          this.router.navigate(["posts"]);
+          this.router.navigate(["/places"]);
         }),
         catchError(
           this.errorHandlerService.handleError<{
             token: string;
             userId: Pick<User, "id">;
-            name: Pick<User, "name">
+            //name: Pick<User, "name">
           }>("login")
         )
       );
