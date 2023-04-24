@@ -1,14 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { AuthService } from '../../services/auth.service';
-
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.scss']
+  styleUrls: ['./signup.component.css'],
 })
-export class SignupComponent implements OnInit {
+export class SignupComponent {
+  bgimg: string = 'bg-login-desktop.jpg';
+
   signupForm!: FormGroup;
 
   constructor(private authService: AuthService) {}
