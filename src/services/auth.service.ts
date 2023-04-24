@@ -40,8 +40,11 @@ export class AuthService {
     return this.http.post<User>(`${this.url}/signup`, user, this.httpOptions)
       .pipe(
         first(),
-        catchError(this.errorHandlerService.handleError<User>("signup"))
-      );
+        catchError(this.errorHandlerService.handleError<User>("signup")),
+        tap(() => {
+          this.router.navigate(["/login"]);
+        })
+      );    
   }
 
   login(
