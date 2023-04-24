@@ -22,7 +22,7 @@ export class AuthService {
 
   isUserLoggedIn$ = new BehaviorSubject<boolean>(false);
 
-  userName$ = new BehaviorSubject<string>("");
+  userName!: Pick<User, "name">;
 
   userId!: Pick<User, "id">;
 
@@ -55,8 +55,9 @@ export class AuthService {
         first(),
         tap(( tokenObject: TokenAndId ) => {
           this.userId = tokenObject.userId;
+          this.userName = tokenObject.name;
+          console.log(this.userName);
           localStorage.setItem("token", tokenObject.token);
-          this.userName$.next(name);
           this.isUserLoggedIn$.next(true);
           this.router.navigate(["posts"]);
         }),
@@ -64,6 +65,7 @@ export class AuthService {
           this.errorHandlerService.handleError<{
             token: string;
             userId: Pick<User, "id">;
+            name: Pick<User, "name">
           }>("login")
         )
       );
