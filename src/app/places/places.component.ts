@@ -6,6 +6,7 @@ import { Router } from '@angular/router'
 import { SearchService } from '../search.service';
 import { Subscription } from 'rxjs';
 import { ScrollTapahtuma } from 'src/shared/interfaces';
+import { AuthService } from '../../services/auth.service';
 
 import { faUtensils } from '@fortawesome/free-solid-svg-icons';
 import { faCamera } from '@fortawesome/free-solid-svg-icons';
@@ -46,13 +47,20 @@ export class PlacesComponent implements OnInit, OnDestroy {
   constructor(
     private http: HttpClient, 
     private router: Router, 
-    private search: SearchService
+    private search: SearchService,
+    private authService: AuthService
     ) { }
 
   ngOnInit(): void {
+    // const userId = this.userId;
+    // console.log('User id:', userId);
     this.haeTapahtumat();
     this.getSearch();
     this.selectedItems = new Array(this.items).fill(false);
+  }
+
+  get userId(): number {
+    return this.authService.userId;
   }
 
   async haeTapahtumat(): Promise<void> {

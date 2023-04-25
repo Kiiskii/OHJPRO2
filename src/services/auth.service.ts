@@ -10,8 +10,8 @@ import { ErrorHandlerService } from './error-handler.service';
 
 type TokenAndId = {
   token: string;
-  userId: Pick<User, "id">;
-  //name: Pick<User, "name">
+  userId: number;
+  name: string
 };
 
 @Injectable({
@@ -22,9 +22,9 @@ export class AuthService {
 
   isUserLoggedIn$ = new BehaviorSubject<boolean>(false);
 
-  //userName!: Pick<User, "name">;
+  userName!: string;
 
-  userId!: Pick<User, "id">;
+  userId!: number;
 
   httpOptions: { headers: HttpHeaders } = {
     headers: new HttpHeaders({ "Content-Type": "application/json" }),
@@ -58,8 +58,8 @@ export class AuthService {
         first(),
         tap(( tokenObject: TokenAndId ) => {
           this.userId = tokenObject.userId;
-          //this.userName = tokenObject.name;
-          //console.log(this.userName);
+          this.userName = tokenObject.name;
+          //console.log(`Logged in as ${this.userName}`);
           localStorage.setItem("token", tokenObject.token);
           this.isUserLoggedIn$.next(true);
           this.router.navigate(["/places"]);
@@ -67,8 +67,8 @@ export class AuthService {
         catchError(
           this.errorHandlerService.handleError<{
             token: string;
-            userId: Pick<User, "id">;
-            //name: Pick<User, "name">
+            userId: number;
+            name: string
           }>("login")
         )
       );
