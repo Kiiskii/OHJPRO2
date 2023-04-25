@@ -75,7 +75,7 @@ export class PlacesComponent implements OnInit, OnDestroy {
           kuvaus: tapahtuma.description.body,
           sijaintiLeveys: tapahtuma.location.lat,
           sijaintiPituus: tapahtuma.location.lon,
-          luokka: tapahtuma.tags.map((tag: any) => tag.name),
+          luokka: tapahtuma.tags.map((tag: any) => tag.name).join(', '),
           homesite: tapahtuma.info_url,
           osoite: osoite
         };
