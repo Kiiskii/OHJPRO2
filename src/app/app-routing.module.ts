@@ -5,6 +5,7 @@ import { PlacesDetailComponent } from './places-detail/places-detail.component';
 import { MapComponent } from './map/map.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
+import { ProfiiliComponent } from './profiili/profiili.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/places', pathMatch: 'full' },
@@ -12,11 +13,12 @@ const routes: Routes = [
   { path: 'places-detail', component: PlacesDetailComponent },
   { path: 'map', component: MapComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'signup', component: SignupComponent }
+  { path: 'signup', component: SignupComponent },
+  { path: 'profiili', component: ProfiiliComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
