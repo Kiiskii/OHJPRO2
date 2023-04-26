@@ -61,7 +61,7 @@ export class PlacesComponent implements OnInit, OnDestroy {
 
   userGeolocation(){
     if (!navigator.geolocation) {
-      console.log('location is not supported')
+      console.log('geolocation is not supported')
     }
     navigator.geolocation.getCurrentPosition((position) => {
       this.latitude = position.coords.latitude;
@@ -83,7 +83,7 @@ export class PlacesComponent implements OnInit, OnDestroy {
         tapahtuma.nimi.toLocaleLowerCase().includes(this.searchTerm.toLocaleLowerCase())
         )};
 
-        //calculate distanse from Helsinki city center
+        //calculate distanse from user if geolocation is on or Helsinki Railway Station if not
         var fromLat: number;
         var fromLon : number;
         var toLat: number;
@@ -98,24 +98,6 @@ export class PlacesComponent implements OnInit, OnDestroy {
               Math.pow(Math.sin(deltaLon/2), 2) ) );
           return radius * angle;
       }
-      /*var lat1 = this.latitude;
-      var lat2 = tapahtuma.location.lat;
-      var lon1 = this.longitude;
-      var lon2 = tapahtuma.location.lat;
-
-      const R = 6378137; // metres
-      const φ1 = lat1 * Math.PI/180; // φ, λ in radians
-      const φ2 = lat2 * Math.PI/180;
-      const Δφ = (lat2-lat1) * Math.PI/180;
-      const Δλ = (lon2-lon1) * Math.PI/180;
-
-      const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
-                Math.cos(φ1) * Math.cos(φ2) *
-                Math.sin(Δλ/2) * Math.sin(Δλ/2);
-      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-
-      const distance = (R * c)/100; // in metres*/
-        
         return {
           id: tapahtuma.id,
           nimi: tapahtuma.name?.fi ?? '',

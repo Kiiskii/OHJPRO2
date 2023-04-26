@@ -4,6 +4,7 @@ export interface Tapahtuma {
     kuvaus: string;
     sijaintiLeveys: number;
     sijaintiPituus: number;
+    sijainti: number;
     luokka: string;
     homesite: string;
     osoite: string;
@@ -15,6 +16,7 @@ export interface Tapahtuma {
     kuvaus: string;
     sijaintiLeveys: number;
     sijaintiPituus: number;
+    sijainti: number;
     luokka: string;
     homesite: string;
     osoite: string;
