@@ -42,6 +42,9 @@ export class PlacesComponent implements OnInit, OnDestroy {
   faXmark = faXmark;
   faLocationDot = faLocationDot;
   faIcons = faIcons;
+
+  latitude = 60.171944;
+  longitude = 24.941389;
   
   constructor(
     private http: HttpClient, 
@@ -53,6 +56,17 @@ export class PlacesComponent implements OnInit, OnDestroy {
     this.haeTapahtumat();
     this.getSearch();
     this.selectedItems = new Array(this.items).fill(false);
+    this.userGeolocation();
+  }
+
+  userGeolocation(){
+    if (!navigator.geolocation) {
+      console.log('location is not supported')
+    }
+    navigator.geolocation.getCurrentPosition((position) => {
+      this.latitude = position.coords.latitude;
+      this.longitude = position.coords.longitude;
+    })
   }
 
   async haeTapahtumat(): Promise<void> {
@@ -68,6 +82,39 @@ export class PlacesComponent implements OnInit, OnDestroy {
         this.tapahtumat = this.tapahtumat.filter(tapahtuma =>
         tapahtuma.nimi.toLocaleLowerCase().includes(this.searchTerm.toLocaleLowerCase())
         )};
+
+        //calculate distanse from Helsinki city center
+        var fromLat: number;
+        var fromLon : number;
+        var toLat: number;
+        var toLon: number;
+        function distance(fromLat: number, fromLon: number, toLat: number, toLon: number) {
+          var radius = 6378137;   // approximate Earth radius, *in meters*
+          var deltaLat = toLat - fromLat;
+          var deltaLon = toLon - fromLon;
+          var angle = 2 * Math.asin( Math.sqrt(
+              Math.pow(Math.sin(deltaLat/2), 2) + 
+              Math.cos(fromLat) * Math.cos(toLat) * 
+              Math.pow(Math.sin(deltaLon/2), 2) ) );
+          return radius * angle;
+      }
+      /*var lat1 = this.latitude;
+      var lat2 = tapahtuma.location.lat;
+      var lon1 = this.longitude;
+      var lon2 = tapahtuma.location.lat;
+
+      const R = 6378137; // metres
+      const φ1 = lat1 * Math.PI/180; // φ, λ in radians
+      const φ2 = lat2 * Math.PI/180;
+      const Δφ = (lat2-lat1) * Math.PI/180;
+      const Δλ = (lon2-lon1) * Math.PI/180;
+
+      const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
+                Math.cos(φ1) * Math.cos(φ2) *
+                Math.sin(Δλ/2) * Math.sin(Δλ/2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+      const distance = (R * c)/100; // in metres*/
         
         return {
           id: tapahtuma.id,
@@ -75,6 +122,7 @@ export class PlacesComponent implements OnInit, OnDestroy {
           kuvaus: tapahtuma.description.body,
           sijaintiLeveys: tapahtuma.location.lat,
           sijaintiPituus: tapahtuma.location.lon,
+          sijainti: distance(tapahtuma.location.lat, tapahtuma.location.lon, this.latitude, this.longitude),
           luokka: tapahtuma.tags.map((tag: any) => tag.name).join(', '),
           homesite: tapahtuma.info_url,
           osoite: osoite
@@ -158,4 +206,6 @@ export class PlacesComponent implements OnInit, OnDestroy {
     if (value === 'activity' || value === '') this.bgimg = 'bg-main-desktop.jpg';
     if (value === '') this.ngOnDestroy();
   }
+
+
 }

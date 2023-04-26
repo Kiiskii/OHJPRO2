@@ -19,6 +19,7 @@ import { FormsModule } from '@angular/forms';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
+import { OrderModule } from 'ngx-order-pipe'; 
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { SignupComponent } from './signup/signup.component';
     FontAwesomeModule,
     FormsModule,
     Ng2SearchPipeModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    OrderModule
   ],
   providers: [],
   bootstrap: [AppComponent]

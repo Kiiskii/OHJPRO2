@@ -66,6 +66,8 @@
     </div>
 
     <div
+      class="container max-w-xl mx-auto m-2 pd-42">
+    <!--<div
       class="container max-w-xl mx-auto m-2 pd-42"
       infinite-scroll
       [infiniteScrollDistance]="2"
@@ -76,9 +78,16 @@
         *ngFor="
           let i = index;
           let event;
-          of: searchTerm ? (tapahtumat | filter : searchTerm) : scrollTapahtumat
+          of: searchTerm ? (tapahtumat | filter  : searchTerm | orderBy: 'sijainti' ) : scrollTapahtumat | orderBy: 'sijainti'
         "
-      >
+      >-->
+      <div
+      *ngFor="
+        let i = index;
+        let event;
+        of: tapahtumat | filter  : searchTerm | orderBy: 'sijainti'
+      "
+    >
         <div
           class="mb-2 p-2 border-solid border-2 border-cyan-400 rounded-lg bg-white"
         >
@@ -131,6 +140,8 @@
             <p class="text-sm">
               <span class="font-semibold">Location:</span> {{ event.osoite }}
             </p>
+            <p class="text-xs">{{ event.sijainti }}</p>
+            <p class="text-xs">{{event.sijaintiLeveys}}, {{event.sijaintiPituus}}</p>
             <hr class="border-blue-900 my-2" />
             <p class="text-xs uppercase">
               <span class="text-cyan-500 font-semibold"> Tags:</span>
