@@ -175,13 +175,10 @@ export class PlacesComponent implements OnInit, OnDestroy {
   changeIcon(id: any, target: any, index: number) {
     if (this.selectedItems[index]) { // Tarkista, onko elementti jo valittu
       this.showAnotherLogo = !this.showAnotherLogo; // Vaihda ikonin tila vain, jos elementti on jo valittu
-      if(this.userId) {
-        console.log(this.userId);
-      } else {
-        console.log('User not logged in') 
-      }
+      
     }
-    this.selectedItems[index] = !this.selectedItems[index]; // Vaihda elementin tila
+    this.selectedItems[id] = !this.selectedItems[id];
+    // Vaihda elementin tila
     console.log(this.selectedItems);
   }
 
