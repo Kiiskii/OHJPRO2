@@ -75,16 +75,14 @@ export class PlacesComponent implements OnInit, OnDestroy {
     })
   }
 
-  get userId(): number {
-    return this.authService.userId;
-  }
-
   async haeTapahtumat(): Promise<void> {
     try {
       const response = 
         await axios.get(`/places/`);
         // console.log(response);
         this.tapahtumat = response.data.data.map((tapahtuma: any) => {
+        const id = tapahtuma.id;
+        // console.log(id)
         const { street_address, postal_code, locality } = tapahtuma.location.address;
         const osoite = `${street_address}, ${postal_code}, ${locality}`;
 
@@ -169,13 +167,22 @@ export class PlacesComponent implements OnInit, OnDestroy {
     // console.log(data);
   }
 
+  get userId(): number {
+    return this.authService.userId;
+  }
+  
   // käyttäjä voi lisätä suosikkeja funktio
   changeIcon(id: any, target: any, index: number) {
     if (this.selectedItems[index]) { // Tarkista, onko elementti jo valittu
       this.showAnotherLogo = !this.showAnotherLogo; // Vaihda ikonin tila vain, jos elementti on jo valittu
+      if(this.userId) {
+        console.log(this.userId);
+      } else {
+        console.log('User not logged in') 
+      }
     }
     this.selectedItems[index] = !this.selectedItems[index]; // Vaihda elementin tila
-    // console.log(this.selectedItems);
+    console.log(this.selectedItems);
   }
 
   //for the search bar ->
@@ -200,6 +207,4 @@ export class PlacesComponent implements OnInit, OnDestroy {
     if (value === 'activity' || value === '') this.bgimg = 'bg-main-desktop.jpg';
     if (value === '') this.ngOnDestroy();
   }
-
-
 }
