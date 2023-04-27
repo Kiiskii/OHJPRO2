@@ -1,5 +1,5 @@
 import { Component, OnInit, EventEmitter, Output, OnDestroy } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import axios from 'axios';
 import { Tapahtuma } from 'src/shared/interfaces';
 import { Router } from '@angular/router'
@@ -23,6 +23,7 @@ import { faIcons } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./places.component.css']
 })
 export class PlacesComponent implements OnInit, OnDestroy {
+  private url = 'http://localhost:3000';
   tapahtumat: Tapahtuma[] = [];
   scrollTapahtumat: ScrollTapahtuma[] = [];
   selectedItems: boolean[] = [];
@@ -56,7 +57,7 @@ export class PlacesComponent implements OnInit, OnDestroy {
     ) { }
 
   ngOnInit(): void {
-    // const userId = this.userId;
+    // const userid = this.userId;
     // console.log('User id:', userId);
     this.userGeolocation();
     this.haeTapahtumat();
@@ -173,13 +174,27 @@ export class PlacesComponent implements OnInit, OnDestroy {
   
   // käyttäjä voi lisätä suosikkeja funktio
   changeIcon(id: any, target: any, index: number) {
+    const userid = this.userId;
+    
     if (this.selectedItems[index]) { // Tarkista, onko elementti jo valittu
       this.showAnotherLogo = !this.showAnotherLogo; // Vaihda ikonin tila vain, jos elementti on jo valittu
-      
     }
-    this.selectedItems[id] = !this.selectedItems[id];
-    // Vaihda elementin tila
-    console.log(this.selectedItems);
+    const favid = id;
+    this.selectedItems[favid] = !this.selectedItems[favid];
+    // console.log(userid)
+    // console.log(favid)
+    
+    return this.http.post(`${this.url}/favorites`, { userid, favid })
+    .subscribe({
+      next: (response) => {
+        console.log(response);
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    });
+    
+    // console.log(this.selectedItems);
   }
 
   //for the search bar ->
