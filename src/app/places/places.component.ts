@@ -175,16 +175,15 @@ export class PlacesComponent implements OnInit, OnDestroy {
   // käyttäjä voi lisätä suosikkeja funktio
   changeIcon(id: any, target: any, index: number) {
     const userid = this.userId;
-    
+    const favid = id;
+
     if (this.selectedItems[index]) { // Tarkista, onko elementti jo valittu
       this.showAnotherLogo = !this.showAnotherLogo; // Vaihda ikonin tila vain, jos elementti on jo valittu
     }
-    const favid = id;
+
     this.selectedItems[favid] = !this.selectedItems[favid];
-    // console.log(userid)
-    // console.log(favid)
-    
-    return this.http.post(`${this.url}/favorites`, { userid, favid })
+    if (this.selectedItems[favid]) {
+      return this.http.post(`${this.url}/favorites`, { userid, favid })
     .subscribe({
       next: (response) => {
         console.log(response);
@@ -193,12 +192,12 @@ export class PlacesComponent implements OnInit, OnDestroy {
         console.log(error);
       }
     });
-    
+    }
+    return null;
     // console.log(this.selectedItems);
   }
 
   //for the search bar ->
-
   getSearch() {
     this.subscription = this.search.currentSearch.subscribe(searchTerm => this.searchTerm = searchTerm)
   }
