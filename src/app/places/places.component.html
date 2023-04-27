@@ -81,6 +81,8 @@
           of: searchTerm ? (tapahtumat | filter  : searchTerm | orderBy: 'sijainti' ) : scrollTapahtumat | orderBy: 'sijainti'
         "
       >-->
+      <!--<div *ngIf="fetchingPlaces" class="text-sm font-bold">Odotathan hetken, kun etsimme paikkoja läheltä Sinua</div>-->
+      <div *ngIf="waitingPlaces" class="mx-auto text-center font-bold text-sm">Pieni hetki etsimme mahtavia paikkoja läheltäsi...</div>
       <div
       *ngFor="
         let i = index;

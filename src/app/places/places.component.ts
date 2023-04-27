@@ -46,6 +46,7 @@ export class PlacesComponent implements OnInit, OnDestroy {
 
   latitude = 60.171944;
   longitude = 24.941389;
+  waitingPlaces = true;
   
   constructor(
     private http: HttpClient, 
@@ -57,10 +58,11 @@ export class PlacesComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     // const userId = this.userId;
     // console.log('User id:', userId);
+    this.userGeolocation();
     this.haeTapahtumat();
     this.getSearch();
     this.selectedItems = new Array(this.items).fill(false);
-    this.userGeolocation();
+   
   }
 
   userGeolocation(){
@@ -126,6 +128,8 @@ export class PlacesComponent implements OnInit, OnDestroy {
     } catch (error) {
       console.error(error);
     }
+
+    this.waitingPlaces = false;
   }
 
   addSearchToScrollTapahtuma() {
