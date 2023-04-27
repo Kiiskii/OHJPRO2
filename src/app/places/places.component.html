@@ -66,6 +66,8 @@
     </div>
 
     <div
+      class="container max-w-xl mx-auto m-2 pd-42">
+    <!--<div
       class="container max-w-xl mx-auto m-2 pd-42"
       infinite-scroll
       [infiniteScrollDistance]="2"
@@ -76,9 +78,18 @@
         *ngFor="
           let i = index;
           let event;
-          of: searchTerm ? (tapahtumat | filter : searchTerm) : scrollTapahtumat
+          of: searchTerm ? (tapahtumat | filter  : searchTerm | orderBy: 'sijainti' ) : scrollTapahtumat | orderBy: 'sijainti'
         "
-      >
+      >-->
+      <!--<div *ngIf="fetchingPlaces" class="text-sm font-bold">Odotathan hetken, kun etsimme paikkoja läheltä Sinua</div>-->
+      <div *ngIf="waitingPlaces" class="mx-auto text-center font-bold text-sm">Pieni hetki etsimme mahtavia paikkoja läheltäsi...</div>
+      <div
+      *ngFor="
+        let i = index;
+        let event;
+        of: tapahtumat | filter  : searchTerm | orderBy: 'sijainti'
+      "
+    >
         <div
           class="mb-2 p-2 border-solid border-2 border-cyan-400 rounded-lg bg-white"
         >

@@ -43,6 +43,10 @@ export class PlacesComponent implements OnInit, OnDestroy {
   faXmark = faXmark;
   faLocationDot = faLocationDot;
   faIcons = faIcons;
+
+  latitude = 60.171944;
+  longitude = 24.941389;
+  waitingPlaces = true;
   
   constructor(
     private http: HttpClient, 
@@ -54,9 +58,21 @@ export class PlacesComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     // const userId = this.userId;
     // console.log('User id:', userId);
+    this.userGeolocation();
     this.haeTapahtumat();
     this.getSearch();
     this.selectedItems = new Array(this.items).fill(false);
+   
+  }
+
+  userGeolocation(){
+    if (!navigator.geolocation) {
+      console.log('geolocation is not supported')
+    }
+    navigator.geolocation.getCurrentPosition((position) => {
+      this.latitude = position.coords.latitude;
+      this.longitude = position.coords.longitude;
+    })
   }
 
   get userId(): number {
@@ -76,13 +92,29 @@ export class PlacesComponent implements OnInit, OnDestroy {
         this.tapahtumat = this.tapahtumat.filter(tapahtuma =>
         tapahtuma.nimi.toLocaleLowerCase().includes(this.searchTerm.toLocaleLowerCase())
         )};
-        
+
+        //calculate distanse from user if geolocation is on or Helsinki Railway Station if not
+        var fromLat: number;
+        var fromLon : number;
+        var toLat: number;
+        var toLon: number;
+        function distance(fromLat: number, fromLon: number, toLat: number, toLon: number) {
+          var radius = 6378137;   // approximate Earth radius, *in meters*
+          var deltaLat = toLat - fromLat;
+          var deltaLon = toLon - fromLon;
+          var angle = 2 * Math.asin( Math.sqrt(
+              Math.pow(Math.sin(deltaLat/2), 2) + 
+              Math.cos(fromLat) * Math.cos(toLat) * 
+              Math.pow(Math.sin(deltaLon/2), 2) ) );
+          return radius * angle;
+      }
         return {
           id: tapahtuma.id,
           nimi: tapahtuma.name?.fi ?? '',
           kuvaus: tapahtuma.description.body,
           sijaintiLeveys: tapahtuma.location.lat,
           sijaintiPituus: tapahtuma.location.lon,
+          sijainti: distance(tapahtuma.location.lat, tapahtuma.location.lon, this.latitude, this.longitude),
           luokka: tapahtuma.tags.map((tag: any) => tag.name).join(', '),
           homesite: tapahtuma.info_url,
           osoite: osoite
@@ -96,6 +128,8 @@ export class PlacesComponent implements OnInit, OnDestroy {
     } catch (error) {
       console.error(error);
     }
+
+    this.waitingPlaces = false;
   }
 
   addSearchToScrollTapahtuma() {
@@ -166,4 +200,6 @@ export class PlacesComponent implements OnInit, OnDestroy {
     if (value === 'activity' || value === '') this.bgimg = 'bg-main-desktop.jpg';
     if (value === '') this.ngOnDestroy();
   }
+
+
 }

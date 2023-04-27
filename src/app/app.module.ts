@@ -19,6 +19,7 @@ import { FormsModule } from '@angular/forms';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
+import { OrderModule } from 'ngx-order-pipe';
 import { ProfiiliComponent } from './profiili/profiili.component';
 
 @NgModule({
@@ -32,7 +33,7 @@ import { ProfiiliComponent } from './profiili/profiili.component';
     GeolocationComponent,
     LoginComponent,
     SignupComponent,
-    ProfiiliComponent
+    ProfiiliComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,9 +45,10 @@ import { ProfiiliComponent } from './profiili/profiili.component';
     FontAwesomeModule,
     FormsModule,
     Ng2SearchPipeModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    OrderModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -18,12 +18,13 @@
         (input)="newSearch()"
       />
       <fa-icon class="text-2xl pt-2" [icon]="faMagnifyingGlass"></fa-icon>
-      <a routerLink="{{ 'login' }}">
+      <a *ngIf="!userName" routerLink="{{ 'login' }}">
         <fa-icon
           class="text-xl p-2 ml-2 hover:text-blue-800"
           [icon]="faUser"
         ></fa-icon>
       </a>
+      <p class="float-right" *ngIf="userName">Tervetuloa:{{ userName }}</p>
     </div>
   </div>
 </div>
