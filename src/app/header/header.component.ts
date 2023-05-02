@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SearchService } from '../search.service';
 import { Subscription } from 'rxjs';
+import { AuthService } from '../../services/auth.service';
 
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
@@ -18,7 +19,11 @@ export class HeaderComponent implements OnInit, OnDestroy{
   searchTerm!: string;
   subscription!: Subscription;
 
-  constructor(private search: SearchService) {}
+  constructor(private search: SearchService, private authService: AuthService) {}
+
+  get userName(): string {
+    return this.authService.userName;
+  }
 
   ngOnInit(): void {
     this.subscription = this.search.currentSearch.subscribe(searchTerm => this.searchTerm = searchTerm)
