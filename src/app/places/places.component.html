@@ -78,7 +78,9 @@
         *ngFor="
           let i = index;
           let event;
+
           of: searchTerm ? (tapahtumat | filter  : searchTerm | orderBy: 'sijainti' ) : scrollTapahtumat | orderBy: 'sijainti'
+
         "
       >-->
       <!--<div *ngIf="fetchingPlaces" class="text-sm font-bold">Odotathan hetken, kun etsimme paikkoja läheltä Sinua</div>-->

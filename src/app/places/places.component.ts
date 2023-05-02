@@ -16,6 +16,7 @@ import { faMugSaucer } from '@fortawesome/free-solid-svg-icons';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import { faIcons } from '@fortawesome/free-solid-svg-icons';
+import { PlacesService } from '../places.service';
 
 @Component({
   selector: 'app-places',
@@ -23,9 +24,11 @@ import { faIcons } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./places.component.css']
 })
 export class PlacesComponent implements OnInit, OnDestroy {
+
   private url = 'http://localhost:3000';
   tapahtumat: Tapahtuma[] = [];
   scrollTapahtumat: ScrollTapahtuma[] = [];
+
   selectedItems: boolean[] = [];
   items?: any;
   showAnotherLogo = false;
@@ -53,6 +56,7 @@ export class PlacesComponent implements OnInit, OnDestroy {
     private http: HttpClient, 
     private router: Router, 
     private search: SearchService,
+
     private authService: AuthService
     ) { }
 
@@ -61,6 +65,7 @@ export class PlacesComponent implements OnInit, OnDestroy {
     // console.log('User id:', userId);
     this.userGeolocation();
     this.haeTapahtumat();
+
     this.getSearch();
     this.selectedItems = new Array(this.items).fill(false);
    
@@ -75,6 +80,7 @@ export class PlacesComponent implements OnInit, OnDestroy {
       this.longitude = position.coords.longitude;
     })
   }
+
 
   async haeTapahtumat(): Promise<void> {
     try {
@@ -131,22 +137,23 @@ export class PlacesComponent implements OnInit, OnDestroy {
     this.waitingPlaces = false;
   }
 
+
   addSearchToScrollTapahtuma() {
     if (this.searchTerm) {
-      const filteredTapahtumat = this.tapahtumat.filter((tapahtuma) =>
+      const filteredTapahtumat = this.places.tapahtumat.filter((tapahtuma) =>
         tapahtuma.nimi.toLowerCase().includes(this.searchTerm.toLowerCase())
       );
-      this.scrollTapahtumat = filteredTapahtumat.slice(0, this.limit);
+      this.places.scrollTapahtumat = filteredTapahtumat.slice(0, this.limit);
     } else {
-      this.scrollTapahtumat = this.tapahtumat.slice(0, this.limit);
+      this.places.scrollTapahtumat = this.places.tapahtumat.slice(0, this.limit);
     }
     console.log(this.searchTerm)
   }
 
   onScrollDown(): void {
-    const startIndex = this.scrollTapahtumat.length;
+    const startIndex = this.places.scrollTapahtumat.length;
     const endIndex = startIndex + this.limit;
-    this.scrollTapahtumat = this.scrollTapahtumat.concat(this.tapahtumat.slice(startIndex, endIndex));
+    this.places.scrollTapahtumat = this.places.scrollTapahtumat.concat(this.places.tapahtumat.slice(startIndex, endIndex));
   }
 
   @Output() tapahtumatLahetetty = new EventEmitter<string>();
