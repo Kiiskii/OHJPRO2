@@ -15,6 +15,7 @@ import { faMugSaucer } from '@fortawesome/free-solid-svg-icons';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import { faIcons } from '@fortawesome/free-solid-svg-icons';
+import { PlacesService } from '../places.service';
 
 @Component({
   selector: 'app-places',
@@ -22,8 +23,8 @@ import { faIcons } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./places.component.css']
 })
 export class PlacesComponent implements OnInit, OnDestroy {
-  tapahtumat: Tapahtuma[] = [];
-  scrollTapahtumat: ScrollTapahtuma[] = [];
+  
+  
   selectedItems: boolean[] = [];
   items?: any;
   showAnotherLogo = false;
@@ -46,66 +47,33 @@ export class PlacesComponent implements OnInit, OnDestroy {
   constructor(
     private http: HttpClient, 
     private router: Router, 
-    private search: SearchService
+    private search: SearchService,
+    public places: PlacesService
     ) { }
 
   ngOnInit(): void {
-    this.haeTapahtumat();
+    this.places.haeTapahtumat();
     this.getSearch();
     this.selectedItems = new Array(this.items).fill(false);
   }
 
-  async haeTapahtumat(): Promise<void> {
-    try {
-      const response = 
-        await axios.get(`/places/`);
-        // console.log(response);
-        this.tapahtumat = response.data.data.map((tapahtuma: any) => {
-        const { street_address, postal_code, locality } = tapahtuma.location.address;
-        const osoite = `${street_address}, ${postal_code}, ${locality}`;
-
-      if(this.searchTerm){
-        this.tapahtumat = this.tapahtumat.filter(tapahtuma =>
-        tapahtuma.nimi.toLocaleLowerCase().includes(this.searchTerm.toLocaleLowerCase())
-        )};
-        
-        return {
-          id: tapahtuma.id,
-          nimi: tapahtuma.name?.fi ?? '',
-          kuvaus: tapahtuma.description.body,
-          sijaintiLeveys: tapahtuma.location.lat,
-          sijaintiPituus: tapahtuma.location.lon,
-          luokka: tapahtuma.tags.map((tag: any) => tag.name),
-          homesite: tapahtuma.info_url,
-          osoite: osoite
-        };
-      });
-
-      this.scrollTapahtumat = this.tapahtumat.slice(0, 8);
-      this.tapahtumat = this.tapahtumat;
-      // console.log(this.tapahtumat);
-      
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
+ 
   addSearchToScrollTapahtuma() {
     if (this.searchTerm) {
-      const filteredTapahtumat = this.tapahtumat.filter((tapahtuma) =>
+      const filteredTapahtumat = this.places.tapahtumat.filter((tapahtuma) =>
         tapahtuma.nimi.toLowerCase().includes(this.searchTerm.toLowerCase())
       );
-      this.scrollTapahtumat = filteredTapahtumat.slice(0, this.limit);
+      this.places.scrollTapahtumat = filteredTapahtumat.slice(0, this.limit);
     } else {
-      this.scrollTapahtumat = this.tapahtumat.slice(0, this.limit);
+      this.places.scrollTapahtumat = this.places.tapahtumat.slice(0, this.limit);
     }
     console.log(this.searchTerm)
   }
 
   onScrollDown(): void {
-    const startIndex = this.scrollTapahtumat.length;
+    const startIndex = this.places.scrollTapahtumat.length;
     const endIndex = startIndex + this.limit;
-    this.scrollTapahtumat = this.scrollTapahtumat.concat(this.tapahtumat.slice(startIndex, endIndex));
+    this.places.scrollTapahtumat = this.places.scrollTapahtumat.concat(this.places.tapahtumat.slice(startIndex, endIndex));
   }
 
   @Output() tapahtumatLahetetty = new EventEmitter<string>();
