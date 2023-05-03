@@ -9,7 +9,6 @@
 
   <div class="float-right">
     <div class="search-bar">
-      <a routerLink="{{ 'profiili' }}">Test</a>
       <input
         class="text-sm bg-transparent border-b-2 border-gray-600 text-gray-500 p-1"
         type="search"
@@ -24,7 +23,8 @@
           [icon]="faUser"
         ></fa-icon>
       </a>
-      <p class="float-right" *ngIf="userName">Tervetuloa:{{ userName }}</p>
+      <p class="ml-2 float-right text-right" *ngIf="userName">
+        <a routerLink="{{ 'profiili' }}">Tervetuloa: <br><span class="font-bold uppercase"> {{ userName }}</span></a></p>
     </div>
   </div>
 </div>

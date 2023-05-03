@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Tapahtuma } from 'src/shared/interfaces';
 import axios from 'axios';
-
+import { AuthService } from 'src/services/auth.service';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -15,7 +15,8 @@ export class ProfiiliComponent implements OnInit {
   favoriteIds?: any[];
   
   constructor (
-    private http: HttpClient
+    private http: HttpClient,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -30,5 +31,9 @@ export class ProfiiliComponent implements OnInit {
         console.log(error);
       }
     });
+  }
+
+  get userName(): string {
+    return this.authService.userName;
   }
 }
