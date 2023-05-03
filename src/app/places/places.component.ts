@@ -227,8 +227,20 @@ export class PlacesComponent implements OnInit, OnDestroy {
             console.log(error);
           },
         });
-    }
-    return null;
+    } else {
+      this.http
+      .delete(`${this.url}/favorites/${favid}`)
+      .subscribe({
+        next: (response) => {
+          console.log(response);
+        },
+        error: (error) => {
+          console.log(error);
+        },
+      });
+  }
+     return null; 
+    
     // console.log(this.selectedItems);
   }
 
