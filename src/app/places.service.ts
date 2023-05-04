@@ -48,8 +48,8 @@ export class PlacesService {
     }
   }
   setFilter(value:string){
-    this.searchTerm = value;
-    this.tapahtumatSourse.next(this.tapahtumat.filter(t => t.luokka.toLowerCase().includes(this.searchTerm.toLowerCase())));
+  this.searchTerm = value;
+   this.tapahtumatSourse.next(   this.tapahtumat.filter(t => t.luokka.some(l=>l.toLowerCase().includes(value.toLowerCase()))))
 
   }
 
