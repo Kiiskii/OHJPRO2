@@ -21,6 +21,7 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { OrderModule } from 'ngx-order-pipe';
 import { ProfiiliComponent } from './profiili/profiili.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { ProfiiliComponent } from './profiili/profiili.component';
     Ng2SearchPipeModule,
     ReactiveFormsModule,
     OrderModule,
+    NgxPaginationModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

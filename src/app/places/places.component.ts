@@ -38,9 +38,9 @@ export class PlacesComponent implements OnInit, OnDestroy {
   items?: any;
   showAnotherLogo = false;
   activeIcon = Number;
- 
+
   subscription!: Subscription;
-  page = 1;
+  page: number = 1;
   limit = 8;
 
   bgimg: string = 'bg-main-desktop.jpg';
@@ -162,7 +162,9 @@ export class PlacesComponent implements OnInit, OnDestroy {
   addSearchToScrollTapahtuma() {
     if (this.places.searchTerm) {
       const filteredTapahtumat = this.places.tapahtumat.filter((tapahtuma) =>
-        tapahtuma.nimi.toLowerCase().includes(this.places.searchTerm.toLowerCase())
+        tapahtuma.nimi
+          .toLowerCase()
+          .includes(this.places.searchTerm.toLowerCase())
       );
       this.places.scrollTapahtumat = filteredTapahtumat.slice(0, this.limit);
     } else {
@@ -173,7 +175,6 @@ export class PlacesComponent implements OnInit, OnDestroy {
     }
 
     console.log(this.searchTerm);
-
   }
 
   onScrollDown(): void {
@@ -230,9 +231,7 @@ export class PlacesComponent implements OnInit, OnDestroy {
           },
         });
     } else {
-      this.http
-      .delete(`${this.url}/favorites/${favid}`)
-      .subscribe({
+      this.http.delete(`${this.url}/favorites/${favid}`).subscribe({
         next: (response) => {
           console.log(response);
         },
@@ -240,19 +239,17 @@ export class PlacesComponent implements OnInit, OnDestroy {
           console.log(error);
         },
       });
-  }
-     return null; 
-    
+    }
+    return null;
+
     // console.log(this.selectedItems);
   }
 
   //for the search bar ->
   getSearch() {
-
     this.subscription = this.search.currentSearch.subscribe(
       (searchTerm) => (this.searchTerm = searchTerm)
     );
-
   }
 
   ngOnDestroy(): void {
@@ -260,9 +257,7 @@ export class PlacesComponent implements OnInit, OnDestroy {
   }
 
   newSearch() {
-
     this.search.changeSearch(this.searchTerm);
-
   }
   //search end
 
