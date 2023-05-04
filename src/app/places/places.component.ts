@@ -33,7 +33,7 @@ export class PlacesComponent implements OnInit, OnDestroy {
   private url = 'http://localhost:3000';
   tapahtumat: Tapahtuma[] = [];
   scrollTapahtumat: ScrollTapahtuma[] = [];
-
+  searchTerm!: string;
   selectedItems: boolean[] = [];
   items?: any;
   showAnotherLogo = false;
