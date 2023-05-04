@@ -21,8 +21,3 @@ export interface Tapahtuma {
     homesite: string;
     osoite: string;
   }
-
-  export interface Favorites {
-    userid: number;
-    favid: number;
-  }
