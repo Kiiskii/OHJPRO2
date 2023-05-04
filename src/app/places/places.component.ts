@@ -68,7 +68,7 @@ export class PlacesComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     // const userid = this.userId;
-    // console.log('User id:', userId);
+    // console.log('User id:', userid);
     this.userGeolocation();
     this.haeTapahtumat();
 
@@ -205,14 +205,14 @@ export class PlacesComponent implements OnInit, OnDestroy {
   }
 
   get userId(): number {
-    return this.authService.userId;
+    const userId = this.authService.userId;
+    return userId;
   }
 
   // käyttäjä voi lisätä suosikkeja funktio
   changeIcon(id: any, target: any, index: number) {
     const userid = this.userId;
     const favid = id;
-
     if (this.selectedItems[index]) {
       // Tarkista, onko elementti jo valittu
       this.showAnotherLogo = !this.showAnotherLogo; // Vaihda ikonin tila vain, jos elementti on jo valittu
