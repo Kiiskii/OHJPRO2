@@ -7,8 +7,10 @@
 </div>
 
 <main class="mx-10 mt-2 pb-24 md:flex md:relative">
-  <article id="map-cont" class="mx-auto my-3 md:basis-1/2 md:fixed md:left-5 md:w-5/12">
-  
+  <article
+    id="map-cont"
+    class="mx-auto my-3 md:basis-1/2 md:fixed md:left-5 md:w-5/12"
+  >
     <div class="md:mb-3 p-2 flex place-content-center">
       <input
         type="text"
@@ -34,7 +36,10 @@
     </div>
   </article>
 
-  <article id="places-cont" class="md:basis-1/2 md:absolute md:right-5 md:w-1/2">
+  <article
+    id="places-cont"
+    class="md:basis-1/2 md:absolute md:right-5 md:w-1/2"
+  >
     <div
       id="filter-buttons"
       class="my-3 p-2 bg-white rounded-lg flex place-content-center drop-shadow-md"
@@ -65,9 +70,8 @@
       </button>
     </div>
 
-    <div
-      class="container max-w-xl mx-auto m-2 pd-42">
-    <!--<div
+    <div class="container max-w-xl mx-auto m-2 pb-32">
+      <!--<div
       class="container max-w-xl mx-auto m-2 pd-42"
       infinite-scroll
       [infiniteScrollDistance]="2"
@@ -86,14 +90,19 @@
         "
       >-->
       <!--<div *ngIf="fetchingPlaces" class="text-sm font-bold">Odotathan hetken, kun etsimme paikkoja läheltä Sinua</div>-->
-      <div *ngIf="waitingPlaces" class="mx-auto text-center font-bold text-sm">Pieni hetki etsimme mahtavia paikkoja läheltäsi...</div>
+      <div *ngIf="waitingPlaces" class="mx-auto text-center font-bold text-sm">
+        Pieni hetki etsimme mahtavia paikkoja läheltäsi...
+      </div>
       <div
-      *ngFor="
-        let i = index;
-        let event;
-        of: tapahtumat | filter  : searchTerm | orderBy: 'sijainti'
-      "
-    >
+        *ngFor="
+          let i = index;
+          let event;
+          of: tapahtumat
+            | filter : searchTerm
+            | orderBy : 'sijainti'
+            | paginate : { itemsPerPage: 5, currentPage: page }
+        "
+      >
         <div
           class="mb-2 p-2 border-solid border-2 border-cyan-400 rounded-lg bg-white"
         >
@@ -106,7 +115,9 @@
               class="p-4 fa-lg cursor-pointer"
               style="color: #ff8400"
               [ngClass]="
-                selectedItems[event.id] ? 'fa-heart fa-solid' : 'fa-heart fa-regular'
+                selectedItems[event.id]
+                  ? 'fa-heart fa-solid'
+                  : 'fa-heart fa-regular'
               "
             >
             </i>
@@ -150,11 +161,14 @@
             <p class="text-xs uppercase">
               <span class="text-cyan-500 font-semibold"> Tags:</span>
               {{ event.luokka }}
-              <br>
+              <br />
               <span>ID: {{ event.id }}</span>
             </p>
           </div>
         </div>
+      </div>
+      <div class="has-text-centered flex justify-center">
+        <pagination-controls (pageChange)="page = $event"></pagination-controls>
       </div>
     </div>
   </article>

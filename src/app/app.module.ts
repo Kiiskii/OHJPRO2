@@ -12,7 +12,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
-import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { GeolocationComponent } from './geolocation/geolocation.component';
 import { FormsModule } from '@angular/forms';
@@ -21,6 +20,7 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { OrderModule } from 'ngx-order-pipe';
 import { ProfiiliComponent } from './profiili/profiili.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -41,12 +41,12 @@ import { ProfiiliComponent } from './profiili/profiili.component';
     HttpClientModule,
     BrowserAnimationsModule,
     MatCardModule,
-    InfiniteScrollModule,
     FontAwesomeModule,
     FormsModule,
     Ng2SearchPipeModule,
     ReactiveFormsModule,
     OrderModule,
+    NgxPaginationModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
