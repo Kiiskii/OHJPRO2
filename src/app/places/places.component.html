@@ -76,7 +76,7 @@
         *ngFor="
           let i = index;
           let event;
-          of: searchTerm ? (places.tapahtumat | filter : searchTerm) : places.scrollTapahtumat
+          of: places.searchTerm ? (places.tapahtumat | filter : places.searchTerm) : places.scrollTapahtumat
         "
       >
         <div
