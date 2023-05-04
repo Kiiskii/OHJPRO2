@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Tapahtuma } from 'src/shared/interfaces';
-import axios from 'axios';
 import { AuthService } from 'src/services/auth.service';
 import { HttpClient } from '@angular/common/http';
 
@@ -11,8 +9,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ProfiiliComponent implements OnInit {
   bgimg: string = 'bg-login-desktop.jpg';
-  tapahtumat: Tapahtuma[] = [];
-  favoriteIds?: any[];
+  favoriteIds?: number[];
   
   constructor (
     private http: HttpClient,
@@ -20,17 +17,30 @@ export class ProfiiliComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    //this.haeFavorites();
-    this.http.get<any[]>('http://localhost:3000/favorites')
-    .subscribe({
-      next: (response) => {
-        this.favoriteIds = response.map((item) => item.favid);
-        console.log(response);
-      },
-      error: (error) => {
-        console.log(error);
-      }
-    });
+    this.fetchFavoriteIds();
+  }
+
+  fetchFavoriteIds(): void {
+    const userid = this.userId;
+    if (userid) {
+      this.http.get<any[]>(`http://localhost:3000/favorites/${userid}`)
+        .subscribe({
+          next: (response) => {
+            this.setFavoriteIds(response);
+          },
+          error: (error) => {
+            console.log(error);
+          }
+        });
+    }
+  }
+
+  setFavoriteIds(ids: number[]): void {
+    this.favoriteIds = ids;
+  }
+
+  get userId(): number {
+    return this.authService.userId;
   }
 
   get userName(): string {
