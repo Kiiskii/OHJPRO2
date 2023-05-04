@@ -38,7 +38,7 @@ export class PlacesComponent implements OnInit, OnDestroy {
   items?: any;
   showAnotherLogo = false;
   activeIcon = Number;
-  searchTerm!: string;
+ 
   subscription!: Subscription;
   page = 1;
   limit = 8;
@@ -160,9 +160,9 @@ export class PlacesComponent implements OnInit, OnDestroy {
   }
 
   addSearchToScrollTapahtuma() {
-    if (this.searchTerm) {
+    if (this.places.searchTerm) {
       const filteredTapahtumat = this.places.tapahtumat.filter((tapahtuma) =>
-        tapahtuma.nimi.toLowerCase().includes(this.searchTerm.toLowerCase())
+        tapahtuma.nimi.toLowerCase().includes(this.places.searchTerm.toLowerCase())
       );
       this.places.scrollTapahtumat = filteredTapahtumat.slice(0, this.limit);
     } else {
@@ -171,7 +171,9 @@ export class PlacesComponent implements OnInit, OnDestroy {
         this.limit
       );
     }
+
     console.log(this.searchTerm);
+
   }
 
   onScrollDown(): void {
@@ -246,9 +248,11 @@ export class PlacesComponent implements OnInit, OnDestroy {
 
   //for the search bar ->
   getSearch() {
+
     this.subscription = this.search.currentSearch.subscribe(
       (searchTerm) => (this.searchTerm = searchTerm)
     );
+
   }
 
   ngOnDestroy(): void {
@@ -256,13 +260,17 @@ export class PlacesComponent implements OnInit, OnDestroy {
   }
 
   newSearch() {
+
     this.search.changeSearch(this.searchTerm);
+
   }
   //search end
 
   //gives searchTerm to filtter and changes bg image
+
   setFilter(value: string) {
     this.searchTerm = value;
+
     this.bgimg = 'bg-' + value + '-desktop.jpg';
     if (value === 'activity' || value === '')
       this.bgimg = 'bg-main-desktop.jpg';
