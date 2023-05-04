@@ -1,0 +1,22 @@
+<div id="bg-img" class="bg-white mb-4 drop-shadow-lg">
+  <img
+    src="assets/img/bg/{{ bgimg }}"
+    class="m-auto w-full md:w-4/6 lg:w-3/6"
+    alt="illustration to add color"
+  />
+</div>
+<div class="container flex justify-center mx-auto mb-6 p-3">
+  <div class="flex flex-col w-full">
+    <p class="m-4 text-right text-lg text-orange-500 underline font-bold cursor-pointer">Kirjaudu ulos</p>
+    <h1 class="font-bold text-2xl p-3 text-orange-400">Hei <span class="uppercase"> {{userName}}</span>!</h1>
+    <p class="font-bold text-lg p-3 text-slate-500">
+      Tässä paikkoja joista olet tykännyt
+    </p>
+  </div>
+</div>
+
+<!--hakee favid-->
+<h1>Favorite IDs:</h1>
+    <ul>
+      <li *ngFor="let id of favoriteIds">{{ id }}</li>
+</ul>

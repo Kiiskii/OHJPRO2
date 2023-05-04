@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -18,6 +19,8 @@ import { FormsModule } from '@angular/forms';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
+import { OrderModule } from 'ngx-order-pipe';
+import { ProfiiliComponent } from './profiili/profiili.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +32,8 @@ import { SignupComponent } from './signup/signup.component';
     MapComponent,
     GeolocationComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    ProfiiliComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,9 +44,11 @@ import { SignupComponent } from './signup/signup.component';
     InfiniteScrollModule,
     FontAwesomeModule,
     FormsModule,
-    Ng2SearchPipeModule
+    Ng2SearchPipeModule,
+    ReactiveFormsModule,
+    OrderModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
