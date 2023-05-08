@@ -36,7 +36,6 @@ export class PlacesComponent implements OnInit, OnDestroy {
   items?: any;
   showAnotherLogo = false;
   activeIcon = Number;
-
   subscription!: Subscription;
   page: number = 1;
   limit = 8;
@@ -91,9 +90,11 @@ export class PlacesComponent implements OnInit, OnDestroy {
   addSearchToScrollTapahtuma() {
     if (this.places.searchTerm) {
       const filteredTapahtumat = this.places.tapahtumat.filter((tapahtuma) =>
+
         tapahtuma.nimi
           .toLowerCase()
           .includes(this.places.searchTerm.toLowerCase())
+
       );
       this.places.scrollTapahtumat = filteredTapahtumat.slice(0, this.limit);
     } else {
@@ -103,7 +104,6 @@ export class PlacesComponent implements OnInit, OnDestroy {
       );
     }
 
-    console.log(this.places.searchTerm);
   }
 
   onScrollDown(): void {
@@ -176,9 +176,9 @@ export class PlacesComponent implements OnInit, OnDestroy {
 
   //for the search bar ->
   getSearch() {
-    this.subscription = this.search.currentSearch.subscribe(
-      (searchTerm) => (this.places.searchTerm = searchTerm)
-    );
+
+    this.subscription = this.search.currentSearch.subscribe(searchTerm => this.places.searchTerm = searchTerm)
+
   }
 
   ngOnDestroy(): void {
@@ -186,11 +186,14 @@ export class PlacesComponent implements OnInit, OnDestroy {
   }
 
   newSearch() {
+
     this.search.changeSearch(this.places.searchTerm);
+
   }
   //search end
 
   //gives searchTerm to filtter and changes bg image
+
 
   setFilter(value: string) {
     this.places.setFilter(value);
@@ -199,5 +202,6 @@ export class PlacesComponent implements OnInit, OnDestroy {
     if (value === 'activity' || value === '')
       this.bgimg = 'bg-main-desktop.png';
     else if (value === '') this.ngOnDestroy();
+
   }
 }

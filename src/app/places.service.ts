@@ -10,8 +10,10 @@ export class PlacesService {
   tapahtumat: Tapahtuma[] = [];
   scrollTapahtumat: ScrollTapahtuma[] = [];
   searchTerm!: string;
+
   waitingPlaces = true;
   currentPosition = {latitude:60.1699, longitude: 24.9384}
+
   private tapahtumatSourse = new BehaviorSubject(this.tapahtumat);
   currentTapahtumat = this.tapahtumatSourse.asObservable();
 
@@ -90,7 +92,7 @@ export class PlacesService {
 
     this.waitingPlaces = false;
   }
-
+ 
 
   setFilter(value:string){
   this.searchTerm = value;

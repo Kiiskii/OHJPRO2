@@ -59,7 +59,11 @@
       <button (click)="setFilter('sights')" class="filter-btn">
         <fa-icon class="text-white text-xl m-1" [icon]="faCamera"></fa-icon>
       </button>
-      <button (click)="setFilter('coffee')" class="filter-btn">
+
+     
+
+      <button (click)="setFilter('caf')" class="filter-btn">
+
         <fa-icon class="text-white text-xl m-1" [icon]="faMugSaucer"></fa-icon>
       </button>
       <button
@@ -84,6 +88,7 @@
           let event;
 
 
+
           of: searchTerm ? (tapahtumat | filter  : searchTerm | orderBy: 'sijainti' ) : scrollTapahtumat | orderBy: 'sijainti'
 
 
@@ -101,6 +106,7 @@
             | filter : places.searchTerm
             | orderBy : 'sijainti'
             | paginate : { itemsPerPage: 5, currentPage: page }
+
         "
       >
         <div

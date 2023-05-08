@@ -61,7 +61,7 @@ export class MapComponent implements OnInit, AfterViewInit {
       
     this.markers.forEach(m=>this.map.removeLayer(m))
     this.markers = []
-   
+
     
     filteredTapahtumat.forEach(t=> {
       const markerIcon = L.icon({
