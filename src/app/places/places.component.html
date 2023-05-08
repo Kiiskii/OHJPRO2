@@ -60,9 +60,11 @@
         <fa-icon class="text-white text-xl m-1" [icon]="faCamera"></fa-icon>
       </button>
 
+
      
 
       <button (click)="setFilter('caf')" class="filter-btn">
+
 
         <fa-icon class="text-white text-xl m-1" [icon]="faMugSaucer"></fa-icon>
       </button>
@@ -88,24 +90,31 @@
           let event;
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> develop
           of: searchTerm ? (tapahtumat | filter  : searchTerm | orderBy: 'sijainti' ) : scrollTapahtumat | orderBy: 'sijainti'
 
 
         "
       >-->
       <!--<div *ngIf="fetchingPlaces" class="text-sm font-bold">Odotathan hetken, kun etsimme paikkoja läheltä Sinua</div>-->
+
       <div *ngIf="places.waitingPlaces" class="mx-auto text-center font-bold text-sm">
+
         Pieni hetki etsimme mahtavia paikkoja läheltäsi...
       </div>
       <div
         *ngFor="
           let i = index;
           let event;
+
           of: places.tapahtumat
             | filter : places.searchTerm
             | orderBy : 'sijainti'
             | paginate : { itemsPerPage: 5, currentPage: page }
+
 
         "
       >

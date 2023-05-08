@@ -31,11 +31,12 @@ import { PlacesService } from '../places.service';
 })
 export class PlacesComponent implements OnInit, OnDestroy {
   private url = 'http://localhost:3000';
- 
+
   selectedItems: boolean[] = [];
   items?: any;
   showAnotherLogo = false;
   activeIcon = Number;
+
   subscription!: Subscription;
   page: number = 1;
   limit = 8;
@@ -52,11 +53,12 @@ export class PlacesComponent implements OnInit, OnDestroy {
 
   latitude = 60.171944;
   longitude = 24.941389;
-  
+
   constructor(
     private http: HttpClient,
     private router: Router,
     private search: SearchService,
+
     public places: PlacesService,
 
     private authService: AuthService
@@ -66,6 +68,7 @@ export class PlacesComponent implements OnInit, OnDestroy {
     // const userid = this.userId;
     // console.log('User id:', userid);
     this.userGeolocation();
+
     this.places.haeTapahtumat();
 
     this.getSearch();
@@ -85,6 +88,7 @@ export class PlacesComponent implements OnInit, OnDestroy {
     });
   }
 
+
  
 
   addSearchToScrollTapahtuma() {
@@ -95,6 +99,7 @@ export class PlacesComponent implements OnInit, OnDestroy {
           .toLowerCase()
           .includes(this.places.searchTerm.toLowerCase())
 
+
       );
       this.places.scrollTapahtumat = filteredTapahtumat.slice(0, this.limit);
     } else {
@@ -103,6 +108,7 @@ export class PlacesComponent implements OnInit, OnDestroy {
         this.limit
       );
     }
+
 
   }
 
@@ -177,10 +183,10 @@ export class PlacesComponent implements OnInit, OnDestroy {
   //for the search bar ->
   getSearch() {
 
+
     this.subscription = this.search.currentSearch.subscribe(searchTerm => this.places.searchTerm = searchTerm)
 
   }
-
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
@@ -188,20 +194,15 @@ export class PlacesComponent implements OnInit, OnDestroy {
   newSearch() {
 
     this.search.changeSearch(this.places.searchTerm);
-
   }
   //search end
 
   //gives searchTerm to filtter and changes bg image
-
-
-  setFilter(value: string) {
+ setFilter(value: string) {
     this.places.setFilter(value);
-
     this.bgimg = 'bg-' + value + '-desktop.png';
     if (value === 'activity' || value === '')
       this.bgimg = 'bg-main-desktop.png';
     else if (value === '') this.ngOnDestroy();
-
   }
 }
