@@ -6,12 +6,12 @@
   />
 </div>
 
-<main class="mx-10 mt-2 pb-24 md:flex md:relative">
+<main class="mx-5 mt-2 pb-8 md:flex md:relative">
   <article
     id="map-cont"
     class="mx-auto my-3 md:basis-1/2 md:fixed md:left-5 md:w-5/12"
   >
-    <div class="md:mb-3 p-2 flex place-content-center">
+    <div class="p-2 flex place-content-center">
       <input
         type="text"
         placeholder="syötä sijainti..."
@@ -30,7 +30,7 @@
     <app-geolocation class="text-xs"></app-geolocation>
 
     <div
-      class="mt-2 w-full h-44 md:w-5/6 md:h-64 m-auto border-solid border-4 border-white rounded-lg"
+      class="mt-2 w-full md:w-5/6 m-auto border-solid border-4 border-white rounded-lg"
     >
       <app-map></app-map>
     </div>
@@ -59,7 +59,7 @@
       <button (click)="setFilter('sights')" class="filter-btn">
         <fa-icon class="text-white text-xl m-1" [icon]="faCamera"></fa-icon>
       </button>
-      <button (click)="setFilter('cafe')" class="filter-btn">
+      <button (click)="setFilter('coffee')" class="filter-btn">
         <fa-icon class="text-white text-xl m-1" [icon]="faMugSaucer"></fa-icon>
       </button>
       <button
@@ -70,7 +70,7 @@
       </button>
     </div>
 
-    <div class="container max-w-xl mx-auto m-2 pb-32">
+    <div class="container max-w-xl mx-auto m-2 pb-4 md:pb-16">
       <!--<div
       class="container max-w-xl mx-auto m-2 pd-42"
       infinite-scroll
@@ -108,11 +108,11 @@
         >
           <div
             (click)="changeIcon(event.id, $event.target, i)"
-            class="float-right text-lg"
+            class="float-right text-xl"
             [class.active]="selectedItems[i]"
           >
             <i
-              class="p-4 fa-lg cursor-pointer"
+              class="p-4 my-4 fa-lg cursor-pointer"
               style="color: #ff8400"
               [ngClass]="
                 selectedItems[event.id]
@@ -123,7 +123,7 @@
             </i>
           </div>
 
-          <div class="m-2 mr-4 bg-cyan-500 float-left rounded-lg p-4">
+          <div class="m-2 mr-4 bg-cyan-500 float-left rounded-lg p-4 drop-shadow">
             <fa-icon
               class="grid place-content-center text-white text-2xl"
               [icon]="faIcons"
@@ -132,7 +132,7 @@
 
           <div>
             <h2
-              class="places-header text-base text-cyan-500 font-bold uppercase cursor-pointer"
+              class="places-header text-base text-cyan-500 font-bold uppercase cursor-pointer leading-tight"
               (click)="
                 navigateToDetails(
                   event.nimi,
@@ -145,24 +145,24 @@
               {{ event.nimi }}
             </h2>
 
-            <span class="font-semibold">www:</span>
+            <span class="font-semibold text-xs md:text-sm">www:</span>
             <a
               href="{{ event.homesite }}"
               target="_blank"
-              class="font-semibold text-cyan-600 visited:text-purple-600 text-sm"
+              class="font-semibold text-cyan-600 visited:text-purple-600 text-xs md:text-sm"
             >
               Siirry yrityksen omille sivuille
               <!--{{ event.homesite }}-->
             </a>
-            <p class="text-sm">
+            <p class="text-xs md:text-sm">
               <span class="font-semibold">Location:</span> {{ event.osoite }}
             </p>
             <hr class="border-blue-900 my-2" />
-            <p class="text-xs uppercase">
+            <p class="text-xs lowercase">
               <span class="text-cyan-500 font-semibold"> Tags:</span>
               {{ event.luokka }}
               <br />
-              <span>ID: {{ event.id }}</span>
+              <span class="text-xs">ID: {{ event.id }}</span>
             </p>
           </div>
         </div>

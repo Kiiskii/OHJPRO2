@@ -43,7 +43,7 @@ export class PlacesComponent implements OnInit, OnDestroy {
   page: number = 1;
   limit = 8;
 
-  bgimg: string = 'bg-main-desktop.jpg';
+  bgimg: string = 'bg-main-desktop.png';
   faUtensils = faUtensils;
   faCamera = faCamera;
   faBagsShopping = faBagShopping;
@@ -266,9 +266,9 @@ export class PlacesComponent implements OnInit, OnDestroy {
   setFilter(value: string) {
     this.searchTerm = value;
 
-    this.bgimg = 'bg-' + value + '-desktop.jpg';
+    this.bgimg = 'bg-' + value + '-desktop.png';
     if (value === 'activity' || value === '')
-      this.bgimg = 'bg-main-desktop.jpg';
-    if (value === '') this.ngOnDestroy();
+      this.bgimg = 'bg-main-desktop.png';
+    else if (value === '') this.ngOnDestroy();
   }
 }
