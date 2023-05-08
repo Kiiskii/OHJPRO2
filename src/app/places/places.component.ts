@@ -31,9 +31,7 @@ import { PlacesService } from '../places.service';
 })
 export class PlacesComponent implements OnInit, OnDestroy {
   private url = 'http://localhost:3000';
-  tapahtumat: Tapahtuma[] = [];
-  scrollTapahtumat: ScrollTapahtuma[] = [];
-  searchTerm!: string;
+ 
   selectedItems: boolean[] = [];
   items?: any;
   showAnotherLogo = false;
@@ -55,13 +53,12 @@ export class PlacesComponent implements OnInit, OnDestroy {
 
   latitude = 60.171944;
   longitude = 24.941389;
-  waitingPlaces = true;
-
+  
   constructor(
     private http: HttpClient,
     private router: Router,
     private search: SearchService,
-    private places: PlacesService,
+    public places: PlacesService,
 
     private authService: AuthService
   ) {}
@@ -70,7 +67,7 @@ export class PlacesComponent implements OnInit, OnDestroy {
     // const userid = this.userId;
     // console.log('User id:', userid);
     this.userGeolocation();
-    this.haeTapahtumat();
+    this.places.haeTapahtumat();
 
     this.getSearch();
     this.selectedItems = new Array(this.items).fill(false);
@@ -89,78 +86,7 @@ export class PlacesComponent implements OnInit, OnDestroy {
     });
   }
 
-  async haeTapahtumat(): Promise<void> {
-    try {
-      const response = await axios.get(`/places/`);
-      // console.log(response);
-      this.tapahtumat = response.data.data.map((tapahtuma: any) => {
-        const id = tapahtuma.id;
-        // console.log(id)
-        const { street_address, postal_code, locality } =
-          tapahtuma.location.address;
-        const osoite = `${street_address}, ${postal_code}, ${locality}`;
-
-        if (this.searchTerm) {
-          this.tapahtumat = this.tapahtumat.filter((tapahtuma) =>
-            tapahtuma.nimi
-              .toLocaleLowerCase()
-              .includes(this.searchTerm.toLocaleLowerCase())
-          );
-        }
-
-        //calculate distanse from user if geolocation is on or Helsinki Railway Station if not
-        var fromLat: number;
-        var fromLon: number;
-        var toLat: number;
-        var toLon: number;
-        function distance(
-          fromLat: number,
-          fromLon: number,
-          toLat: number,
-          toLon: number
-        ) {
-          var radius = 6378137; // approximate Earth radius, *in meters*
-          var deltaLat = toLat - fromLat;
-          var deltaLon = toLon - fromLon;
-          var angle =
-            2 *
-            Math.asin(
-              Math.sqrt(
-                Math.pow(Math.sin(deltaLat / 2), 2) +
-                  Math.cos(fromLat) *
-                    Math.cos(toLat) *
-                    Math.pow(Math.sin(deltaLon / 2), 2)
-              )
-            );
-          return radius * angle;
-        }
-        return {
-          id: tapahtuma.id,
-          nimi: tapahtuma.name?.fi ?? '',
-          kuvaus: tapahtuma.description.body,
-          sijaintiLeveys: tapahtuma.location.lat,
-          sijaintiPituus: tapahtuma.location.lon,
-          sijainti: distance(
-            tapahtuma.location.lat,
-            tapahtuma.location.lon,
-            this.latitude,
-            this.longitude
-          ),
-          luokka: tapahtuma.tags.map((tag: any) => tag.name).join(', '),
-          homesite: tapahtuma.info_url,
-          osoite: osoite,
-        };
-      });
-
-      this.scrollTapahtumat = this.tapahtumat.slice(0, 8);
-      this.tapahtumat = this.tapahtumat;
-      // console.log(this.tapahtumat);
-    } catch (error) {
-      console.error(error);
-    }
-
-    this.waitingPlaces = false;
-  }
+ 
 
   addSearchToScrollTapahtuma() {
     if (this.places.searchTerm) {
@@ -177,7 +103,7 @@ export class PlacesComponent implements OnInit, OnDestroy {
       );
     }
 
-    console.log(this.searchTerm);
+    console.log(this.places.searchTerm);
   }
 
   onScrollDown(): void {
@@ -251,7 +177,7 @@ export class PlacesComponent implements OnInit, OnDestroy {
   //for the search bar ->
   getSearch() {
     this.subscription = this.search.currentSearch.subscribe(
-      (searchTerm) => (this.searchTerm = searchTerm)
+      (searchTerm) => (this.places.searchTerm = searchTerm)
     );
   }
 
@@ -260,14 +186,14 @@ export class PlacesComponent implements OnInit, OnDestroy {
   }
 
   newSearch() {
-    this.search.changeSearch(this.searchTerm);
+    this.search.changeSearch(this.places.searchTerm);
   }
   //search end
 
   //gives searchTerm to filtter and changes bg image
 
   setFilter(value: string) {
-    this.searchTerm = value;
+    this.places.setFilter(value);
 
     this.bgimg = 'bg-' + value + '-desktop.png';
     if (value === 'activity' || value === '')

@@ -16,7 +16,7 @@ export class MapComponent implements OnInit, AfterViewInit {
   private map!: L.Map;
   @ViewChild('map', { static: true }) mapContainer!: ElementRef;
   subscription!: Subscription;
-  currentPosition = {x:60.1699, y: 24.9384}
+  
   radius = 0.001
   markers:L.Marker<any> [] = []
 
@@ -34,7 +34,7 @@ export class MapComponent implements OnInit, AfterViewInit {
     this.subscription = this.places.currentTapahtumat.subscribe(tapahtumat => this.placeMarkers(tapahtumat))
   }
   private initMap(): void {
-    this.map = L.map(this.mapContainer.nativeElement).setView([this.currentPosition.x, this.currentPosition.y], 13);
+    this.map = L.map(this.mapContainer.nativeElement).setView([this.places.currentPosition.latitude, this.places.currentPosition.longitude], 13);
 
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -54,14 +54,14 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
   placeMarkers(tapahtumat: Tapahtuma[]){
     let filteredTapahtumat = tapahtumat.filter(t=>
-      t.sijaintiLeveys<this.currentPosition.x+this.radius && 
-      t.sijaintiLeveys > this.currentPosition.x - this.radius &&
-      t.sijaintiPituus < this.currentPosition.y + this.radius &&
-      t.sijaintiPituus > this.currentPosition.y - this.radius)
+      t.sijaintiLeveys<this.places.currentPosition.latitude+this.radius && 
+      t.sijaintiLeveys > this.places.currentPosition.latitude - this.radius &&
+      t.sijaintiPituus < this.places.currentPosition.longitude + this.radius &&
+      t.sijaintiPituus > this.places.currentPosition.longitude - this.radius)
       
     this.markers.forEach(m=>this.map.removeLayer(m))
     this.markers = []
-    // console.log(tapahtumat)
+   
     
     filteredTapahtumat.forEach(t=> {
       const markerIcon = L.icon({
