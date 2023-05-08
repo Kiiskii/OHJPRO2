@@ -18,14 +18,17 @@
         (input)="newSearch()"
       />
       <fa-icon class="text-xl pt-2 -ml-2" [icon]="faMagnifyingGlass"></fa-icon>
-      <a *ngIf="!userName" routerLink="{{ 'login' }}">
+      <a *ngIf="!(userNameLogin | async)" routerLink="{{ 'login' }}">
         <fa-icon
           class="text-xl p-2 ml-2 hover:text-blue-800"
           [icon]="faUser"
         ></fa-icon>
       </a>
-      <p class="ml-2 float-right text-right leading-tight font-semibold" *ngIf="userName">
-        <a routerLink="{{ 'profiili' }}">Tervetuloa <br><span class="font-bold uppercase text-orange-500"> {{ userName }}</span>!</a></p>
+      <p class="ml-2 float-right text-right leading-tight font-semibold" *ngIf="userNameLogin | async">
+        <a routerLink="{{ 'profiili' }}">Tervetuloa <br>
+          <span class="font-bold uppercase text-orange-500"> {{ (userNameLogin | async) }}</span>!
+        </a>
+      </p>
     </div>
   </div>
 </div>
