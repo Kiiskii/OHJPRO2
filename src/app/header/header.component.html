@@ -24,7 +24,7 @@
           [icon]="faUser"
         ></fa-icon>
       </a>
-      <p class="ml-2 float-right text-right leading-tight font-semibold" *ngIf="userName">
+      <p class="ml-2 float-right text-right leading-tight font-semibold" *ngIf="userNameLogin | async">
         <a routerLink="{{ 'profiili' }}">Tervetuloa <br>
           <span class="font-bold uppercase text-orange-500"> {{ (userNameLogin | async) }}</span>!
         </a>
