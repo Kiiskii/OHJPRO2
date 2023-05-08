@@ -18,7 +18,7 @@ export class MapComponent implements OnInit, AfterViewInit {
   subscription!: Subscription;
   currentPosition = {x:60.1699, y: 24.9384}
   radius = 0.001
-  markers = []
+  markers:L.Marker<any> [] = []
 
 
   constructor(private places: PlacesService) { }
@@ -41,7 +41,7 @@ export class MapComponent implements OnInit, AfterViewInit {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(this.map);
     const markerIcon = L.icon({
-      iconUrl: `../../assets/img/markers/location-pointer.png`,
+      iconUrl: `../../assets/img/markers/user-location-pointer.png`,
       iconSize: [46, 46], // size of the icon
       iconAnchor: [15.5, 42], // point of the icon which will correspond to marker's location
       popupAnchor: [0, -45] // point from which the popup should open relative to the iconAnchor
@@ -59,11 +59,13 @@ export class MapComponent implements OnInit, AfterViewInit {
       t.sijaintiPituus < this.currentPosition.y + this.radius &&
       t.sijaintiPituus > this.currentPosition.y - this.radius)
       
- 
+    this.markers.forEach(m=>this.map.removeLayer(m))
+    this.markers = []
+    // console.log(tapahtumat)
     
     filteredTapahtumat.forEach(t=> {
       const markerIcon = L.icon({
-        iconUrl: `../../assets/img/markers/location-pointer.png`,
+        iconUrl: `../../assets/img/markers/place-location-pointer.png`,
         iconSize: [46, 46], // size of the icon
         iconAnchor: [15.5, 42], // point of the icon which will correspond to marker's location
         popupAnchor: [0, -45] // point from which the popup should open relative to the iconAnchor
@@ -72,7 +74,7 @@ export class MapComponent implements OnInit, AfterViewInit {
         
         icon: markerIcon
       }).addTo(this.map);
-      // this.markers.push(marker)
+      this.markers.push(marker)
     })
 
   }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ScrollTapahtuma, Tapahtuma } from 'src/shared/interfaces';
 import axios from 'axios';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, filter } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +9,7 @@ import { BehaviorSubject } from 'rxjs';
 export class PlacesService {
   tapahtumat: Tapahtuma[] = [];
   scrollTapahtumat: ScrollTapahtuma[] = [];
+  searchTerm!: string;
   private tapahtumatSourse = new BehaviorSubject(this.tapahtumat);
   currentTapahtumat = this.tapahtumatSourse.asObservable();
 
@@ -46,7 +47,11 @@ export class PlacesService {
       console.error(error);
     }
   }
+  setFilter(value:string){
+  this.searchTerm = value;
+   this.tapahtumatSourse.next(   this.tapahtumat.filter(t => t.luokka.some(l=>l.toLowerCase().includes(value.toLowerCase()))))
 
+  }
 
   constructor() { }
 }
