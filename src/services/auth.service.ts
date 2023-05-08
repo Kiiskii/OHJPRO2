@@ -24,6 +24,8 @@ export class AuthService {
 
   userName!: string;
 
+  userName$ = new BehaviorSubject<string | null>(localStorage.getItem("userName"));
+
   userId!: number;
 
   httpOptions: { headers: HttpHeaders } = {
@@ -58,12 +60,14 @@ export class AuthService {
         first(),
         tap(( tokenObject: TokenAndId ) => {
           this.userId = tokenObject.userId;
-          this.userName = tokenObject.name;
-          //console.log(`Logged in as ${this.userName}`);
+          const userNameLogin = tokenObject.name;
           localStorage.setItem("token", tokenObject.token);
+          localStorage.setItem("userName", userNameLogin);
+          this.userName$.next(userNameLogin);
           this.isUserLoggedIn$.next(true);
           this.router.navigate(["/places"]);
         }),
+
         catchError(
           this.errorHandlerService.handleError<{
             token: string;
@@ -72,5 +76,13 @@ export class AuthService {
           }>("login")
         )
       );
+  }
+
+  logout(): void {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userName');
+    this.userName$.next(null);
+    this.isUserLoggedIn$.next(false);
+    this.router.navigate(['/login']);
   }
 }

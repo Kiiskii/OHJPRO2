@@ -10,7 +10,7 @@ import axios from 'axios';
 import { Tapahtuma } from 'src/shared/interfaces';
 import { Router } from '@angular/router';
 import { SearchService } from '../search.service';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { ScrollTapahtuma } from 'src/shared/interfaces';
 import { AuthService } from '../../services/auth.service';
 
@@ -30,7 +30,11 @@ import { PlacesService } from '../places.service';
   styleUrls: ['./places.component.css'],
 })
 export class PlacesComponent implements OnInit, OnDestroy {
+  token: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
+  userNameLogin!: Observable<string | null>;
+
   private url = 'http://localhost:3000';
+
   tapahtumat: Tapahtuma[] = [];
   scrollTapahtumat: ScrollTapahtuma[] = [];
   searchTerm!: string;
@@ -74,9 +78,23 @@ export class PlacesComponent implements OnInit, OnDestroy {
 
     this.getSearch();
     this.selectedItems = new Array(this.items).fill(false);
+
+    this.subscription = this.search.currentSearch.subscribe(searchTerm => this.searchTerm = searchTerm);
+    const token = localStorage.getItem('token');
+    if (token) {
+      this.token.next(token);
+    } else {
+      this.token.next(null);
+    };
+    this.userNameLogin = this.authService.userName$;
   }
+
   get isUserLoggedIn$() {
     return this.authService.isUserLoggedIn$;
+  }
+
+  get userName(): Observable<string | null> {
+    return this.authService.userName$;
   }
 
   userGeolocation() {

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/services/auth.service';
 import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, Observable, Subscription  } from 'rxjs';
 
 @Component({
   selector: 'app-profiili',
@@ -8,8 +9,13 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./profiili.component.css'],
 })
 export class ProfiiliComponent implements OnInit {
+  token: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
+  userNameLogin!: Observable<string | null>;
+  
   bgimg: string = 'bg-login-desktop.jpg';
   favoriteIds?: number[];
+
+  subscription!: Subscription;
   
   constructor (
     private http: HttpClient,
@@ -17,7 +23,21 @@ export class ProfiiliComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.fetchFavoriteIds();
+    const token = localStorage.getItem('token');
+    if (token) {
+      this.token.next(token);
+    } else {
+      this.token.next(null);
+    };
+    this.userNameLogin = this.authService.userName$;
+  }
+
+  get userName(): Observable<string | null> {
+    return this.authService.userName$;
+  }
+
+  get userId(): number {
+    return this.authService.userId;
   }
 
   fetchFavoriteIds(): void {
@@ -39,11 +59,7 @@ export class ProfiiliComponent implements OnInit {
     this.favoriteIds = ids;
   }
 
-  get userId(): number {
-    return this.authService.userId;
-  }
-
-  get userName(): string {
-    return this.authService.userName;
+  logout(): void {
+    this.authService.logout();
   }
 }
