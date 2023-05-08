@@ -75,6 +75,9 @@ export class PlacesComponent implements OnInit, OnDestroy {
     this.getSearch();
     this.selectedItems = new Array(this.items).fill(false);
   }
+  get isUserLoggedIn$() {
+    return this.authService.isUserLoggedIn$;
+  }
 
   userGeolocation() {
     if (!navigator.geolocation) {
@@ -224,7 +227,7 @@ export class PlacesComponent implements OnInit, OnDestroy {
         .post(`${this.url}/favorites`, { userid, favid })
         .subscribe({
           next: (response) => {
-            console.log(response);
+            console.log("Favorite added to db!");
           },
           error: (error) => {
             console.log(error);
@@ -233,7 +236,7 @@ export class PlacesComponent implements OnInit, OnDestroy {
     } else {
       this.http.delete(`${this.url}/favorites/${favid}`).subscribe({
         next: (response) => {
-          console.log(response);
+          console.log("Favorite removed from db!");
         },
         error: (error) => {
           console.log(error);

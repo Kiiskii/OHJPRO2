@@ -107,6 +107,7 @@
           class="mb-2 p-2 border-solid border-2 border-cyan-400 rounded-lg bg-white"
         >
           <div
+            *ngIf="isUserLoggedIn$ | async"
             (click)="changeIcon(event.id, $event.target, i)"
             class="float-right text-lg"
             [class.active]="selectedItems[i]"
