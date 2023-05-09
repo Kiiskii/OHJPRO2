@@ -67,8 +67,6 @@ export class PlacesComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    // const userid = this.userId;
-    // console.log('User id:', userid);
     this.userGeolocation();
 
     this.places.haeTapahtumat();
