@@ -63,7 +63,7 @@
 
      
 
-      <button (click)="setFilter('caf')" class="filter-btn">
+      <button (click)="setFilter('cafés')" class="filter-btn">
 
 
         <fa-icon class="text-white text-xl m-1" [icon]="faMugSaucer"></fa-icon>
@@ -88,15 +88,7 @@
         *ngFor="
           let i = index;
           let event;
-
-
-<<<<<<< HEAD
-
-=======
->>>>>>> develop
           of: searchTerm ? (tapahtumat | filter  : searchTerm | orderBy: 'sijainti' ) : scrollTapahtumat | orderBy: 'sijainti'
-
-
         "
       >-->
       <!--<div *ngIf="fetchingPlaces" class="text-sm font-bold">Odotathan hetken, kun etsimme paikkoja läheltä Sinua</div>-->

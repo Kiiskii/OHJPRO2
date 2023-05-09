@@ -219,6 +219,8 @@ export class PlacesComponent implements OnInit, OnDestroy {
     this.bgimg = 'bg-' + value + '-desktop.png';
     if (value === 'activity' || value === '')
       this.bgimg = 'bg-main-desktop.png';
+      else if (value === 'cafés')
+      this.bgimg = 'bg-coffee-desktop.png';
     else if (value === '') this.ngOnDestroy();
   }
 }

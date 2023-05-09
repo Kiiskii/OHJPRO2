@@ -17,7 +17,7 @@ export class MapComponent implements OnInit, AfterViewInit {
   @ViewChild('map', { static: true }) mapContainer!: ElementRef;
   subscription!: Subscription;
   
-  radius = 0.001
+  radius = 0.003
   markers:L.Marker<any> [] = []
 
 
@@ -34,7 +34,7 @@ export class MapComponent implements OnInit, AfterViewInit {
     this.subscription = this.places.currentTapahtumat.subscribe(tapahtumat => this.placeMarkers(tapahtumat))
   }
   private initMap(): void {
-    this.map = L.map(this.mapContainer.nativeElement).setView([this.places.currentPosition.latitude, this.places.currentPosition.longitude], 13);
+    this.map = L.map(this.mapContainer.nativeElement).setView([this.places.currentPosition.latitude, this.places.currentPosition.longitude], 16);
 
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -46,9 +46,11 @@ export class MapComponent implements OnInit, AfterViewInit {
       iconAnchor: [15.5, 42], // point of the icon which will correspond to marker's location
       popupAnchor: [0, -45] // point from which the popup should open relative to the iconAnchor
     });
-    const zooMarker = L.marker([60.1699, 24.9384], {
+    const zooMarker = L.marker([this.places.currentPosition.latitude, this.places.currentPosition.longitude], {
       icon: markerIcon
-    }).addTo(this.map);
+    })
+    .bindPopup(`<b class="text-orange-500">Olet tässä</b>`)
+    .addTo(this.map);
     
     
   }
@@ -66,14 +68,16 @@ export class MapComponent implements OnInit, AfterViewInit {
     filteredTapahtumat.forEach(t=> {
       const markerIcon = L.icon({
         iconUrl: `../../assets/img/markers/place-location-pointer.png`,
-        iconSize: [46, 46], // size of the icon
+        iconSize: [30, 30], // size of the icon
         iconAnchor: [15.5, 42], // point of the icon which will correspond to marker's location
         popupAnchor: [0, -45] // point from which the popup should open relative to the iconAnchor
       });
       const marker = L.marker([t.sijaintiLeveys, t.sijaintiPituus], {
         
         icon: markerIcon
-      }).addTo(this.map);
+      })
+      .bindPopup(`<b class="text-cyan-600">${t.nimi}</b>`)
+      .addTo(this.map);
       this.markers.push(marker)
     })
 
