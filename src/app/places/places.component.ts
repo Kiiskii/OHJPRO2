@@ -62,14 +62,16 @@ export class PlacesComponent implements OnInit, OnDestroy {
     private http: HttpClient,
     private router: Router,
     private search: SearchService,
-
     public places: PlacesService,
+    private authService: AuthService
 
     private authService: AuthService,
     private favoritesService: FavoritesService
   ) {}
 
   ngOnInit(): void {
+    // const userid = this.userId;
+    // console.log('User id:', userid);
     const userId = localStorage.getItem('userId');
       if (userId) {
         this.favoritesService.fetchFavoriteIds(userId).subscribe(ids => {
@@ -80,7 +82,6 @@ export class PlacesComponent implements OnInit, OnDestroy {
     this.userGeolocation();
 
     this.places.haeTapahtumat();
-
     this.getSearch();
     this.selectedItems = new Array(this.items).fill(false);
 
@@ -107,38 +108,20 @@ export class PlacesComponent implements OnInit, OnDestroy {
     return this.authService.userName$;
   }
 
-  userGeolocation() {
-    if (!navigator.geolocation) {
-      console.log('geolocation is not supported');
-    }
-    navigator.geolocation.getCurrentPosition((position) => {
-      this.latitude = position.coords.latitude;
-      this.longitude = position.coords.longitude;
-    });
-  }
-
-
- 
-
   addSearchToScrollTapahtuma() {
     if (this.places.searchTerm) {
       const filteredTapahtumat = this.places.tapahtumat.filter((tapahtuma) =>
-
         tapahtuma.nimi
           .toLowerCase()
           .includes(this.places.searchTerm.toLowerCase())
-
-
       );
       this.places.scrollTapahtumat = filteredTapahtumat.slice(0, this.limit);
-    } else {
+      } else {
       this.places.scrollTapahtumat = this.places.tapahtumat.slice(
         0,
         this.limit
       );
     }
-
-
   }
 
   onScrollDown(): void {
@@ -156,7 +139,7 @@ export class PlacesComponent implements OnInit, OnDestroy {
     kuvaus: string,
     homesite: string,
     osoite: string
-  ) {
+    ) {
     const data = {
       nimi: nimi,
       kuvaus: kuvaus,
@@ -200,29 +183,25 @@ export class PlacesComponent implements OnInit, OnDestroy {
       });
     }
     return null;
-
     // console.log(this.selectedItems);
   }
 
   //for the search bar ->
   getSearch() {
-
-
     this.subscription = this.search.currentSearch.subscribe(searchTerm => this.places.searchTerm = searchTerm)
-
   }
+
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 
   newSearch() {
-
     this.search.changeSearch(this.places.searchTerm);
   }
   //search end
 
   //gives searchTerm to filtter and changes bg image
- setFilter(value: string) {
+  setFilter(value: string) {
     this.places.setFilter(value);
     this.bgimg = 'bg-' + value + '-desktop.png';
     if (value === 'activity' || value === '')
@@ -231,4 +210,5 @@ export class PlacesComponent implements OnInit, OnDestroy {
       this.bgimg = 'bg-coffee-desktop.png';
     else if (value === '') this.ngOnDestroy();
   }
+  
 }
