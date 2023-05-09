@@ -26,7 +26,7 @@ export class AuthService {
 
   userName$ = new BehaviorSubject<string | null>(localStorage.getItem("userName"));
 
-  userId!: number;
+  userId$ = new BehaviorSubject<number>(0);
 
   httpOptions: { headers: HttpHeaders } = {
     headers: new HttpHeaders({ "Content-Type": "application/json" }),
@@ -59,11 +59,12 @@ export class AuthService {
     ).pipe(
         first(),
         tap(( tokenObject: TokenAndId ) => {
-          this.userId = tokenObject.userId;
+          const userId = tokenObject.userId;
           const userNameLogin = tokenObject.name;
           localStorage.setItem("token", tokenObject.token);
           localStorage.setItem("userName", userNameLogin);
           this.userName$.next(userNameLogin);
+          this.userId$.next(userId);
           this.isUserLoggedIn$.next(true);
           this.router.navigate(["/places"]);
         }),

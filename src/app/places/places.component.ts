@@ -153,9 +153,8 @@ export class PlacesComponent implements OnInit, OnDestroy {
     // console.log(data);
   }
 
-  get userId(): number {
-    const userId = this.authService.userId;
-    return userId;
+  userId() {
+    const userId = this.authService.userId$;
   }
 
   // käyttäjä voi lisätä suosikkeja funktio
