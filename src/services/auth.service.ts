@@ -83,6 +83,7 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('userName');
+    localStorage.removeItem('userId');
     this.userName$.next(null);
     this.isUserLoggedIn$.next(false);
     this.router.navigate(['/places']);
