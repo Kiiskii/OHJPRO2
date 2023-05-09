@@ -46,5 +46,9 @@ export class HeaderComponent implements OnInit, OnDestroy{
     this.search.changeSearch(this.searchTerm)
     //console.log(this.searchTerm)
   }
+
+  logout(): void {
+    this.authService.logout();
+  }
     
 }

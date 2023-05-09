@@ -28,6 +28,7 @@
         <a routerLink="{{ 'profiili' }}">Tervetuloa <br>
           <span class="font-bold uppercase text-orange-500"> {{ (userNameLogin | async) }}</span>!
         </a>
+        <i class="fa-solid fa-arrow-right-from-bracket absolute top-3 right-1 hover:cursor-pointer" (click)="logout()"></i>
       </p>
     </div>
   </div>
