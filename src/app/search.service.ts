@@ -6,13 +6,13 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class SearchService {
 
-  private searchSourse = new BehaviorSubject('');
-  currentSearch = this.searchSourse.asObservable();
+  private searchSource = new BehaviorSubject('');
+  currentSearch = this.searchSource.asObservable();
 
   constructor() { }
 
   changeSearch(searchTerm: string) {
-    this.searchSourse.next(searchTerm)
+    this.searchSource.next(searchTerm)
   }
   
 }

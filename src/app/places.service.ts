@@ -12,13 +12,12 @@ export class PlacesService {
   searchTerm!: string;
 
   waitingPlaces = true;
-  currentPosition = {latitude:60.22476426876709, longitude: 24.98851068259144}
+  currentPosition = {latitude: 60.171944, longitude: 24.941389}
 
   private tapahtumatSourse = new BehaviorSubject(this.tapahtumat);
   currentTapahtumat = this.tapahtumatSourse.asObservable();
 
- 
-
+  
   async haeTapahtumat(): Promise<void> {
     try {
       const response = await axios.get(`/places/`);
@@ -38,28 +37,24 @@ export class PlacesService {
           );
         }
 
-        //calculate distanse from user if geolocation is on or Helsinki Railway Station if not
+        //calculate distanse from given coords to place
         var fromLat: number;
         var fromLon: number;
         var toLat: number;
         var toLon: number;
-        function distance(
-          fromLat: number,
-          fromLon: number,
-          toLat: number,
-          toLon: number
-        ) {
+        function distance(fromLat: number, fromLon: number, toLat: number, toLon: number) {
           var radius = 6378137; // approximate Earth radius, *in meters*
-          var gammaToLat = toLat * Math.PI/180;
-          var gammaFromLat = fromLat * Math.PI/180;
+          var gToLat = toLat * Math.PI/180;
+          var gFromLat = fromLat * Math.PI/180;
           var deltaLat = (toLat - fromLat) * Math.PI/180;
           var deltaLon = (toLon - fromLon) * Math.PI/180;
 
-          var a = Math.sin(deltaLat/2) * Math.sin(deltaLat/2) + Math.cos(gammaToLat) * Math.cos(gammaFromLat) * Math.sin(deltaLon/2) * Math.sin(deltaLon/2);
+          var a = Math.sin(deltaLat/2) * Math.sin(deltaLat/2) + Math.cos(gToLat) * Math.cos(gFromLat) * Math.sin(deltaLon/2) * Math.sin(deltaLon/2);
           var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
           var d = (radius * c) / 1000;
-          return d.toFixed(3)
+          return d.toFixed(3) //returns distance in 0.000 km
         }
+
         return {
           id: tapahtuma.id,
           nimi: tapahtuma.name?.fi ?? '',
@@ -85,16 +80,13 @@ export class PlacesService {
     } catch (error) {
       console.error(error);
     }
-
     this.waitingPlaces = false;
   }
  
 
   setFilter(value:string){
   this.searchTerm = value;
- 
    this.tapahtumatSourse.next(   this.tapahtumat.filter(t => t.luokka.toLowerCase().includes(value.toLowerCase())))
-
   }
 
   constructor() { }
