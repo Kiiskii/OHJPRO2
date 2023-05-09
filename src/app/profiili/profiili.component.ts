@@ -3,6 +3,8 @@ import { AuthService } from 'src/services/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, Subscription  } from 'rxjs';
 
+import { FavoritesService } from 'src/services/favorites.service';
+
 @Component({
   selector: 'app-profiili',
   templateUrl: './profiili.component.html',
@@ -19,11 +21,18 @@ export class ProfiiliComponent implements OnInit {
   
   constructor (
     private http: HttpClient,
-    private authService: AuthService
+    private authService: AuthService,
+    private favoritesservice: FavoritesService
   ) {}
 
   ngOnInit(): void {
-    this.fetchFavoriteIds();
+    const userId = localStorage.getItem('userId');
+      if (userId) {
+        this.favoritesservice.fetchFavoriteIds(userId).subscribe(ids => {
+          this.favoriteIds = ids;
+    });
+  }
+
     const token = localStorage.getItem('token');
     if (token) {
       this.token.next(token);
@@ -35,26 +44,6 @@ export class ProfiiliComponent implements OnInit {
 
   get userName(): Observable<string | null> {
     return this.authService.userName$;
-  }
-
-  get userId(): number {
-    return this.authService.userId;
-  }
-
-  fetchFavoriteIds(): void {
-    const userid = this.userId;
-    console.log(userid)
-    if (userid) {
-      this.http.get<any[]>(`http://localhost:3000/favorites/${userid}`)
-        .subscribe({
-          next: (response) => {
-            this.setFavoriteIds(response);
-          },
-          error: (error) => {
-            console.log(error);
-          }
-        });
-    }
   }
 
   setFavoriteIds(ids: number[]): void {
