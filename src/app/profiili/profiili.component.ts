@@ -23,6 +23,7 @@ export class ProfiiliComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.fetchFavoriteIds();
     const token = localStorage.getItem('token');
     if (token) {
       this.token.next(token);
@@ -42,6 +43,7 @@ export class ProfiiliComponent implements OnInit {
 
   fetchFavoriteIds(): void {
     const userid = this.userId;
+    console.log(userid)
     if (userid) {
       this.http.get<any[]>(`http://localhost:3000/favorites/${userid}`)
         .subscribe({
