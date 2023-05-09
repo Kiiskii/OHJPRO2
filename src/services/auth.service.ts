@@ -63,6 +63,7 @@ export class AuthService {
           const userNameLogin = tokenObject.name;
           localStorage.setItem("token", tokenObject.token);
           localStorage.setItem("userName", userNameLogin);
+          localStorage.setItem("userId", userId.toString());
           this.userName$.next(userNameLogin);
           this.userId$.next(userId);
           this.isUserLoggedIn$.next(true);

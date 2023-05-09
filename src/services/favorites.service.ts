@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map, of } from 'rxjs';
+import { Observable, catchError, map, of } from 'rxjs';
 
 import { AuthService } from './auth.service';
 
@@ -14,17 +14,14 @@ export class FavoritesService {
     private http: HttpClient,
     private authservice: AuthService) { }
 
-  fetchFavoriteIds(): Observable<any[]> {
-    const userId = this.authservice.userId$.value;
-    // console.log(`Favoriteservice userId: ${userId}`)
-    if (userId > 0) {
+    fetchFavoriteIds(userId: string): Observable<any[]> {
+      // console.log(`Favoriteservice userId: ${userId}`)
       return this.http.get<number[]>(`${this.url}${userId}`).pipe(
         map(response => {
           // console.log(response);
           return response;
-        }));
-    } else {
-      return of([]);
-    }
+        }),
+        catchError(() => of([]))
+      );
   }
 }

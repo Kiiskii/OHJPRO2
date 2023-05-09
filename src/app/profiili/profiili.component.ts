@@ -26,11 +26,13 @@ export class ProfiiliComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.authService.userId$.subscribe(userId => {
-      this.favoritesservice.fetchFavoriteIds().subscribe(ids => {
-        this.favoriteIds = ids;
-      });
+    const userId = localStorage.getItem('userId');
+      if (userId) {
+        this.favoritesservice.fetchFavoriteIds(userId).subscribe(ids => {
+          this.favoriteIds = ids;
     });
+  }
+
     const token = localStorage.getItem('token');
     if (token) {
       this.token.next(token);
