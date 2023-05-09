@@ -165,12 +165,14 @@
             <p class="text-xs md:text-sm">
               <span class="font-semibold">Location:</span> {{ event.osoite }}
             </p>
+            <p class="text-xs font-bold">Etäisyys kohteeseen noin <span class="font-semibold text-cyan-600">{{ event.sijainti }}</span> km</p>
             <hr class="border-blue-900 my-2" />
             <p class="text-xs lowercase">
               <span class="text-cyan-500 font-semibold"> Tags:</span>
               {{ event.luokka }}
               <br />
               <span class="text-xs">ID: {{ event.id }}</span>
+              
             </p>
           </div>
         </div>

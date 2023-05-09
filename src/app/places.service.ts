@@ -12,7 +12,7 @@ export class PlacesService {
   searchTerm!: string;
 
   waitingPlaces = true;
-  currentPosition = {latitude:60.1699, longitude: 24.9384}
+  currentPosition = {latitude:60.22476426876709, longitude: 24.98851068259144}
 
   private tapahtumatSourse = new BehaviorSubject(this.tapahtumat);
   currentTapahtumat = this.tapahtumatSourse.asObservable();
@@ -50,19 +50,15 @@ export class PlacesService {
           toLon: number
         ) {
           var radius = 6378137; // approximate Earth radius, *in meters*
-          var deltaLat = toLat - fromLat;
-          var deltaLon = toLon - fromLon;
-          var angle =
-            2 *
-            Math.asin(
-              Math.sqrt(
-                Math.pow(Math.sin(deltaLat / 2), 2) +
-                  Math.cos(fromLat) *
-                    Math.cos(toLat) *
-                    Math.pow(Math.sin(deltaLon / 2), 2)
-              )
-            );
-          return radius * angle;
+          var gammaToLat = toLat * Math.PI/180;
+          var gammaFromLat = fromLat * Math.PI/180;
+          var deltaLat = (toLat - fromLat) * Math.PI/180;
+          var deltaLon = (toLon - fromLon) * Math.PI/180;
+
+          var a = Math.sin(deltaLat/2) * Math.sin(deltaLat/2) + Math.cos(gammaToLat) * Math.cos(gammaFromLat) * Math.sin(deltaLon/2) * Math.sin(deltaLon/2);
+          var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+          var d = (radius * c) / 1000;
+          return d.toFixed(3)
         }
         return {
           id: tapahtuma.id,
