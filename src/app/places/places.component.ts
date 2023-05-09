@@ -23,6 +23,7 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import { faIcons } from '@fortawesome/free-solid-svg-icons';
 import { PlacesService } from '../places.service';
+import { FavoritesService } from 'src/services/favorites.service';
 
 @Component({
   selector: 'app-places',
@@ -35,6 +36,7 @@ export class PlacesComponent implements OnInit, OnDestroy {
 
   private url = 'http://localhost:3000';
   selectedItems: boolean[] = [];
+  favoriteIds?: number[];
   items?: any;
   showAnotherLogo = false;
   activeIcon = Number;
@@ -63,10 +65,18 @@ export class PlacesComponent implements OnInit, OnDestroy {
 
     public places: PlacesService,
 
-    private authService: AuthService
+    private authService: AuthService,
+    private favoritesService: FavoritesService
   ) {}
 
   ngOnInit(): void {
+    const userId = localStorage.getItem('userId');
+      if (userId) {
+        this.favoritesService.fetchFavoriteIds(userId).subscribe(ids => {
+          this.favoriteIds = ids;
+      });
+    }
+
     this.userGeolocation();
 
     this.places.haeTapahtumat();
@@ -83,6 +93,11 @@ export class PlacesComponent implements OnInit, OnDestroy {
     };
     this.userNameLogin = this.authService.userName$;
   }
+
+  // isFavorite(id: number): boolean {
+  //   return this.favoriteIds?.includes(id) ?? false;
+  // }
+  
 
   get isUserLoggedIn$() {
     return this.authService.isUserLoggedIn$;
@@ -153,13 +168,9 @@ export class PlacesComponent implements OnInit, OnDestroy {
     // console.log(data);
   }
 
-  userId() {
-    const userId = this.authService.userId$;
-  }
-
   // käyttäjä voi lisätä suosikkeja funktio
   changeIcon(id: any, target: any, index: number) {
-    const userid = this.userId;
+    const userid = localStorage.getItem('userId')
     const favid = id;
     if (this.selectedItems[index]) {
       // Tarkista, onko elementti jo valittu

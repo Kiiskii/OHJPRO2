@@ -119,16 +119,10 @@
             class="float-right text-xl"
             [class.active]="selectedItems[i]"
           >
-            <i
-              class="p-4 my-4 fa-lg cursor-pointer"
-              style="color: #ff8400"
-              [ngClass]="
-                selectedItems[event.id]
-                  ? 'fa-heart fa-solid'
-                  : 'fa-heart fa-regular'
-              "
-            >
-            </i>
+          <i class="p-4 my-4 fa-lg cursor-pointer" style="color: #ff8400"
+              [ngClass]="selectedItems[event.id]  ? 
+              'fa-heart fa-solid' : 'fa-heart fa-regular'">
+          </i>
           </div>
 
           <div class="m-2 mr-4 bg-cyan-500 float-left rounded-lg p-4 drop-shadow">
