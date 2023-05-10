@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/services/auth.service';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, Subscription  } from 'rxjs';
-
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { PlacesService } from '../places.service';
 import { FavoritesService } from 'src/services/favorites.service';
 
 @Component({
@@ -11,34 +11,38 @@ import { FavoritesService } from 'src/services/favorites.service';
   styleUrls: ['./profiili.component.css'],
 })
 export class ProfiiliComponent implements OnInit {
-  token: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
+  token: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(
+    null
+  );
   userNameLogin!: Observable<string | null>;
-  
+
   bgimg: string = 'bg-login-desktop.jpg';
-  favoriteIds?: number[];
+  favoriteIds!: number[];
 
   subscription!: Subscription;
-  
-  constructor (
+
+  constructor(
     private http: HttpClient,
     private authService: AuthService,
-    private favoritesservice: FavoritesService
+    private favoritesservice: FavoritesService,
+    public placesService: PlacesService
   ) {}
 
   ngOnInit(): void {
     const userId = localStorage.getItem('userId');
-      if (userId) {
-        this.favoritesservice.fetchFavoriteIds(userId).subscribe(ids => {
-          this.favoriteIds = ids;
-    });
-  }
+    if (userId) {
+      this.favoritesservice.fetchFavoriteIds(userId).subscribe((ids) => {
+        this.favoriteIds = ids;
+      });
+    }
+    this.placesService.haeTapahtumat();
 
     const token = localStorage.getItem('token');
     if (token) {
       this.token.next(token);
     } else {
       this.token.next(null);
-    };
+    }
     this.userNameLogin = this.authService.userName$;
   }
 
