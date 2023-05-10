@@ -1,3 +1,23 @@
+<div class="pt-20 md:pt-0 p-2 flex place-content-center">
+  <input
+    type="text"
+    placeholder="Syötä sijainti..."
+    id="address"
+    [(ngModel)]="address"
+    class="my-0.5 mb-1 p-2 border-solid border-2 border-orange-400 rounded-lg w-full md:w-5/6"
+  />
+  <button
+    class="bg-orange-400 -ml-10 px-6 m-0.5 rounded-lg text-white font-bold text-lg"
+    (click)="findAddress()"
+  >
+    <fa-icon
+      class="text-white text-xl m-1 drop-shadow-lg"
+      [icon]="faLocationDot"
+    ></fa-icon>
+  </button>
+  <div id="results"></div>
+</div>
+
 <div class="text-xs">
 <p class="text-center" *ngIf="latitude && longitude">
   <span class="font-semibold"> Your current location is <br></span> latitude: {{latitude}} and longitude: {{longitude}}
