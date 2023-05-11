@@ -23,6 +23,7 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import { faIcons } from '@fortawesome/free-solid-svg-icons';
 import { PlacesService } from '../places.service';
+import { FavoritesService } from 'src/services/favorites.service';
 
 @Component({
   selector: 'app-places',
@@ -35,6 +36,7 @@ export class PlacesComponent implements OnInit, OnDestroy {
 
   private url = 'http://localhost:3000';
   selectedItems: boolean[] = [];
+  favoriteIds!: number[];
   items?: any;
   showAnotherLogo = false;
   activeIcon = Number;
@@ -43,7 +45,7 @@ export class PlacesComponent implements OnInit, OnDestroy {
   page: number = 1;
   limit = 8;
 
-  bgimg: string = 'bg-main-desktop.png';
+  bgimg: string = 'bg-main2-desktop.png';
   faUtensils = faUtensils;
   faCamera = faCamera;
   faBagsShopping = faBagShopping;
@@ -52,6 +54,7 @@ export class PlacesComponent implements OnInit, OnDestroy {
   faXmark = faXmark;
   faLocationDot = faLocationDot;
   faIcons = faIcons;
+  filterValue: string = '';
 
   latitude = 60.171944;
   longitude = 24.941389;
@@ -61,12 +64,21 @@ export class PlacesComponent implements OnInit, OnDestroy {
     private router: Router,
     private search: SearchService,
     public places: PlacesService,
-    private authService: AuthService
+    private authService: AuthService,
+    private favoritesService: FavoritesService
   ) {}
 
-  ngOnInit(): void {
-    // const userid = this.userId;
-    // console.log('User id:', userid);
+  async ngOnInit(): Promise<void> {
+    this.selectedItems =[];
+
+    const userId = localStorage.getItem('userId');
+    if (userId) {
+      this.favoritesService.fetchFavoriteIds(userId).subscribe(ids => {
+        this.favoriteIds = ids;
+        console.log(`favoriteids: ${this.favoriteIds}`);
+      });
+    }
+
     this.places.haeTapahtumat();
     this.getSearch();
     this.selectedItems = new Array(this.items).fill(false);
@@ -79,6 +91,10 @@ export class PlacesComponent implements OnInit, OnDestroy {
       this.token.next(null);
     };
     this.userNameLogin = this.authService.userName$;
+  }
+
+  isFavorite(eventId: number): boolean {
+    return this.favoriteIds && this.favoriteIds.includes(eventId) || false;
   }
 
   get isUserLoggedIn$() {
@@ -132,20 +148,23 @@ export class PlacesComponent implements OnInit, OnDestroy {
     // console.log(data);
   }
 
-  userId() {
-    const userId = this.authService.userId$;
-  }
-
   // käyttäjä voi lisätä suosikkeja funktio
   changeIcon(id: any, target: any, index: number) {
-    const userid = this.userId;
+    const userid = localStorage.getItem('userId')
     const favid = id;
     if (this.selectedItems[index]) {
-      // Tarkista, onko elementti jo valittu
-      this.showAnotherLogo = !this.showAnotherLogo; // Vaihda ikonin tila vain, jos elementti on jo valittu
+      this.showAnotherLogo = !this.showAnotherLogo;
     }
-
+  
+    const idx = this.favoriteIds.indexOf(favid);
+    if (idx >= 0) {
+      this.favoriteIds.splice(idx, 1);
+    } else {
+      this.favoriteIds.push(favid);
+    }
+    
     this.selectedItems[favid] = !this.selectedItems[favid];
+  
     if (this.selectedItems[favid]) {
       return this.http
         .post(`${this.url}/favorites`, { userid, favid })
@@ -168,8 +187,10 @@ export class PlacesComponent implements OnInit, OnDestroy {
       });
     }
     return null;
-    // console.log(this.selectedItems);
   }
+  
+  
+  
 
   //for the search bar ->
   getSearch() {
@@ -188,12 +209,18 @@ export class PlacesComponent implements OnInit, OnDestroy {
   //gives searchTerm to filtter and changes bg image
   setFilter(value: string) {
     this.places.setFilter(value);
-    this.bgimg = 'bg-' + value + '-desktop.png';
+    this.bgimg = 'bg-' + value + '2-desktop.png';
     if (value === 'activity' || value === '')
-      this.bgimg = 'bg-main-desktop.png';
+      this.bgimg = 'bg-main2-desktop.png';
       else if (value === 'cafés')
-      this.bgimg = 'bg-coffee-desktop.png';
+      this.bgimg = 'bg-coffee2-desktop.png';
     else if (value === '') this.ngOnDestroy();
+    if (value === 'restaurant') this.filterValue = "ravintoloita";
+    if (value === 'shopping') this.filterValue = "kauppoja";
+    if (value === 'activity') this.filterValue = "aktiviteetteja";
+    if (value === 'sights') this.filterValue = "nähtävyyksiä";
+    if (value === 'cafés') this.filterValue = "kahviloita";
+    if (value === '') this.filterValue = '';
   }
   
 }

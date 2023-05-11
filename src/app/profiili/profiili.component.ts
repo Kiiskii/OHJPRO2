@@ -7,6 +7,7 @@ import { FavoritesService } from 'src/services/favorites.service';
 import { Router } from '@angular/router';
 import { faIcons } from '@fortawesome/free-solid-svg-icons';
 
+
 @Component({
   selector: 'app-profiili',
   templateUrl: './profiili.component.html',
@@ -18,7 +19,8 @@ export class ProfiiliComponent implements OnInit {
   );
   userNameLogin!: Observable<string | null>;
 
-  bgimg: string = 'bg-login-desktop.jpg';
+  bgimg: string = 'bg-login2-desktop.png';
+
   favoriteIds!: number[];
 
   subscription!: Subscription;
@@ -31,9 +33,10 @@ export class ProfiiliComponent implements OnInit {
     private favoritesservice: FavoritesService,
     public placesService: PlacesService,
     private router: Router
+
   ) {}
 
-  ngOnInit(): void {
+  async ngOnInit() {
     const userId = localStorage.getItem('userId');
     if (userId) {
       this.favoritesservice.fetchFavoriteIds(userId).subscribe((ids) => {

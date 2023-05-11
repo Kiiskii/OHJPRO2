@@ -1,7 +1,7 @@
 
 import { Component, OnInit, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import * as L from 'leaflet';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { Tapahtuma } from 'src/shared/interfaces';
 import { PlacesService } from '../places.service';
 import { PlacesComponent } from '../places/places.component';
@@ -13,17 +13,22 @@ import { PlacesComponent } from '../places/places.component';
   styleUrls: ['./map.component.css']
 })
 export class MapComponent implements OnInit, AfterViewInit {
-  private map!: L.Map;
-  @ViewChild('map', { static: true }) mapContainer!: ElementRef;
+  public map!: L.Map;
+  @ViewChild('map', { static: true }) 
+  mapContainer!: ElementRef;
   subscription!: Subscription;
-  
+  currentPosition!: { latitude: number, longitude: number };
   radius = 0.005
   markers:L.Marker<any> [] = []
 
   constructor(private places: PlacesService) { }
 
   ngOnInit(): void {
-    this.getPlacesSubscription()
+    this.getPlacesSubscription();
+    this.places.getCurrentPositionObservable().subscribe((position) => {
+      this.currentPosition = position;
+      this.initMap();
+    });
   }
 
   ngAfterViewInit(): void {
@@ -35,8 +40,15 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   private initMap(): void {
-    this.map = L.map(this.mapContainer.nativeElement).setView([this.places.currentPosition.latitude, this.places.currentPosition.longitude], 15);
+    if (this.map) {
+      this.map.remove();
+    }
+    if (!this.currentPosition) {
+      return;
+    }
 
+    this.map = L.map(this.mapContainer.nativeElement).setView([this.currentPosition.latitude, this.currentPosition.longitude], 15);
+    
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(this.map);
@@ -48,7 +60,7 @@ export class MapComponent implements OnInit, AfterViewInit {
       popupAnchor: [0, -45] // point from which the popup should open relative to the iconAnchor
     });
 
-    const zooMarker = L.marker([this.places.currentPosition.latitude, this.places.currentPosition.longitude], {
+    const zooMarker = L.marker([this.currentPosition.latitude, this.currentPosition.longitude], {
       icon: markerIcon
     })
     .bindPopup(`<b class="text-orange-500">Olet tässä</b>`)
@@ -81,5 +93,15 @@ export class MapComponent implements OnInit, AfterViewInit {
       this.markers.push(marker)
     })
   }
+
+  // refreshMap() {
+  //   const zooMarker = L.marker([this.places.currentPosition.latitude, this.places.currentPosition.longitude], {
+  //     icon: markerIcon
+  //   })
+  //   .bindPopup(`<b class="text-orange-500">Olet tässä</b>`)
+  //   .addTo(this.map);
+  
+  //   this.map.panTo(new L.LatLng(this.places.currentPosition.latitude, this.places.currentPosition.longitude));
+  // }
 
 }

@@ -8,7 +8,7 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./signup.component.css'],
 })
 export class SignupComponent {
-  bgimg: string = 'bg-login-desktop.jpg';
+  bgimg: string = 'bg-login2-desktop.png';
 
   signupForm!: FormGroup;
 

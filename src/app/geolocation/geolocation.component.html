@@ -1,9 +1,31 @@
-<div class="text-xs">
-<p class="text-center" *ngIf="latitude && longitude">
-  <span class="font-semibold"> Your current location is <br></span> latitude: {{latitude}} and longitude: {{longitude}}
+<div class="pt-20 md:pt-0 p-2 flex place-content-center text-sm md:text-base">
+  <input
+    type="search"
+    placeholder="Syötä sijainti..."
+    id="address"
+    [(ngModel)]="address"
+    class="my-1 mb-1 p-2 border-solid border-2 border-orange-400 rounded-lg w-full md:w-4/6"
+  />
+  <button
+    class="bg-orange-400 px-6 m-1 ml-2 rounded-lg text-white font-bold text-lg hover:bg-orange-600"
+    (click)="findAddress()"
+  >
+    <fa-icon
+      class="text-white text-xl m-1 drop-shadow-lg"
+      [icon]="faLocationDot"
+    ></fa-icon>
+  </button>
+</div>
+
+<div class="pl-6 md:pl-12 text-xs">
+<p class="" *ngIf="latitude && longitude">
+  <span class="font-semibold"> Your current location is <br></span> 
+   {{address}} <br> 
+   latitude: {{latitude}} and longitude: {{longitude}}
 </p>
-<p class="text-center" *ngIf="!latitude && !longitude">
+<p class="" *ngIf="!latitude && !longitude">
   Not found coordinates. Allow your browser location data.
 </p>
+<button class="bg-cyan-400 rounded-lg my-1 p-2 text-white" (click)="refreshCurrentCoords()">Päivitä käyttämään näitä koordinaatteja</button>
 </div>
 
