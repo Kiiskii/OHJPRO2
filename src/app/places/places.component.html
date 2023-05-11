@@ -1,7 +1,7 @@
 <div id="bg-img" class="bg-white mb-4 drop-shadow-lg">
   <img
     src="assets/img/bg/{{ bgimg }}"
-    class="m-auto w-full md:w-4/6 lg:w-3/6"
+    class="m-auto w-full md:h-16 md:w-4/6 lg:w-3/6"
     alt="illustration to add color"
   />
 </div>
@@ -11,23 +11,7 @@
     id="map-cont"
     class="mx-auto my-3 md:basis-1/2 md:fixed md:left-5 md:w-5/12"
   >
-    <div class="p-2 flex place-content-center">
-      <input
-        type="text"
-        placeholder="syötä sijainti..."
-        class="my-0.5 mb-1 p-2 border-solid border-2 border-orange-400 rounded-lg w-full md:w-5/6"
-      />
-      <button
-        class="bg-orange-400 -ml-10 px-6 m-0.5 rounded-lg text-white font-bold text-lg"
-      >
-        <fa-icon
-          class="text-white text-xl m-1 drop-shadow-lg"
-          [icon]="faLocationDot"
-        ></fa-icon>
-      </button>
-    </div>
-
-    <app-geolocation class="text-xs"></app-geolocation>
+    <app-geolocation class="pt-20 md:pt-0"></app-geolocation>
 
     <div
       class="mt-2 w-full md:w-5/6 m-auto border-solid border-4 border-white rounded-lg"

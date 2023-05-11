@@ -17,7 +17,23 @@ export class PlacesService {
   private tapahtumatSourse = new BehaviorSubject(this.tapahtumat);
   currentTapahtumat = this.tapahtumatSourse.asObservable();
 
-  
+  latitude = new BehaviorSubject<number>(60.171944);
+  currentLat = this.latitude.asObservable();
+
+  longitude = new BehaviorSubject<number>(24.941389);
+  currentLon = this.longitude.asObservable();
+ 
+  setCoords(lat: number, lon: number){
+    this.currentPosition.latitude = lat;
+    this.currentPosition.longitude = lon;
+    this.haeTapahtumat();
+  }
+
+  changeSearch(lat:number, lon:number) {
+    this.latitude.next(lat)
+    this.longitude.next(lon)
+  }
+
   async haeTapahtumat(): Promise<void> {
     try {
       const response = await axios.get(`/places/`);

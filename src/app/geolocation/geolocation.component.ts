@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PlacesService } from '../places.service';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-geolocation',
@@ -7,8 +9,12 @@ import { PlacesService } from '../places.service';
   styleUrls: ['./geolocation.component.css']
 })
 export class GeolocationComponent implements OnInit {
-  latitude?: Number; 
-  longitude?: Number;
+  latitude = 60.171944; 
+  longitude = 24.941389;
+  subscription!: Subscription;
+  faLocationDot = faLocationDot;
+  address: string = '';
+  addressCoords = [];
 
   constructor(public places: PlacesService) {}
 
@@ -23,5 +29,22 @@ export class GeolocationComponent implements OnInit {
       //   `lat: ${position.coords.latitude}, lon: ${position.coords.longitude}`
       // )
     })
+  }
+
+  findAddress() {
+    var addressArr: any;
+    var url = "https://nominatim.openstreetmap.org/search?format=json&limit=3&q=" + this.address + ",helsinki";
+    fetch(url)
+      .then(response => response.json())
+      .then(data => addressArr = data)
+      //.then(show => console.log(addressArr))
+      .then(lat => this.latitude = addressArr[0].lat)
+      .then(lon => this.longitude = addressArr[0].lon)
+      .then(log => this.address = addressArr[0].display_name)
+      .catch(err => console.log(err));
+  }
+
+  refreshCurrentCoords(){
+    this.places.setCoords(this.latitude, this.longitude)
   }
 }
