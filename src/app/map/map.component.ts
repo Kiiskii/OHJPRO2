@@ -1,7 +1,7 @@
 
 import { Component, OnInit, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import * as L from 'leaflet';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { Tapahtuma } from 'src/shared/interfaces';
 import { PlacesService } from '../places.service';
 import { PlacesComponent } from '../places/places.component';

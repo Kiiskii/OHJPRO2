@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PlacesService } from '../places.service';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -8,9 +9,9 @@ import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./geolocation.component.css']
 })
 export class GeolocationComponent implements OnInit {
-  latitude?: Number; 
-  longitude?: Number;
-
+  latitude = 60.171944; 
+  longitude = 24.941389;
+  subscription!: Subscription;
   faLocationDot = faLocationDot;
   address: string = '';
   addressCoords = [];
@@ -36,10 +37,14 @@ export class GeolocationComponent implements OnInit {
     fetch(url)
       .then(response => response.json())
       .then(data => addressArr = data)
-      .then(show => console.log(addressArr))
+      //.then(show => console.log(addressArr))
       .then(lat => this.latitude = addressArr[0].lat)
       .then(lon => this.longitude = addressArr[0].lon)
+      .then(log => this.address = addressArr[0].display_name)
       .catch(err => console.log(err));
   }
 
+  refreshCurrentCoords(){
+    this.places.setCoords(this.latitude, this.longitude)
+  }
 }
