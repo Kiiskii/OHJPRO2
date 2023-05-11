@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { AuthService } from 'src/services/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { PlacesService } from '../places.service';
 import { FavoritesService } from 'src/services/favorites.service';
+import { Router } from '@angular/router';
+import { faIcons } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-profiili',
@@ -21,11 +23,14 @@ export class ProfiiliComponent implements OnInit {
 
   subscription!: Subscription;
 
+  faIcons = faIcons;
+
   constructor(
     private http: HttpClient,
     private authService: AuthService,
     private favoritesservice: FavoritesService,
-    public placesService: PlacesService
+    public placesService: PlacesService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -56,5 +61,24 @@ export class ProfiiliComponent implements OnInit {
 
   logout(): void {
     this.authService.logout();
+  }
+
+  @Output() tapahtumatLahetetty = new EventEmitter<string>();
+
+  navigateToDetails(
+    nimi: string,
+    kuvaus: string,
+    homesite: string,
+    osoite: string
+  ) {
+    const data = {
+      nimi: nimi,
+      kuvaus: kuvaus,
+      homesite: homesite,
+      osoite: osoite,
+    };
+    this.router.navigate(['/places-detail'], { queryParams: data });
+    this.tapahtumatLahetetty.emit(JSON.stringify(data));
+    // console.log(data);
   }
 }

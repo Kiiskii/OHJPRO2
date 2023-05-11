@@ -24,12 +24,57 @@
   </div>
 </div>
 
+<!--  -->
+
 <!--hakee favid-->
-<h1>IDs:</h1>
-<ul *ngFor="let event of placesService.tapahtumat">
-  <li *ngIf="favoriteIds.includes(+event.id)">
-    {{ event.id }}
-    {{ event.nimi }}
-    {{ event.homesite }}
-  </li>
-</ul>
+
+<div class="p-4 pb-20 max-w-xl mx-auto">
+  <div *ngFor="let event of placesService.tapahtumat" class="">
+    <div
+      *ngIf="favoriteIds.includes(+event.id)"
+      class="mb-2 p-2 border-solid border-2 border-cyan-400 rounded-lg bg-white"
+    >
+      <div class="m-2 mr-4 bg-cyan-500 float-left rounded-lg p-4 drop-shadow">
+        <fa-icon
+          class="grid place-content-center text-white text-2xl"
+          [icon]="faIcons"
+        ></fa-icon>
+      </div>
+      <h2
+        class="places-header text-base text-cyan-500 font-bold uppercase cursor-pointer leading-tight"
+        (click)="
+          navigateToDetails(
+            event.nimi,
+            event.kuvaus,
+            event.homesite,
+            event.osoite
+          )
+        "
+      >
+        {{ event.nimi }}
+      </h2>
+      <span class="font-semibold text-xs md:text-sm">www:</span>
+      <a
+        href="{{ event.homesite }}"
+        target="_blank"
+        class="font-semibold text-cyan-600 visited:text-purple-600 text-xs md:text-sm"
+      >
+        Siirry yrityksen omille sivuille
+        <!--{{ event.homesite }}-->
+      </a>
+      <p class="text-xs md:text-sm">
+        <span class="font-semibold">Osoite:</span> {{ event.osoite }}
+      </p>
+      <p class="text-xs font-semibold md:font-bold">
+        Etäisyys kohteeseen noin
+        <span class="font-semibold text-cyan-600">{{ event.sijainti }}</span>
+        km
+      </p>
+      <hr class="border-blue-900 my-2" />
+      <p class="ml-2 text-xs lowercase">
+        <span class="text-cyan-500 font-semibold"> Tags:</span>
+        {{ event.luokka }}
+      </p>
+    </div>
+  </div>
+</div>
