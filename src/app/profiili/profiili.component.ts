@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/services/auth.service';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, Subscription  } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, map  } from 'rxjs';
 
 import { FavoritesService } from 'src/services/favorites.service';
+import { PlacesService } from '../places.service';
+
+import { Tapahtuma } from 'src/shared/interfaces';
 
 @Component({
   selector: 'app-profiili',
@@ -15,23 +18,24 @@ export class ProfiiliComponent implements OnInit {
   userNameLogin!: Observable<string | null>;
   
   bgimg: string = 'bg-login-desktop.jpg';
-  favoriteIds?: number[];
+  favoriteIds!: number[];
 
   subscription!: Subscription;
   
   constructor (
     private http: HttpClient,
     private authService: AuthService,
-    private favoritesservice: FavoritesService
+    private favoritesservice: FavoritesService,
+    public placesService: PlacesService
   ) {}
 
-  ngOnInit(): void {
+  async ngOnInit() {
     const userId = localStorage.getItem('userId');
       if (userId) {
         this.favoritesservice.fetchFavoriteIds(userId).subscribe(ids => {
           this.favoriteIds = ids;
     });
-  }
+    }
 
     const token = localStorage.getItem('token');
     if (token) {

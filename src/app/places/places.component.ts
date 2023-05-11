@@ -36,7 +36,7 @@ export class PlacesComponent implements OnInit, OnDestroy {
 
   private url = 'http://localhost:3000';
   selectedItems: boolean[] = [];
-  favoriteIds?: number[];
+  favoriteIds!: number[];
   items?: any;
   showAnotherLogo = false;
   activeIcon = Number;
@@ -63,23 +63,20 @@ export class PlacesComponent implements OnInit, OnDestroy {
     private router: Router,
     private search: SearchService,
     public places: PlacesService,
-    private authService: AuthService
-
     private authService: AuthService,
     private favoritesService: FavoritesService
   ) {}
 
-  ngOnInit(): void {
-    // const userid = this.userId;
-    // console.log('User id:', userid);
+  async ngOnInit(): Promise<void> {
+    this.selectedItems =[];
+
     const userId = localStorage.getItem('userId');
-      if (userId) {
-        this.favoritesService.fetchFavoriteIds(userId).subscribe(ids => {
-          this.favoriteIds = ids;
+    if (userId) {
+      this.favoritesService.fetchFavoriteIds(userId).subscribe(ids => {
+        this.favoriteIds = ids;
+        console.log(`favoriteids: ${this.favoriteIds}`);
       });
     }
-
-    this.userGeolocation();
 
     this.places.haeTapahtumat();
     this.getSearch();
@@ -95,10 +92,9 @@ export class PlacesComponent implements OnInit, OnDestroy {
     this.userNameLogin = this.authService.userName$;
   }
 
-  // isFavorite(id: number): boolean {
-  //   return this.favoriteIds?.includes(id) ?? false;
-  // }
-  
+  isFavorite(eventId: number): boolean {
+    return this.favoriteIds && this.favoriteIds.includes(eventId) || false;
+  }
 
   get isUserLoggedIn$() {
     return this.authService.isUserLoggedIn$;
@@ -156,11 +152,18 @@ export class PlacesComponent implements OnInit, OnDestroy {
     const userid = localStorage.getItem('userId')
     const favid = id;
     if (this.selectedItems[index]) {
-      // Tarkista, onko elementti jo valittu
-      this.showAnotherLogo = !this.showAnotherLogo; // Vaihda ikonin tila vain, jos elementti on jo valittu
+      this.showAnotherLogo = !this.showAnotherLogo;
     }
-
+  
+    const idx = this.favoriteIds.indexOf(favid);
+    if (idx >= 0) {
+      this.favoriteIds.splice(idx, 1);
+    } else {
+      this.favoriteIds.push(favid);
+    }
+    
     this.selectedItems[favid] = !this.selectedItems[favid];
+  
     if (this.selectedItems[favid]) {
       return this.http
         .post(`${this.url}/favorites`, { userid, favid })
@@ -183,8 +186,10 @@ export class PlacesComponent implements OnInit, OnDestroy {
       });
     }
     return null;
-    // console.log(this.selectedItems);
   }
+  
+  
+  
 
   //for the search bar ->
   getSearch() {
