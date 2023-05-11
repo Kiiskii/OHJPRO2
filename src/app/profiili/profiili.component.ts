@@ -14,7 +14,7 @@ export class ProfiiliComponent implements OnInit {
   token: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
   userNameLogin!: Observable<string | null>;
   
-  bgimg: string = 'bg-login-desktop.jpg';
+  bgimg: string = 'bg-login2-desktop.png';
   favoriteIds?: number[];
 
   subscription!: Subscription;

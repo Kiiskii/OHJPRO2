@@ -1,4 +1,4 @@
-<div class="w-full pt-2 pb-4 px-6 bg-white md:bg-gray-50/70 fixed">
+<div class="w-full pt-2 pr-6 pb-3 pl-3 md:pr-8 bg-white fixed">
   <a href="/" class="">
     <img src="assets/img/markers/location-pointer.png" alt="location pointer image" class="float-left h-6 mt-1 md:h-8">
     <h1
@@ -24,11 +24,11 @@
           [icon]="faUser"
         ></fa-icon>
       </a>
-      <p class="ml-2 float-right text-right leading-tight font-semibold" *ngIf="userNameLogin | async">
+      <p class="mx-2 float-right text-right leading-tight font-semibold" *ngIf="userNameLogin | async">
         <a routerLink="{{ 'profiili' }}">Tervetuloa <br>
           <span class="font-bold uppercase text-orange-500"> {{ (userNameLogin | async) }}</span>!
         </a>
-        <i class="fa-solid fa-arrow-right-from-bracket absolute top-3 right-1 hover:cursor-pointer" (click)="logout()"></i>
+        <i class="fa-solid fa-arrow-right-from-bracket absolute top-3 right-2 hover:cursor-pointer" (click)="logout()"></i>
       </p>
     </div>
   </div>

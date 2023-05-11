@@ -1,23 +1,25 @@
-<div id="bg-img" class="hidden md:block md:bg-white md:mb-4 md:drop-shadow-lg">
-  <img
-    src="assets/img/bg/{{ bgimg }}"
-    class="m-auto w-full md:h-16 md:w-4/6 lg:w-3/6"
-    alt="illustration to add color"
-  />
-</div>
-
-<main class="mx-5 pb-8 md:flex md:relative">
+<main class="mx-5 mb-8 md:mt-16 md:flex md:relative">
   <article
     id="map-cont"
     class="mx-auto md:my-3 md:basis-1/2 md:fixed md:left-5 md:w-5/12"
   >
-    <app-geolocation class="pt-20 md:pt-0"></app-geolocation>
+      <app-geolocation></app-geolocation>
 
-    <div
-      class="mt-2 w-full md:w-5/6 m-auto border-solid border-4 border-white rounded-lg"
-    >
-      <app-map></app-map>
-    </div>
+      <div
+        class="mt-1 w-full md:w-5/6 m-auto border-solid border-8 border-white rounded-lg"
+      >
+        <app-map></app-map>
+      </div>
+    
+      <div id="bg-img" class="float-left hidden md:block md:fixed md:bottom-14 md:drop-shadow-lg">
+        <img
+          src="assets/img/bg/{{ bgimg }}"
+          class="m-auto md:bottom-0 md:w-5/12 md:float-left"
+          alt="illustration to add color"
+        /> 
+      
+      </div>
+
   </article>
 
   <article
@@ -43,13 +45,7 @@
       <button (click)="setFilter('sights')" class="filter-btn">
         <fa-icon class="text-white text-xl m-1" [icon]="faCamera"></fa-icon>
       </button>
-
-
-     
-
       <button (click)="setFilter('cafés')" class="filter-btn">
-
-
         <fa-icon class="text-white text-xl m-1" [icon]="faMugSaucer"></fa-icon>
       </button>
       <button
@@ -58,9 +54,12 @@
       >
         <fa-icon class="text-white text-xl m-1" [icon]="faXmark"></fa-icon>
       </button>
+      
     </div>
 
-    <div class="container max-w-xl mx-auto m-2 pb-4 md:pb-16">
+    <p *ngIf="filterValue" class="text-center text-cyan-500 drop-shadow-sm font-bold">Lähelläsi olevia {{ filterValue }}</p>
+
+    <div class="container max-w-xl mx-auto m-2 pb-10 md:pb-16">
       <!--<div
       class="container max-w-xl mx-auto m-2 pd-42"
       infinite-scroll
@@ -90,8 +89,6 @@
             | filter : places.searchTerm
             | orderBy : 'sijainti'
             | paginate : { itemsPerPage: 5, currentPage: page }
-
-
         "
       >
         <div
