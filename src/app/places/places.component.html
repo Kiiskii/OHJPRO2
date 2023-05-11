@@ -1,16 +1,7 @@
 <main class="mx-5 mb-8 md:mt-16 md:flex md:relative">
-<div id="bg-img" class="bg-white mb-4 drop-shadow-lg">
-  <img
-    src="assets/img/bg/{{ bgimg }}"
-    class="m-auto w-full md:h-16 md:w-4/6 lg:w-3/6"
-    alt="illustration to add color"
-  />
-</div>
-
-<main class="mx-5 mt-2 pb-8 md:flex md:relative">
   <article
     id="map-cont"
-    class="mx-auto my-3 md:basis-1/2 md:fixed md:left-5 md:w-5/12"
+    class="mx-auto md:my-3 md:basis-1/2 md:fixed md:left-5 md:w-5/12"
   >
       <app-geolocation></app-geolocation>
 
@@ -105,23 +96,20 @@
         >
           <div
             *ngIf="userNameLogin | async"
+            (click)="changeIcon(event.id, $event.target, i)"
             class="float-right text-xl"
             [class.active]="selectedItems[i]"
           >
-          <i 
-              *ngIf="favoriteIds.includes(+event.id)"
-              (click)="changeIcon(event.id, $event.target, i)"
-              class="p-4 my-4 fa-lg cursor-pointer" style="color: #ff8400"
-              [ngClass]="favoriteIds.includes(+event.id) || selectedItems[event.id]? 
-              'fa-heart fa-solid' : 'fa-heart fa-regular'">
-          </i>
-          <i 
-              *ngIf="!favoriteIds.includes(+event.id)"
-              (click)="changeIcon(event.id, $event.target, i)"
-              class="p-4 my-4 fa-lg cursor-pointer" style="color: #ff8400"
-              [ngClass]="selectedItems[event.id]? 
-              'fa-heart fa-solid' : 'fa-heart fa-regular'">
-          </i>
+            <i
+              class="p-4 my-4 fa-lg cursor-pointer"
+              style="color: #ff8400"
+              [ngClass]="
+                selectedItems[event.id]
+                  ? 'fa-heart fa-solid'
+                  : 'fa-heart fa-regular'
+              "
+            >
+            </i>
           </div>
 
           <div class="m-2 mr-4 bg-cyan-500 float-left rounded-lg p-4 drop-shadow">
@@ -156,14 +144,15 @@
               <!--{{ event.homesite }}-->
             </a>
             <p class="text-xs md:text-sm">
-              <span class="font-semibold">Location:</span> {{ event.osoite }}
+              <span class="font-semibold">Osoite:</span> {{ event.osoite }}
             </p>
+            <p class="text-xs font-semibold md:font-bold ">Etäisyys kohteeseen noin <span class="font-semibold text-cyan-600">{{ event.sijainti }}</span> km</p>
             <hr class="border-blue-900 my-2" />
-            <p class="text-xs lowercase">
+            <p class="ml-2 text-xs lowercase">
               <span class="text-cyan-500 font-semibold"> Tags:</span>
               {{ event.luokka }}
-              <br />
-              <span class="text-xs">ID: {{ event.id }}</span>
+              <!--<br />
+              <span class="text-xs">ID: {{ event.id }}</span>-->             
             </p>
           </div>
         </div>
@@ -174,3 +163,4 @@
     </div>
   </article>
 </main>
+
