@@ -45,7 +45,7 @@ export class PlacesComponent implements OnInit, OnDestroy {
   page: number = 1;
   limit = 8;
 
-  bgimg: string = 'bg-main-desktop.png';
+  bgimg: string = 'bg-main2-desktop.png';
   faUtensils = faUtensils;
   faCamera = faCamera;
   faBagsShopping = faBagShopping;
@@ -54,6 +54,7 @@ export class PlacesComponent implements OnInit, OnDestroy {
   faXmark = faXmark;
   faLocationDot = faLocationDot;
   faIcons = faIcons;
+  filterValue: string = '';
 
   latitude = 60.171944;
   longitude = 24.941389;
@@ -208,12 +209,18 @@ export class PlacesComponent implements OnInit, OnDestroy {
   //gives searchTerm to filtter and changes bg image
   setFilter(value: string) {
     this.places.setFilter(value);
-    this.bgimg = 'bg-' + value + '-desktop.png';
+    this.bgimg = 'bg-' + value + '2-desktop.png';
     if (value === 'activity' || value === '')
-      this.bgimg = 'bg-main-desktop.png';
+      this.bgimg = 'bg-main2-desktop.png';
       else if (value === 'cafés')
-      this.bgimg = 'bg-coffee-desktop.png';
+      this.bgimg = 'bg-coffee2-desktop.png';
     else if (value === '') this.ngOnDestroy();
+    if (value === 'restaurant') this.filterValue = "ravintoloita";
+    if (value === 'shopping') this.filterValue = "kauppoja";
+    if (value === 'activity') this.filterValue = "aktiviteetteja";
+    if (value === 'sights') this.filterValue = "nähtävyyksiä";
+    if (value === 'cafés') this.filterValue = "kahviloita";
+    if (value === '') this.filterValue = '';
   }
   
 }
