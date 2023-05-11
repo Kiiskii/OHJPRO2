@@ -22,6 +22,8 @@ import { OrderModule } from 'ngx-order-pipe';
 import { ProfiiliComponent } from './profiili/profiili.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 
+import * as L from 'leaflet';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,7 +50,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     OrderModule,
     NgxPaginationModule,
   ],
-  providers: [],
+  providers: [MapComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

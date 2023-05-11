@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ScrollTapahtuma, Tapahtuma } from 'src/shared/interfaces';
 import axios from 'axios';
 import { BehaviorSubject, filter } from 'rxjs';
+import { MapComponent } from './map/map.component';
 
 @Injectable({
   providedIn: 'root'
@@ -10,9 +11,10 @@ export class PlacesService {
   tapahtumat: Tapahtuma[] = [];
   scrollTapahtumat: ScrollTapahtuma[] = [];
   searchTerm!: string;
+  currentPosition = { latitude: 60.171944, longitude: 24.941389 };
+  public currentPositionSubject = new BehaviorSubject(this.currentPosition);
 
   waitingPlaces = true;
-  currentPosition = {latitude: 60.171944, longitude: 24.941389}
 
   private tapahtumatSourse = new BehaviorSubject(this.tapahtumat);
   currentTapahtumat = this.tapahtumatSourse.asObservable();
@@ -22,16 +24,16 @@ export class PlacesService {
 
   longitude = new BehaviorSubject<number>(24.941389);
   currentLon = this.longitude.asObservable();
- 
+
   setCoords(lat: number, lon: number){
     this.currentPosition.latitude = lat;
     this.currentPosition.longitude = lon;
     this.haeTapahtumat();
+    this.currentPositionSubject.next(this.currentPosition);
   }
 
-  changeSearch(lat:number, lon:number) {
-    this.latitude.next(lat)
-    this.longitude.next(lon)
+  getCurrentPositionObservable() {
+    return this.currentPositionSubject.asObservable();
   }
 
   async haeTapahtumat(): Promise<void> {

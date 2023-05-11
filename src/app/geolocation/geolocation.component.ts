@@ -16,7 +16,10 @@ export class GeolocationComponent implements OnInit {
   address: string = '';
   addressCoords = [];
 
-  constructor(public places: PlacesService) {}
+  private map!: L.Map;
+
+  constructor(public places: PlacesService) {
+  }
 
   ngOnInit() {
     if (!navigator.geolocation) {
@@ -28,7 +31,7 @@ export class GeolocationComponent implements OnInit {
       // console.log(
       //   `lat: ${position.coords.latitude}, lon: ${position.coords.longitude}`
       // )
-    })
+    });
   }
 
   findAddress() {
@@ -45,6 +48,7 @@ export class GeolocationComponent implements OnInit {
   }
 
   refreshCurrentCoords(){
-    this.places.setCoords(this.latitude, this.longitude)
+    this.places.setCoords(this.latitude, this.longitude);
+    }
   }
-}
+  
