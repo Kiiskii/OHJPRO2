@@ -55,9 +55,20 @@ export class GeolocationComponent implements OnInit {
   getGeolocation(){
       navigator.geolocation.getCurrentPosition((position) => {
         this.latitude = position.coords.latitude;
-        this.longitude = position.coords.longitude;    
+        this.longitude = position.coords.longitude; 
+
+        var addressArr: any;
+        var url = "https://nominatim.openstreetmap.org/search?format=json&limit=1&q=" + position.coords.latitude +","+ position.coords.longitude;
+        fetch(url)
+          .then(response => response.json())
+          .then(data => addressArr = data)
+          .then(log => this.addressResult = addressArr[0].display_name)
+          .catch(err => console.log(err));
+
+
+        this.places.setCoords(position.coords.latitude, position.coords.longitude);   
       });
-      this.places.setCoords(this.latitude, this.longitude);
+      
   }
     
   }

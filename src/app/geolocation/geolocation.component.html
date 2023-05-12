@@ -26,8 +26,8 @@
   Not found coordinates. Allow your browser location data.
 </p>-->
 <p class="mb-2" *ngIf="addressResult">
-  {{ addressResult }}<br>
-  lat: {{latitude}} & long: {{longitude}}
+ <span class="font-semibold"> Osoite:</span> {{ addressResult }}<br>
+ <span class="font-semibold"> lat: </span> {{latitude}} <span class="font-semibold"> & long:</span> {{longitude}}
 </p>
 
 <button class="bg-cyan-500 rounded-lg my-1 p-2 text-white drop-shadow-lg hover:bg-orange-500" (click)="refreshCurrentCoords()">
