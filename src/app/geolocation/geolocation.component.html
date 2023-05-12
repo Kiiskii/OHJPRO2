@@ -1,4 +1,4 @@
-<div class="pt-20 md:pt-0 p-2 flex place-content-center text-sm md:text-base">
+<div class="pt-20 md:pt-2 p-1 flex place-content-center text-sm md:text-base">
   <input
     type="search"
     placeholder="Syötä sijainti..."
@@ -17,7 +17,7 @@
   </button>
 </div>
 
-<div class="pl-3 md:pl-12 text-xs">
+<div class="pl-2 md:pl-12 text-xs">
 <!--<p class="" *ngIf="latitude && longitude">
   <span class="font-semibold"> Your current location is <br></span> 
    latitude: {{latitude}} and longitude: {{longitude}}
@@ -30,14 +30,14 @@
  <span class="font-semibold"> lat: </span> {{latitude}} <span class="font-semibold"> & long:</span> {{longitude}}
 </p>
 
-<button class="bg-cyan-500 rounded-lg my-1 p-2 text-white drop-shadow-lg hover:bg-orange-500" (click)="refreshCurrentCoords()">
+<button class="bg-cyan-500 rounded-lg my-1 p-3 text-white drop-shadow-lg hover:bg-orange-500" (click)="refreshCurrentCoords()">
   <fa-icon
   class="text-white m-1 drop-shadow-lg"
   [icon]="faLocationDot"
 ></fa-icon>
   Päivitä sijainti
 </button>
-<button class="bg-cyan-500 rounded-lg ml-3 my-1 p-2 text-white drop-shadow-lg hover:bg-orange-500" (click)="getGeolocation()">
+<button class="bg-cyan-500 rounded-lg ml-4 my-1 p-3 text-white drop-shadow-lg hover:bg-orange-500" (click)="getGeolocation()">
   <fa-icon
   class="text-white m-1 drop-shadow-lg"
   [icon]="faLocationDot"

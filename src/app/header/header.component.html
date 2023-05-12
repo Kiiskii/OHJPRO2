@@ -1,6 +1,6 @@
-<div class="w-full pt-2 pr-6 pb-3 pl-3 md:pr-8 bg-white fixed">
+<div class="w-full pt-2 pr-6 pb-2 pl-3 md:pr-8 bg-white drop-shadow-lg fixed">
   <a href="/" class="">
-    <img src="assets/img/markers/location-pointer.png" alt="location pointer image" class="float-left h-6 mt-1 md:h-8">
+    <img src="assets/img/markers/location-pointer.png" alt="location pointer image" class="float-left h-6 mt-1 md:h-8 md:ml-4">
     <h1
       class="float-left text-2xl md:text-4xl font-bold drop-shadow-xl uppercase text-black"
     >
@@ -8,7 +8,7 @@
     </h1>
   </a>
 
-  <div class="float-right">
+  <div class="float-right md:mr-2">
     <div class="search-bar">
       <input
         class="text-sm bg-transparent border-b-2 border-cyan-700 text-gray-500 p-1"
@@ -17,7 +17,7 @@
         [(ngModel)]="searchTerm"
         (input)="newSearch()"
       />
-      <fa-icon class="text-xl pt-2 -ml-2" [icon]="faMagnifyingGlass"></fa-icon>
+      <fa-icon class="text-xl pt-2 -ml-1" [icon]="faMagnifyingGlass"></fa-icon>
       <a *ngIf="!(userNameLogin | async)" routerLink="{{ 'login' }}">
         <fa-icon
           class="text-xl p-2 ml-2 hover:text-blue-800"
@@ -28,7 +28,7 @@
         <a routerLink="{{ 'profiili' }}">Tervetuloa <br>
           <span class="font-bold uppercase text-orange-500"> {{ (userNameLogin | async) }}</span>!
         </a>
-        <i class="fa-solid fa-arrow-right-from-bracket absolute top-3 right-2 hover:cursor-pointer" (click)="logout()"></i>
+        <i class="fa-solid fa-arrow-right-from-bracket absolute top-3 right-2 md:right-5 hover:cursor-pointer" (click)="logout()"></i>
       </p>
     </div>
   </div>

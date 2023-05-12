@@ -1,7 +1,7 @@
-<div id="bg-img" class="bg-white mb-4 drop-shadow-lg">
+<div id="bg-img" class="bg-white mb-4">
   <img
-    src="assets/img/bg/{{ bgimg }}"
-    class="m-auto w-full md:w-4/6 lg:w-3/6"
+    src="assets/img/bg/bg-login2-desktop.png"
+    class="m-auto w-full md:w-4/6 lg:w-5/12"
     alt="illustration to add color"
   />
 </div>
@@ -29,7 +29,7 @@
       </div>
       <div class="p-4 flex justify-center">
         <button 
-          class="text-white bg-cyan-500 p-3 rounded-xl text-xl px-6"
+          class="text-white bg-cyan-500 p-3 rounded-xl text-xl px-6 mb-4"
           [disabled]="!loginForm.valid"
           type="submit">
             Kirjaudu
@@ -38,7 +38,7 @@
       <p class="text-center">
         Jos et ole vielä luonut itsellesi profiilia voit tehdä sen helposti tästä
       </p>
-      <a routerLink="{{ '../signup' }}" class="underline text-center"
+      <a routerLink="{{ '../signup' }}" class="underline text-center hover:text-orange-500"
         >Luo tunnus</a
       >
     </div>
