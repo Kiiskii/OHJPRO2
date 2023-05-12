@@ -15,6 +15,7 @@ export class GeolocationComponent implements OnInit {
   faLocationDot = faLocationDot;
   address: string = '';
   addressCoords = [];
+  addressResult: string = '';
 
   private map!: L.Map;
 
@@ -43,12 +44,21 @@ export class GeolocationComponent implements OnInit {
       //.then(show => console.log(addressArr))
       .then(lat => this.latitude = addressArr[0].lat)
       .then(lon => this.longitude = addressArr[0].lon)
-      .then(log => this.address = addressArr[0].display_name)
+      .then(log => this.addressResult = addressArr[0].display_name)
       .catch(err => console.log(err));
   }
 
   refreshCurrentCoords(){
     this.places.setCoords(this.latitude, this.longitude);
     }
+
+  getGeolocation(){
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.latitude = position.coords.latitude;
+        this.longitude = position.coords.longitude;    
+      });
+      this.places.setCoords(this.latitude, this.longitude);
+  }
+    
   }
   

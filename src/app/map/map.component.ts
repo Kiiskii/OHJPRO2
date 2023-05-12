@@ -55,9 +55,9 @@ export class MapComponent implements OnInit, AfterViewInit {
 
     const markerIcon = L.icon({
       iconUrl: `../../assets/img/markers/user-location-pointer.png`,
-      iconSize: [46, 46], // size of the icon
+      iconSize: [30, 30], // size of the icon
       iconAnchor: [15.5, 42], // point of the icon which will correspond to marker's location
-      popupAnchor: [0, -45] // point from which the popup should open relative to the iconAnchor
+      popupAnchor: [0, -40] // point from which the popup should open relative to the iconAnchor
     });
 
     const zooMarker = L.marker([this.currentPosition.latitude, this.currentPosition.longitude], {
@@ -68,27 +68,27 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   placeMarkers(tapahtumat: Tapahtuma[]){
-    let filteredTapahtumat = tapahtumat.filter(t=>
+    let filteredTapahtumat = tapahtumat/*.filter(t=>
       t.sijaintiLeveys < this.places.currentPosition.latitude + this.radius && 
       t.sijaintiLeveys > this.places.currentPosition.latitude - this.radius &&
       t.sijaintiPituus < this.places.currentPosition.longitude + this.radius &&
-      t.sijaintiPituus > this.places.currentPosition.longitude - this.radius)
+      t.sijaintiPituus > this.places.currentPosition.longitude - this.radius)*/
       
     this.markers.forEach(m=>this.map.removeLayer(m))
     this.markers = []
 
     filteredTapahtumat.forEach(t=> {
       const markerIcon = L.icon({
-        iconUrl: `../../assets/img/markers/place-location-pointer.png`,
-        iconSize: [30, 30], // size of the icon
+        iconUrl: `../../assets/img/markers/place2-location-pointer.png`,
+        iconSize: [14, 14], // size of the icon
         iconAnchor: [15.5, 42], // point of the icon which will correspond to marker's location
-        popupAnchor: [0, -45] // point from which the popup should open relative to the iconAnchor
+        popupAnchor: [-10, -40] // point from which the popup should open relative to the iconAnchor
       });
 
       const marker = L.marker([t.sijaintiLeveys, t.sijaintiPituus], {  
         icon: markerIcon
       })
-      .bindPopup(`<b class="text-cyan-600">${t.nimi}</b>`)
+      .bindPopup(`<a href="${t.homesite}" target="_blank"><b class="text-cyan-600">${t.nimi}</b></a><br><b class="lowercase">${t.luokka}</b>`)
       .addTo(this.map);
       this.markers.push(marker)
     })
