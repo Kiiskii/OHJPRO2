@@ -1,0 +1,18 @@
+<div class="flex">
+    <div class="text-sm font-bold mt-1 mx-2">
+    <p class="text-orange-500 leading-tight">Sääennuste:</p>
+    <p class="text-cyan-500 leading-tight">{{city}}</p>
+    </div>
+    <div id="weatherdiv" class="flex row">
+        <div class="weather-card" *ngFor="let weather of weatherForcast.slice(0,3)">
+            <img src="http://openweathermap.org/img/wn/{{weather.weather[0].icon }}.png" 
+                alt="weather icon"
+                class="float-left drop-shadow-lg">
+            <div class="float-right">
+                <h4 class="text-sm"><fa-icon class="text-cyan-600 text-xs mr-0.5" [icon]="faClock"></fa-icon> {{ date(weather.dt) }}</h4>
+                <p class="text-sm">{{ weather.main.temp }} °C</p>
+            </div>
+        </div>
+        
+    </div>
+</div>
