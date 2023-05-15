@@ -23,6 +23,7 @@ import { ProfiiliComponent } from './profiili/profiili.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 
 import * as L from 'leaflet';
+import { WeatherComponent } from './weather/weather.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import * as L from 'leaflet';
     LoginComponent,
     SignupComponent,
     ProfiiliComponent,
+    WeatherComponent,
   ],
   imports: [
     BrowserModule,
