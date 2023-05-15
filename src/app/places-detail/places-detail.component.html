@@ -1,7 +1,7 @@
-<div id="bg-img" class="bg-white mb-4 drop-shadow-lg">
+<div id="bg-img" class="bg-white mb-4">
   <img
-    src="assets/img/bg/bg-main-desktop.jpg"
-    class="m-auto w-full md:w-4/6 lg:w-3/6"
+    src="assets/img/bg/bg-main2-desktop.png"
+    class="m-auto w-full md:w-4/6 lg:w-5/12"
     alt="illustration to add color"
   />
 </div>
@@ -19,16 +19,16 @@
   <div
     class="mx-auto md:mr-16 p-4 bg-white border-solid border-cyan-400 border-4 rounded-lg"
   >
-    <p class="text-3xl font-bold text-cyan-400 mx-4">
+    <p class="text-3xl font-bold text-cyan-500 mx-4">
       {{ receivedData?.nimi }}
     </p>
-    <hr class="border-cyan-500 border-2 mt-2 mb-4" />
+    <hr class="border-cyan-500 border mt-2 mb-4" />
     <div class="mx-6">
       <a href="{{ receivedData?.homesite }}"
         target="_blank"
-        class="my-2 font-bold text-md text-cyan-400 hover:text-orange-400 visited:text-cyan-600"
+        class="my-2 font-bold text-md text-cyan-400 hover:text-orange-400 visited:text-violet-700"
       >
-        {{ receivedData?.homesite }}
+        Siirry yrityksen omille sivuille
     </a>
 
       <p class="my-2 font-bold">{{ receivedData?.osoite }}</p>

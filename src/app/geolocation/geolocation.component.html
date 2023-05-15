@@ -1,15 +1,15 @@
-<div class="pt-20 md:pt-0 p-2 flex place-content-center text-sm md:text-base">
+<div class="pt-20 md:pt-2 p-1 flex place-content-center text-sm md:text-base">
   <input
     type="search"
     placeholder="Syötä sijainti..."
     id="address"
     [(ngModel)]="address"
-    class="my-1 mb-1 p-2 border-solid border-2 border-orange-400 rounded-lg w-full md:w-4/6"
+    class="my-1 p-2 border-solid border-2 border-orange-400 rounded-lg w-full md:w-4/6"
   />
   <button
-    class="bg-orange-400 px-6 m-1 ml-2 rounded-lg text-white font-bold text-lg hover:bg-orange-600"
+    class="bg-orange-500 px-3 p-1 m-1 ml-2 rounded-lg text-white font-bold leading-none hover:bg-cyan-500"
     (click)="findAddress()"
-  >
+  > Etsi
     <fa-icon
       class="text-white text-xl m-1 drop-shadow-lg"
       [icon]="faLocationDot"
@@ -17,15 +17,33 @@
   </button>
 </div>
 
-<div class="pl-6 md:pl-12 text-xs">
-<p class="" *ngIf="latitude && longitude">
+<div class="pl-2 md:pl-12 text-xs">
+<!--<p class="" *ngIf="latitude && longitude">
   <span class="font-semibold"> Your current location is <br></span> 
-   {{address}} <br> 
    latitude: {{latitude}} and longitude: {{longitude}}
 </p>
 <p class="" *ngIf="!latitude && !longitude">
   Not found coordinates. Allow your browser location data.
+</p>-->
+<p class="mb-2" *ngIf="addressResult">
+ <span class="font-semibold"> Osoite:</span> {{ addressResult }}<br>
+ <span class="font-semibold"> lat: </span> {{latitude}} <span class="font-semibold"> & long:</span> {{longitude}}
 </p>
-<button class="bg-cyan-400 rounded-lg my-1 p-2 text-white" (click)="refreshCurrentCoords()">Päivitä käyttämään näitä koordinaatteja</button>
+
+<button class="bg-cyan-500 rounded-lg my-1 p-3 text-white drop-shadow-lg hover:bg-orange-500" (click)="refreshCurrentCoords()">
+  <fa-icon
+  class="text-white m-1 drop-shadow-lg"
+  [icon]="faLocationDot"
+></fa-icon>
+  Päivitä sijainti
+</button>
+<button class="bg-cyan-500 rounded-lg ml-4 my-1 p-3 text-white drop-shadow-lg hover:bg-orange-500" (click)="getGeolocation()">
+  <fa-icon
+  class="text-white m-1 drop-shadow-lg"
+  [icon]="faLocationDot"
+></fa-icon>
+Käytä oman sijainnin paikannusta 
+</button>
+
 </div>
 

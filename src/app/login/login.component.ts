@@ -10,7 +10,6 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  bgimg: string = 'bg-login2-desktop.png';
   loginForm!: FormGroup;
 
   constructor(private authService: AuthService, private router: Router) {}
