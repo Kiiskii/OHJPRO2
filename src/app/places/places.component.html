@@ -103,11 +103,14 @@
             <i
               class="p-4 my-4 fa-lg cursor-pointer"
               style="color: #ff8400"
-              [ngClass]="
-                selectedItems[event.id]
+              [ngClass]=" selectedItems[event.id]
                   ? 'fa-heart fa-solid'
                   : 'fa-heart fa-regular'
               "
+              [ngClass]=" favoriteIds.includes(+event.id)
+                  ? 'fa-heart fa-solid'
+                  : 'fa-heart fa-regular'
+              " 
             >
             </i>
           </div>

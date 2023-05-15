@@ -152,19 +152,11 @@ export class PlacesComponent implements OnInit, OnDestroy {
   changeIcon(id: any, target: any, index: number) {
     const userid = localStorage.getItem('userId')
     const favid = id;
-    if (this.selectedItems[index]) {
-      this.showAnotherLogo = !this.showAnotherLogo;
-    }
-  
-    const idx = this.favoriteIds.indexOf(favid);
-    if (idx >= 0) {
-      this.favoriteIds.splice(idx, 1);
-    } else {
-      this.favoriteIds.push(favid);
-    }
-    
+      
     this.selectedItems[favid] = !this.selectedItems[favid];
-  
+    
+    console.log(this.selectedItems[favid]);
+
     if (this.selectedItems[favid]) {
       return this.http
         .post(`${this.url}/favorites`, { userid, favid })
@@ -188,9 +180,6 @@ export class PlacesComponent implements OnInit, OnDestroy {
     }
     return null;
   }
-  
-  
-  
 
   //for the search bar ->
   getSearch() {
