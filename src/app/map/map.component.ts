@@ -94,14 +94,4 @@ export class MapComponent implements OnInit, AfterViewInit {
     })
   }
 
-  // refreshMap() {
-  //   const zooMarker = L.marker([this.places.currentPosition.latitude, this.places.currentPosition.longitude], {
-  //     icon: markerIcon
-  //   })
-  //   .bindPopup(`<b class="text-orange-500">Olet tässä</b>`)
-  //   .addTo(this.map);
-  
-  //   this.map.panTo(new L.LatLng(this.places.currentPosition.latitude, this.places.currentPosition.longitude));
-  // }
-
 }
