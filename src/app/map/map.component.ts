@@ -81,8 +81,8 @@ export class MapComponent implements OnInit, AfterViewInit {
       const markerIcon = L.icon({
         iconUrl: `../../assets/img/markers/place2-location-pointer.png`,
         iconSize: [14, 14], // size of the icon
-        iconAnchor: [15.5, 42], // point of the icon which will correspond to marker's location
-        popupAnchor: [-10, -40] // point from which the popup should open relative to the iconAnchor
+        iconAnchor: [10, 0], // point of the icon which will correspond to marker's location
+        popupAnchor: [0, 0] // point from which the popup should open relative to the iconAnchor
       });
 
       const marker = L.marker([t.sijaintiLeveys, t.sijaintiPituus], {  
