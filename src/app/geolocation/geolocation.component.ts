@@ -6,7 +6,7 @@ import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-geolocation',
   templateUrl: './geolocation.component.html',
-  styleUrls: ['./geolocation.component.css']
+  styleUrls: ['./geolocation.component.css'],
 })
 export class GeolocationComponent implements OnInit {
   latitude = 60.171944; 
@@ -20,63 +20,68 @@ export class GeolocationComponent implements OnInit {
 
   private map!: L.Map;
 
-  constructor(public places: PlacesService) {
-  }
+  constructor(public places: PlacesService) {}
 
   ngOnInit() {
     if (!navigator.geolocation) {
-      console.log('location is not supported')
+      console.log('location is not supported');
     }
     navigator.geolocation.getCurrentPosition((position) => {
       this.latitude = position.coords.latitude;
       this.longitude = position.coords.longitude;
-      // console.log(
-      //   `lat: ${position.coords.latitude}, lon: ${position.coords.longitude}`
-      // )
     });
   }
 
   findAddress() {
     var addressArr: any;
-    var url = "https://nominatim.openstreetmap.org/search?format=json&limit=3&q=" + this.address + ",helsinki";
+    var url =
+      'https://nominatim.openstreetmap.org/search?format=json&limit=3&q=' +
+      this.address +
+      ',helsinki';
     fetch(url)
-      .then(response => response.json())
-      .then(data => addressArr = data)
-      //.then(show => console.log(addressArr))
-      .then(lat => this.latitude = addressArr[0].lat)
-      .then(lon => this.longitude = addressArr[0].lon)
-      .then(log => this.addressResult = addressArr[0].display_name)
-      .catch(err => this.addressResult = "Sijaintia ei löytynyt Uudenmaan alueelta");
+      .then((response) => response.json())
+      .then((data) => (addressArr = data))
+      .then((lat) => (this.latitude = addressArr[0].lat))
+      .then((lon) => (this.longitude = addressArr[0].lon))
+      .then((log) => (this.addressResult = addressArr[0].display_name))
+      .catch(
+        (err) =>
+          (this.addressResult = 'Sijaintia ei löytynyt Uudenmaan alueelta')
+      );
   }
 
-  refreshCurrentCoords(){
+  refreshCurrentCoords() {
     this.places.setCoords(this.latitude, this.longitude);
-    }
+  }
 
-  getGeolocation(){
-      navigator.geolocation.getCurrentPosition((position) => {
+  getGeolocation() {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
         this.latitude = position.coords.latitude;
-        this.longitude = position.coords.longitude; 
+        this.longitude = position.coords.longitude;
 
         var addressArr: any;
-        var url = "https://nominatim.openstreetmap.org/search?format=json&limit=1&q=" + position.coords.latitude +","+ position.coords.longitude;
+        var url =
+          'https://nominatim.openstreetmap.org/search?format=json&limit=1&q=' +
+          position.coords.latitude +
+          ',' +
+          position.coords.longitude;
         fetch(url)
-          .then(response => response.json())
-          .then(data => addressArr = data)
-          .then(log => this.addressResult = addressArr[0].display_name)
-          .catch(err => console.log(err));
+          .then((response) => response.json())
+          .then((data) => (addressArr = data))
+          .then((log) => (this.addressResult = addressArr[0].display_name))
+          .catch((err) => console.log(err));
 
-
-        this.places.setCoords(position.coords.latitude, position.coords.longitude);   
-      }, (error) => {
+        this.places.setCoords(
+          position.coords.latitude,
+          position.coords.longitude
+        );
+      },
+      (error) => {
         if (error.code === 1) {
-          this.geolocOff = "Et ole antanut lupaa sijaintitietojesi käyttöön.";
-        }
-        else this.geolocOff = "Paikannus ei tällä hetkellä toimi";
-      });
-      
-      
+          this.geolocOff = 'Et ole antanut lupaa sijaintitietojesi käyttöön.';
+        } else this.geolocOff = 'Paikannus ei tällä hetkellä toimi';
+      }
+    );
   }
-    
-  }
-  
+}

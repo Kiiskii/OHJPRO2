@@ -1,4 +1,3 @@
-
 import { Component, OnInit, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import * as L from 'leaflet';
 import { BehaviorSubject, Subscription } from 'rxjs';
@@ -6,14 +5,14 @@ import { Tapahtuma } from 'src/shared/interfaces';
 import { PlacesService } from '../places.service';
 import { PlacesComponent } from '../places/places.component';
 
-
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
-  styleUrls: ['./map.component.css']
+  styleUrls: ['./map.component.css'],
 })
 export class MapComponent implements OnInit, AfterViewInit {
   public map!: L.Map;
+
   @ViewChild('map', { static: true }) 
   mapContainer!: ElementRef;
   subscription!: Subscription;
@@ -68,11 +67,7 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   placeMarkers(tapahtumat: Tapahtuma[]){
-    let filteredTapahtumat = tapahtumat/*.filter(t=>
-      t.sijaintiLeveys < this.places.currentPosition.latitude + this.radius && 
-      t.sijaintiLeveys > this.places.currentPosition.latitude - this.radius &&
-      t.sijaintiPituus < this.places.currentPosition.longitude + this.radius &&
-      t.sijaintiPituus > this.places.currentPosition.longitude - this.radius)*/
+    let filteredTapahtumat = tapahtumat
       
     this.markers.forEach(m=>this.map.removeLayer(m))
     this.markers = []
@@ -93,5 +88,3 @@ export class MapComponent implements OnInit, AfterViewInit {
       this.markers.push(marker)
     })
   }
-
-}

@@ -5,13 +5,10 @@ import {
   Output,
   OnDestroy,
 } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import axios from 'axios';
-import { Tapahtuma } from 'src/shared/interfaces';
+import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { SearchService } from '../search.service';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { ScrollTapahtuma } from 'src/shared/interfaces';
 import { AuthService } from '../../services/auth.service';
 
 import { faUtensils } from '@fortawesome/free-solid-svg-icons';
@@ -105,22 +102,6 @@ export class PlacesComponent implements OnInit, OnDestroy {
     return this.authService.userName$;
   }
 
-  addSearchToScrollTapahtuma() {
-    if (this.places.searchTerm) {
-      const filteredTapahtumat = this.places.tapahtumat.filter((tapahtuma) =>
-        tapahtuma.nimi
-          .toLowerCase()
-          .includes(this.places.searchTerm.toLowerCase())
-      );
-      this.places.scrollTapahtumat = filteredTapahtumat.slice(0, this.limit);
-      } else {
-      this.places.scrollTapahtumat = this.places.tapahtumat.slice(
-        0,
-        this.limit
-      );
-    }
-  }
-
   onScrollDown(): void {
     const startIndex = this.places.scrollTapahtumat.length;
     const endIndex = startIndex + this.limit;
@@ -145,7 +126,6 @@ export class PlacesComponent implements OnInit, OnDestroy {
     };
     this.router.navigate(['/places-detail'], { queryParams: data });
     this.tapahtumatLahetetty.emit(JSON.stringify(data));
-    // console.log(data);
   }
 
   // käyttäjä voi lisätä suosikkeja funktio
@@ -162,7 +142,7 @@ export class PlacesComponent implements OnInit, OnDestroy {
         .post(`${this.url}/favorites`, { userid, favid })
         .subscribe({
           next: (response) => {
-            console.log("Favorite added to db!");
+            console.log('Favorite added to db!');
           },
           error: (error) => {
             console.log(error);
@@ -171,7 +151,7 @@ export class PlacesComponent implements OnInit, OnDestroy {
     } else {
       this.http.delete(`${this.url}/favorites/${favid}`).subscribe({
         next: (response) => {
-          console.log("Favorite removed from db!");
+          console.log('Favorite removed from db!');
         },
         error: (error) => {
           console.log(error);
@@ -201,15 +181,13 @@ export class PlacesComponent implements OnInit, OnDestroy {
     this.bgimg = 'bg-' + value + '2-desktop.png';
     if (value === 'activity' || value === '')
       this.bgimg = 'bg-main2-desktop.png';
-      else if (value === 'cafés')
-      this.bgimg = 'bg-coffee2-desktop.png';
+    else if (value === 'cafés') this.bgimg = 'bg-coffee2-desktop.png';
     else if (value === '') this.ngOnDestroy();
-    if (value === 'restaurant') this.filterValue = "ravintoloita";
-    if (value === 'shopping') this.filterValue = "kauppoja";
-    if (value === 'activity') this.filterValue = "aktiviteetteja";
-    if (value === 'sights') this.filterValue = "nähtävyyksiä";
-    if (value === 'cafés') this.filterValue = "kahviloita";
+    if (value === 'restaurant') this.filterValue = 'ravintoloita';
+    if (value === 'shopping') this.filterValue = 'kauppoja';
+    if (value === 'activity') this.filterValue = 'aktiviteetteja';
+    if (value === 'sights') this.filterValue = 'nähtävyyksiä';
+    if (value === 'cafés') this.filterValue = 'kahviloita';
     if (value === '') this.filterValue = '';
   }
-  
 }
