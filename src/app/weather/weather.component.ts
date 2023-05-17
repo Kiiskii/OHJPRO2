@@ -28,7 +28,7 @@ export class WeatherComponent implements OnInit {
   }
 
   getWeatherForecast(){
-    fetch(`http://api.openweathermap.org/data/2.5/forecast?lat=${this.currentPosition.latitude}&lon=${this.currentPosition.longitude}&appid=${this.key}&units=${this.units}&lang=${this.lang}`)
+    fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${this.currentPosition.latitude}&lon=${this.currentPosition.longitude}&appid=${this.key}&units=${this.units}&lang=${this.lang}`)
     .then(resp=>{
       if(!resp.ok) throw new Error(resp.statusText)
       return resp.json()
