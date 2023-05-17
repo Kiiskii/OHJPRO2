@@ -1,0 +1,82 @@
+<div id="bg-img" class="bg-white mb-2">
+  <img
+    src="assets/img/bg/{{ bgimg }}"
+    class="m-auto w-full md:w-4/6 lg:w-5/12"
+    alt="illustration to add color"
+  />
+</div>
+<div class="container flex justify-center mx-auto p-3">
+  <div class="flex flex-col w-full">
+    <!-- <a href="/">
+      <p class="m-4 text-right text-lg text-orange-500 underline font-bold cursor-pointer">
+        Kirjaudu ulos
+      </p>
+    </a> -->
+    <button (click)="logout()" class="m-4 text-right text-cyan-500 underline font-bold hover:text-orange-500">Kirjaudu ulos</button>
+
+    <div class="mx-auto text-center">
+    <h1 class="font-bold text-2xl text-orange-500">
+      Hei <span class="uppercase"> {{ userNameLogin | async }}</span
+      >!
+    </h1>
+    <p class="font-bold text-lg text-slate-500">
+      Tässä paikkoja joista olet tykännyt
+    </p>
+  </div>
+  </div>
+</div>
+
+<!--  -->
+
+<!--hakee favid-->
+
+<div class="p-4 pb-20 max-w-xl mx-auto">
+  <div *ngFor="let event of placesService.tapahtumat" class="">
+    <div
+      *ngIf="favoriteIds.includes(+event.id)"
+      class="mb-2 p-2 border-solid border-2 border-cyan-400 rounded-lg bg-white"
+    >
+      <div class="m-2 mr-4 bg-cyan-500 float-left rounded-lg p-4 drop-shadow">
+        <fa-icon
+          class="grid place-content-center text-white text-2xl"
+          [icon]="faIcons"
+        ></fa-icon>
+      </div>
+      <h2
+        class="places-header text-base text-cyan-500 font-bold uppercase cursor-pointer leading-tight"
+        (click)="
+          navigateToDetails(
+            event.nimi,
+            event.kuvaus,
+            event.homesite,
+            event.osoite
+          )
+        "
+      >
+        {{ event.nimi }}
+      </h2>
+      <span class="font-semibold text-xs md:text-sm">www:</span>
+      <a
+        href="{{ event.homesite }}"
+        target="_blank"
+        class="font-semibold text-cyan-600 visited:text-purple-600 text-xs md:text-sm"
+      >
+        Siirry yrityksen omille sivuille
+        <!--{{ event.homesite }}-->
+      </a>
+      <p class="text-xs md:text-sm">
+        <span class="font-semibold">Osoite:</span> {{ event.osoite }}
+      </p>
+      <p class="text-xs font-semibold md:font-bold">
+        Etäisyys kohteeseen noin
+        <span class="font-semibold text-cyan-600">{{ event.sijainti }}</span>
+        km
+      </p>
+      <hr class="border-blue-900 my-2" />
+      <p class="ml-2 text-xs lowercase">
+        <span class="text-cyan-500 font-semibold"> Tags:</span>
+        {{ event.luokka }}
+      </p>
+    </div>
+  </div>
+</div>

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -11,13 +12,18 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
-import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { GeolocationComponent } from './geolocation/geolocation.component';
 import { FormsModule } from '@angular/forms';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
+import { OrderModule } from 'ngx-order-pipe';
+import { ProfiiliComponent } from './profiili/profiili.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+
+import * as L from 'leaflet';
+import { WeatherComponent } from './weather/weather.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +35,9 @@ import { SignupComponent } from './signup/signup.component';
     MapComponent,
     GeolocationComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    ProfiiliComponent,
+    WeatherComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,12 +45,14 @@ import { SignupComponent } from './signup/signup.component';
     HttpClientModule,
     BrowserAnimationsModule,
     MatCardModule,
-    InfiniteScrollModule,
     FontAwesomeModule,
     FormsModule,
-    Ng2SearchPipeModule
+    Ng2SearchPipeModule,
+    ReactiveFormsModule,
+    OrderModule,
+    NgxPaginationModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [MapComponent],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
