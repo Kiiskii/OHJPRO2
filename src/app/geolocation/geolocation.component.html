@@ -9,13 +9,36 @@
   <button
     class="bg-orange-500 px-3 p-1 m-1 ml-2 rounded-lg text-white font-bold leading-none hover:bg-cyan-500"
     (click)="findAddress()"
-  >
-    Etsi
+  > Etsi
     <fa-icon
       class="text-white text-xl m-1 drop-shadow-lg"
       [icon]="faLocationDot"
     ></fa-icon>
   </button>
+</div>
+
+<div class="pl-2 md:pl-12 text-xs">
+<p class="mb-2" *ngIf="addressResult">
+{{ addressResult }}<br>
+</p>
+
+<button class="bg-cyan-500 rounded-lg my-1 p-3 text-white drop-shadow-lg hover:bg-orange-500" (click)="refreshCurrentCoords()">
+  <fa-icon
+  class="text-white m-1 drop-shadow-lg"
+  [icon]="faLocationDot"
+></fa-icon>
+  Päivitä sijainti
+</button>
+<button class="bg-cyan-500 rounded-lg ml-4 my-1 p-3 text-white drop-shadow-lg hover:bg-orange-500" (click)="getGeolocation()">
+  <fa-icon
+  class="text-white m-1 drop-shadow-lg"
+  [icon]="faLocationDot"
+></fa-icon>
+Käytä oman sijainnin paikannusta 
+</button>
+<p class="mt-1 font-semibold" *ngIf="geolocOff"> 
+ <span class="text-orange-500 font-extrabold">!</span> {{geolocOff}}
+</p>
 </div>
 
 <div class="pl-2 md:pl-12 text-xs">

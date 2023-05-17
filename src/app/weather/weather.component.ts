@@ -23,27 +23,25 @@ export class WeatherComponent implements OnInit {
   ngOnInit(): void {
     this.places.getCurrentPositionObservable().subscribe((position) => {
       this.currentPosition = position;
-      this.getWeatherForecast();
-    });
+    this.getWeatherForecast();
+  });
   }
 
-  getWeatherForecast() {
-    fetch(
-      `http://api.openweathermap.org/data/2.5/forecast?lat=${this.currentPosition.latitude}&lon=${this.currentPosition.longitude}&appid=${this.key}&units=${this.units}&lang=${this.lang}`
-    )
-      .then((resp) => {
-        if (!resp.ok) throw new Error(resp.statusText);
-        return resp.json();
-      })
-      .then((data) => {
-        this.weatherForcast = data.list;
-        this.city = data.city.name;
-        this.day = data.list[0].dt_txt.slice(0, 10);
-      })
-      .catch(console.error);
+  getWeatherForecast(){
+    fetch(`http://api.openweathermap.org/data/2.5/forecast?lat=${this.currentPosition.latitude}&lon=${this.currentPosition.longitude}&appid=${this.key}&units=${this.units}&lang=${this.lang}`)
+    .then(resp=>{
+      if(!resp.ok) throw new Error(resp.statusText)
+      return resp.json()
+    })
+    .then(data => {
+      this.weatherForcast = data.list;
+      this.city = data.city.name;
+      this.day = data.list[0].dt_txt.slice(0,10);
+    })
+    .catch(console.error);
   }
 
-  date(value: number) {
-    return new Date(value * 1000).toLocaleTimeString().slice(0, 5);
+  date(value: number){
+    return new Date(value * 1000).toLocaleTimeString().slice(0,5);
   }
 }

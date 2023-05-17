@@ -9,7 +9,7 @@ import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./geolocation.component.css'],
 })
 export class GeolocationComponent implements OnInit {
-  latitude = 60.171944;
+  latitude = 60.171944; 
   longitude = 24.941389;
   subscription!: Subscription;
   faLocationDot = faLocationDot;

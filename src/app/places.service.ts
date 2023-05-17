@@ -5,7 +5,9 @@ import { BehaviorSubject, filter } from 'rxjs';
 import { MapComponent } from './map/map.component';
 
 @Injectable({
-  providedIn: 'root',
+
+  providedIn: 'root'
+
 })
 export class PlacesService {
   tapahtumat: Tapahtuma[] = [];

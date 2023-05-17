@@ -28,9 +28,7 @@ import { FavoritesService } from 'src/services/favorites.service';
   styleUrls: ['./places.component.css'],
 })
 export class PlacesComponent implements OnInit, OnDestroy {
-  token: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(
-    null
-  );
+  token: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
   userNameLogin!: Observable<string | null>;
 
   private url = 'http://localhost:3000';
@@ -68,11 +66,11 @@ export class PlacesComponent implements OnInit, OnDestroy {
   ) {}
 
   async ngOnInit(): Promise<void> {
-    this.selectedItems = [];
+    this.selectedItems =[];
 
     const userId = localStorage.getItem('userId');
     if (userId) {
-      this.favoritesService.fetchFavoriteIds(userId).subscribe((ids) => {
+      this.favoritesService.fetchFavoriteIds(userId).subscribe(ids => {
         this.favoriteIds = ids;
         console.log(`favoriteids: ${this.favoriteIds}`);
       });
@@ -82,20 +80,18 @@ export class PlacesComponent implements OnInit, OnDestroy {
     this.getSearch();
     this.selectedItems = new Array(this.items).fill(false);
 
-    this.subscription = this.search.currentSearch.subscribe(
-      (searchTerm) => (this.places.searchTerm = searchTerm)
-    );
+    this.subscription = this.search.currentSearch.subscribe(searchTerm => this.places.searchTerm = searchTerm);
     const token = localStorage.getItem('token');
     if (token) {
       this.token.next(token);
     } else {
       this.token.next(null);
-    }
+    };
     this.userNameLogin = this.authService.userName$;
   }
 
   isFavorite(eventId: number): boolean {
-    return (this.favoriteIds && this.favoriteIds.includes(eventId)) || false;
+    return this.favoriteIds && this.favoriteIds.includes(eventId) || false;
   }
 
   get isUserLoggedIn$() {
@@ -121,7 +117,7 @@ export class PlacesComponent implements OnInit, OnDestroy {
     kuvaus: string,
     homesite: string,
     osoite: string
-  ) {
+    ) {
     const data = {
       nimi: nimi,
       kuvaus: kuvaus,
@@ -134,11 +130,11 @@ export class PlacesComponent implements OnInit, OnDestroy {
 
   // käyttäjä voi lisätä suosikkeja funktio
   changeIcon(id: any, target: any, index: number) {
-    const userid = localStorage.getItem('userId');
+    const userid = localStorage.getItem('userId')
     const favid = id;
-
+      
     this.selectedItems[favid] = !this.selectedItems[favid];
-
+    
     console.log(this.selectedItems[favid]);
 
     if (this.selectedItems[favid]) {
@@ -167,9 +163,7 @@ export class PlacesComponent implements OnInit, OnDestroy {
 
   //for the search bar ->
   getSearch() {
-    this.subscription = this.search.currentSearch.subscribe(
-      (searchTerm) => (this.places.searchTerm = searchTerm)
-    );
+    this.subscription = this.search.currentSearch.subscribe(searchTerm => this.places.searchTerm = searchTerm)
   }
 
   ngOnDestroy(): void {
