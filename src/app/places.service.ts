@@ -5,7 +5,7 @@ import { BehaviorSubject, filter } from 'rxjs';
 import { MapComponent } from './map/map.component';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PlacesService {
   tapahtumat: Tapahtuma[] = [];
@@ -19,7 +19,7 @@ export class PlacesService {
   private tapahtumatSourse = new BehaviorSubject(this.tapahtumat);
   currentTapahtumat = this.tapahtumatSourse.asObservable();
 
-  setCoords(lat: number, lon: number){
+  setCoords(lat: number, lon: number) {
     this.currentPosition.latitude = lat;
     this.currentPosition.longitude = lon;
     this.haeTapahtumat();
@@ -33,10 +33,8 @@ export class PlacesService {
   async haeTapahtumat(): Promise<void> {
     try {
       const response = await axios.get(`/places/`);
-      // console.log(response);
       this.tapahtumat = response.data.data.map((tapahtuma: any) => {
         const id = tapahtuma.id;
-        // console.log(id)
         const { street_address, postal_code, locality } =
           tapahtuma.location.address;
         const osoite = `${street_address}, ${postal_code}, ${locality}`;
@@ -54,17 +52,27 @@ export class PlacesService {
         var fromLon: number;
         var toLat: number;
         var toLon: number;
-        function distance(fromLat: number, fromLon: number, toLat: number, toLon: number) {
+        function distance(
+          fromLat: number,
+          fromLon: number,
+          toLat: number,
+          toLon: number
+        ) {
           var radius = 6378137; // approximate Earth radius, *in meters*
-          var gToLat = toLat * Math.PI/180;
-          var gFromLat = fromLat * Math.PI/180;
-          var deltaLat = (toLat - fromLat) * Math.PI/180;
-          var deltaLon = (toLon - fromLon) * Math.PI/180;
+          var gToLat = (toLat * Math.PI) / 180;
+          var gFromLat = (fromLat * Math.PI) / 180;
+          var deltaLat = ((toLat - fromLat) * Math.PI) / 180;
+          var deltaLon = ((toLon - fromLon) * Math.PI) / 180;
 
-          var a = Math.sin(deltaLat/2) * Math.sin(deltaLat/2) + Math.cos(gToLat) * Math.cos(gFromLat) * Math.sin(deltaLon/2) * Math.sin(deltaLon/2);
-          var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+          var a =
+            Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
+            Math.cos(gToLat) *
+              Math.cos(gFromLat) *
+              Math.sin(deltaLon / 2) *
+              Math.sin(deltaLon / 2);
+          var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
           var d = (radius * c) / 1000;
-          return d.toFixed(3) //returns distance in 0.000 km
+          return d.toFixed(3); //returns distance in 0.000 km
         }
 
         return {
@@ -86,20 +94,21 @@ export class PlacesService {
       });
 
       this.scrollTapahtumat = this.tapahtumat.slice(0, 8);
-      this.tapahtumatSourse.next(this.tapahtumat)
-   
-      // console.log(this.tapahtumat);
+      this.tapahtumatSourse.next(this.tapahtumat);
     } catch (error) {
       console.error(error);
     }
     this.waitingPlaces = false;
   }
- 
 
-  setFilter(value:string){
-  this.searchTerm = value;
-   this.tapahtumatSourse.next(   this.tapahtumat.filter(t => t.luokka.toLowerCase().includes(value.toLowerCase())))
+  setFilter(value: string) {
+    this.searchTerm = value;
+    this.tapahtumatSourse.next(
+      this.tapahtumat.filter((t) =>
+        t.luokka.toLowerCase().includes(value.toLowerCase())
+      )
+    );
   }
 
-  constructor() { }
+  constructor() {}
 }

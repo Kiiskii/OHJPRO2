@@ -7,22 +7,22 @@
 </div>
 <div class="container flex justify-center mx-auto p-3">
   <div class="flex flex-col w-full">
-    <!-- <a href="/">
-      <p class="m-4 text-right text-lg text-orange-500 underline font-bold cursor-pointer">
-        Kirjaudu ulos
-      </p>
-    </a> -->
-    <button (click)="logout()" class="m-4 text-right text-cyan-500 underline font-bold hover:text-orange-500">Kirjaudu ulos</button>
+    <button
+      (click)="logout()"
+      class="m-4 text-right text-cyan-500 underline font-bold hover:text-orange-500"
+    >
+      Kirjaudu ulos
+    </button>
 
     <div class="mx-auto text-center">
-    <h1 class="font-bold text-2xl text-orange-500">
-      Hei <span class="uppercase"> {{ userNameLogin | async }}</span
-      >!
-    </h1>
-    <p class="font-bold text-lg text-slate-500">
-      Tässä paikkoja joista olet tykännyt
-    </p>
-  </div>
+      <h1 class="font-bold text-2xl text-orange-500">
+        Hei <span class="uppercase"> {{ userNameLogin | async }}</span
+        >!
+      </h1>
+      <p class="font-bold text-lg text-slate-500">
+        Tässä paikkoja joista olet tykännyt
+      </p>
+    </div>
   </div>
 </div>
 
@@ -62,7 +62,6 @@
         class="font-semibold text-cyan-600 visited:text-purple-600 text-xs md:text-sm"
       >
         Siirry yrityksen omille sivuille
-        <!--{{ event.homesite }}-->
       </a>
       <p class="text-xs md:text-sm">
         <span class="font-semibold">Osoite:</span> {{ event.osoite }}

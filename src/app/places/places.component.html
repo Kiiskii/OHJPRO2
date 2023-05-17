@@ -3,23 +3,24 @@
     id="map-cont"
     class="mx-auto md:my-3 md:basis-1/2 md:fixed md:left-5 md:w-5/12"
   >
-      <app-geolocation></app-geolocation>
+    <app-geolocation></app-geolocation>
 
-      <div
-        class="mt-2 w-full md:w-5/6 m-auto border-solid border-8 border-white rounded-lg"
-      >
-        <app-map></app-map>
-      </div>
-    
-      <div id="bg-img" class="float-left hidden md:block md:fixed md:bottom-14 md:drop-shadow-lg">
-        <img
-          src="assets/img/bg/{{ bgimg }}"
-          class="m-auto md:bottom-0 md:w-5/12 md:float-left"
-          alt="illustration to add color"
-        /> 
-      
-      </div>
+    <div
+      class="mt-2 w-full md:w-5/6 m-auto border-solid border-8 border-white rounded-lg"
+    >
+      <app-map></app-map>
+    </div>
 
+    <div
+      id="bg-img"
+      class="float-left hidden md:block md:fixed md:bottom-14 md:drop-shadow-lg"
+    >
+      <img
+        src="assets/img/bg/{{ bgimg }}"
+        class="m-auto md:bottom-0 md:w-5/12 md:float-left"
+        alt="illustration to add color"
+      />
+    </div>
   </article>
 
   <article
@@ -54,37 +55,26 @@
       >
         <fa-icon class="text-white text-xl m-1" [icon]="faXmark"></fa-icon>
       </button>
-      
     </div>
 
-    <p *ngIf="filterValue" class="text-center text-cyan-500 drop-shadow-sm font-bold">Lähelläsi olevia {{ filterValue }}</p>
+    <p
+      *ngIf="filterValue"
+      class="text-center text-cyan-500 drop-shadow-sm font-bold"
+    >
+      Lähelläsi olevia {{ filterValue }}
+    </p>
 
     <div class="container max-w-xl mx-auto m-2 pb-10 md:pb-16">
-      <!--<div
-      class="container max-w-xl mx-auto m-2 pd-42"
-      infinite-scroll
-      [infiniteScrollDistance]="2"
-      [infiniteScrollThrottle]="500"
-      (scrolled)="onScrollDown()"
-    >
       <div
-        *ngFor="
-          let i = index;
-          let event;
-          of: searchTerm ? (tapahtumat | filter  : searchTerm | orderBy: 'sijainti' ) : scrollTapahtumat | orderBy: 'sijainti'
-        "
-      >-->
-      <!--<div *ngIf="fetchingPlaces" class="text-sm font-bold">Odotathan hetken, kun etsimme paikkoja läheltä Sinua</div>-->
-
-      <div *ngIf="places.waitingPlaces" class="mx-auto text-center font-bold text-sm">
-
+        *ngIf="places.waitingPlaces"
+        class="mx-auto text-center font-bold text-sm"
+      >
         Pieni hetki etsimme mahtavia paikkoja läheltäsi...
       </div>
       <div
         *ngFor="
           let i = index;
           let event;
-
           of: places.tapahtumat
             | filter : places.searchTerm
             | orderBy : 'sijainti'
@@ -103,19 +93,23 @@
             <i
               class="p-4 my-4 fa-lg cursor-pointer"
               style="color: #ff8400"
-              [ngClass]=" selectedItems[event.id]
+              [ngClass]="
+                selectedItems[event.id]
                   ? 'fa-heart fa-solid'
                   : 'fa-heart fa-regular'
               "
-              [ngClass]=" favoriteIds.includes(+event.id)
+              [ngClass]="
+                favoriteIds.includes(+event.id)
                   ? 'fa-heart fa-solid'
                   : 'fa-heart fa-regular'
-              " 
+              "
             >
             </i>
           </div>
 
-          <div class="m-2 mr-4 bg-cyan-500 float-left rounded-lg p-4 drop-shadow">
+          <div
+            class="m-2 mr-4 bg-cyan-500 float-left rounded-lg p-4 drop-shadow"
+          >
             <fa-icon
               class="grid place-content-center text-white text-2xl"
               [icon]="faIcons"
@@ -144,18 +138,21 @@
               class="font-semibold text-cyan-600 visited:text-purple-600 text-xs md:text-sm"
             >
               Siirry yrityksen omille sivuille
-              <!--{{ event.homesite }}-->
             </a>
             <p class="text-xs md:text-sm">
               <span class="font-semibold">Osoite:</span> {{ event.osoite }}
             </p>
-            <p class="text-xs font-semibold md:font-bold ">Etäisyys kohteeseen noin <span class="font-semibold text-cyan-600">{{ event.sijainti }}</span> km</p>
+            <p class="text-xs font-semibold md:font-bold">
+              Etäisyys kohteeseen noin
+              <span class="font-semibold text-cyan-600">{{
+                event.sijainti
+              }}</span>
+              km
+            </p>
             <hr class="border-blue-900 my-2" />
             <p class="ml-2 text-xs lowercase">
               <span class="text-cyan-500 font-semibold"> Tags:</span>
               {{ event.luokka }}
-              <!--<br />
-              <span class="text-xs">ID: {{ event.id }}</span>-->             
             </p>
           </div>
         </div>
@@ -166,4 +163,3 @@
     </div>
   </article>
 </main>
-

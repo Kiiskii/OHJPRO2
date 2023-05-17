@@ -1,22 +1,28 @@
 <div class="flex">
-    <div class="text-sm font-bold mt-1 mx-3">
+  <div class="text-sm font-bold mt-1 mx-3">
     <p class="text-orange-500 text-xs leading-tight">Sääennuste:</p>
-    <p class="text-cyan-500 leading-tight">{{city}}</p>
-    <!--<p class="text-cyan-500 text-xs leading-tight">{{day}}</p>-->
+    <p class="text-cyan-500 leading-tight">{{ city }}</p>
+  </div>
+  <div id="weatherdiv" class="flex row mt-1">
+    <div *ngFor="let weather of weatherForcast.slice(0, 3)" class="mr-3.5">
+      <img
+        src="http://openweathermap.org/img/wn/{{ weather.weather[0].icon }}.png"
+        style="width: 30px; height: 30px"
+        alt="{{ weather.weather[0].description }}"
+        class="float-left bg-cyan-500/50 rounded mr-1"
+      />
+      <div class="float-right">
+        <h4 class="text-xs">
+          <fa-icon
+            class="text-cyan-500 text-xs mr-0.5"
+            [icon]="faClock"
+          ></fa-icon>
+          {{ date(weather.dt) }}
+        </h4>
+        <p class="text-xs font-semibold text-end">
+          +{{ weather.main.temp.toFixed(0) }} °C
+        </p>
+      </div>
     </div>
-    <div id="weatherdiv" class="flex row mt-1">
-        <div *ngFor="let weather of weatherForcast.slice(0,3)"
-                class="mr-3.5">
-            <img src="http://openweathermap.org/img/wn/{{weather.weather[0].icon }}.png" 
-                style="width: 30px; height: 30px;"
-                alt="{{weather.weather[0].description}}"
-                class="float-left bg-cyan-500/50 rounded mr-1">
-            <div class="float-right">
-                <h4 class="text-xs"><fa-icon class="text-cyan-500 text-xs mr-0.5" [icon]="faClock"></fa-icon> {{ date(weather.dt) }}</h4>
-                <p class="text-xs font-semibold text-end">+{{ weather.main.temp.toFixed(0) }} °C</p>
-               <!-- <p class="text-xs">{{weather.weather[0].description}}</p>-->
-            </div>
-        </div>
-        
-    </div>
+  </div>
 </div>

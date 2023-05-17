@@ -5,13 +5,10 @@ import {
   Output,
   OnDestroy,
 } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import axios from 'axios';
-import { Tapahtuma } from 'src/shared/interfaces';
+import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { SearchService } from '../search.service';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { ScrollTapahtuma } from 'src/shared/interfaces';
 import { AuthService } from '../../services/auth.service';
 
 import { faUtensils } from '@fortawesome/free-solid-svg-icons';
@@ -31,7 +28,9 @@ import { FavoritesService } from 'src/services/favorites.service';
   styleUrls: ['./places.component.css'],
 })
 export class PlacesComponent implements OnInit, OnDestroy {
-  token: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
+  token: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(
+    null
+  );
   userNameLogin!: Observable<string | null>;
 
   private url = 'http://localhost:3000';
@@ -69,11 +68,11 @@ export class PlacesComponent implements OnInit, OnDestroy {
   ) {}
 
   async ngOnInit(): Promise<void> {
-    this.selectedItems =[];
+    this.selectedItems = [];
 
     const userId = localStorage.getItem('userId');
     if (userId) {
-      this.favoritesService.fetchFavoriteIds(userId).subscribe(ids => {
+      this.favoritesService.fetchFavoriteIds(userId).subscribe((ids) => {
         this.favoriteIds = ids;
         console.log(`favoriteids: ${this.favoriteIds}`);
       });
@@ -83,18 +82,20 @@ export class PlacesComponent implements OnInit, OnDestroy {
     this.getSearch();
     this.selectedItems = new Array(this.items).fill(false);
 
-    this.subscription = this.search.currentSearch.subscribe(searchTerm => this.places.searchTerm = searchTerm);
+    this.subscription = this.search.currentSearch.subscribe(
+      (searchTerm) => (this.places.searchTerm = searchTerm)
+    );
     const token = localStorage.getItem('token');
     if (token) {
       this.token.next(token);
     } else {
       this.token.next(null);
-    };
+    }
     this.userNameLogin = this.authService.userName$;
   }
 
   isFavorite(eventId: number): boolean {
-    return this.favoriteIds && this.favoriteIds.includes(eventId) || false;
+    return (this.favoriteIds && this.favoriteIds.includes(eventId)) || false;
   }
 
   get isUserLoggedIn$() {
@@ -103,22 +104,6 @@ export class PlacesComponent implements OnInit, OnDestroy {
 
   get userName(): Observable<string | null> {
     return this.authService.userName$;
-  }
-
-  addSearchToScrollTapahtuma() {
-    if (this.places.searchTerm) {
-      const filteredTapahtumat = this.places.tapahtumat.filter((tapahtuma) =>
-        tapahtuma.nimi
-          .toLowerCase()
-          .includes(this.places.searchTerm.toLowerCase())
-      );
-      this.places.scrollTapahtumat = filteredTapahtumat.slice(0, this.limit);
-      } else {
-      this.places.scrollTapahtumat = this.places.tapahtumat.slice(
-        0,
-        this.limit
-      );
-    }
   }
 
   onScrollDown(): void {
@@ -136,7 +121,7 @@ export class PlacesComponent implements OnInit, OnDestroy {
     kuvaus: string,
     homesite: string,
     osoite: string
-    ) {
+  ) {
     const data = {
       nimi: nimi,
       kuvaus: kuvaus,
@@ -145,16 +130,15 @@ export class PlacesComponent implements OnInit, OnDestroy {
     };
     this.router.navigate(['/places-detail'], { queryParams: data });
     this.tapahtumatLahetetty.emit(JSON.stringify(data));
-    // console.log(data);
   }
 
   // käyttäjä voi lisätä suosikkeja funktio
   changeIcon(id: any, target: any, index: number) {
-    const userid = localStorage.getItem('userId')
+    const userid = localStorage.getItem('userId');
     const favid = id;
-      
+
     this.selectedItems[favid] = !this.selectedItems[favid];
-    
+
     console.log(this.selectedItems[favid]);
 
     if (this.selectedItems[favid]) {
@@ -162,7 +146,7 @@ export class PlacesComponent implements OnInit, OnDestroy {
         .post(`${this.url}/favorites`, { userid, favid })
         .subscribe({
           next: (response) => {
-            console.log("Favorite added to db!");
+            console.log('Favorite added to db!');
           },
           error: (error) => {
             console.log(error);
@@ -171,7 +155,7 @@ export class PlacesComponent implements OnInit, OnDestroy {
     } else {
       this.http.delete(`${this.url}/favorites/${favid}`).subscribe({
         next: (response) => {
-          console.log("Favorite removed from db!");
+          console.log('Favorite removed from db!');
         },
         error: (error) => {
           console.log(error);
@@ -183,7 +167,9 @@ export class PlacesComponent implements OnInit, OnDestroy {
 
   //for the search bar ->
   getSearch() {
-    this.subscription = this.search.currentSearch.subscribe(searchTerm => this.places.searchTerm = searchTerm)
+    this.subscription = this.search.currentSearch.subscribe(
+      (searchTerm) => (this.places.searchTerm = searchTerm)
+    );
   }
 
   ngOnDestroy(): void {
@@ -201,15 +187,13 @@ export class PlacesComponent implements OnInit, OnDestroy {
     this.bgimg = 'bg-' + value + '2-desktop.png';
     if (value === 'activity' || value === '')
       this.bgimg = 'bg-main2-desktop.png';
-      else if (value === 'cafés')
-      this.bgimg = 'bg-coffee2-desktop.png';
+    else if (value === 'cafés') this.bgimg = 'bg-coffee2-desktop.png';
     else if (value === '') this.ngOnDestroy();
-    if (value === 'restaurant') this.filterValue = "ravintoloita";
-    if (value === 'shopping') this.filterValue = "kauppoja";
-    if (value === 'activity') this.filterValue = "aktiviteetteja";
-    if (value === 'sights') this.filterValue = "nähtävyyksiä";
-    if (value === 'cafés') this.filterValue = "kahviloita";
+    if (value === 'restaurant') this.filterValue = 'ravintoloita';
+    if (value === 'shopping') this.filterValue = 'kauppoja';
+    if (value === 'activity') this.filterValue = 'aktiviteetteja';
+    if (value === 'sights') this.filterValue = 'nähtävyyksiä';
+    if (value === 'cafés') this.filterValue = 'kahviloita';
     if (value === '') this.filterValue = '';
   }
-  
 }
