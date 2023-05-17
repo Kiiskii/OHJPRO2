@@ -13,7 +13,7 @@ import { PlacesComponent } from '../places/places.component';
 export class MapComponent implements OnInit, AfterViewInit {
   public map!: L.Map;
 
-  @ViewChild('map', { static: true })
+  @ViewChild('map', { static: true }) 
   mapContainer!: ElementRef;
   subscription!: Subscription;
   currentPosition!: { latitude: number, longitude: number };
@@ -67,6 +67,7 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   placeMarkers(tapahtumat: Tapahtuma[]) {
+
     let filteredTapahtumat = tapahtumat
       
     this.markers.forEach(m => this.map.removeLayer(m))
