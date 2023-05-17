@@ -3,22 +3,19 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, map, of } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FavoritesService {
   private url = 'http://localhost:3000/favorites/';
 
-  constructor(
-    private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-    fetchFavoriteIds(userId: string): Observable<any[]> {
-      // console.log(`Favoriteservice userId: ${userId}`)
-      return this.http.get<number[]>(`${this.url}${userId}`).pipe(
-        map(response => {
-          // console.log(response);
-          return response;
-        }),
-        catchError(() => of([]))
-      );
+  fetchFavoriteIds(userId: string): Observable<any[]> {
+    return this.http.get<number[]>(`${this.url}${userId}`).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(() => of([]))
+    );
   }
 }

@@ -7,7 +7,6 @@ import { FavoritesService } from 'src/services/favorites.service';
 import { Router } from '@angular/router';
 import { faIcons } from '@fortawesome/free-solid-svg-icons';
 
-
 @Component({
   selector: 'app-profiili',
   templateUrl: './profiili.component.html',
@@ -33,7 +32,6 @@ export class ProfiiliComponent implements OnInit {
     private favoritesservice: FavoritesService,
     public placesService: PlacesService,
     private router: Router
-
   ) {}
 
   async ngOnInit() {
@@ -82,6 +80,5 @@ export class ProfiiliComponent implements OnInit {
     };
     this.router.navigate(['/places-detail'], { queryParams: data });
     this.tapahtumatLahetetty.emit(JSON.stringify(data));
-    // console.log(data);
   }
 }
