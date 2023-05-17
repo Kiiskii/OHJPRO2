@@ -13,12 +13,12 @@ import { PlacesComponent } from '../places/places.component';
 export class MapComponent implements OnInit, AfterViewInit {
   public map!: L.Map;
 
-  @ViewChild('map', { static: true }) 
+  @ViewChild('map', { static: true })
   mapContainer!: ElementRef;
   subscription!: Subscription;
   currentPosition!: { latitude: number, longitude: number };
   radius = 0.005
-  markers:L.Marker<any> [] = []
+  markers: L.Marker<any>[] = []
 
   constructor(private places: PlacesService) { }
 
@@ -62,17 +62,17 @@ export class MapComponent implements OnInit, AfterViewInit {
     const zooMarker = L.marker([this.currentPosition.latitude, this.currentPosition.longitude], {
       icon: markerIcon
     })
-    .bindPopup(`<b class="text-orange-500">Olet tässä</b>`)
-    .addTo(this.map);
+      .bindPopup(`<b class="text-orange-500">Olet tässä</b>`)
+      .addTo(this.map);
   }
 
-  placeMarkers(tapahtumat: Tapahtuma[]){
+  placeMarkers(tapahtumat: Tapahtuma[]) {
     let filteredTapahtumat = tapahtumat
       
-    this.markers.forEach(m=>this.map.removeLayer(m))
+    this.markers.forEach(m => this.map.removeLayer(m))
     this.markers = []
 
-    filteredTapahtumat.forEach(t=> {
+    filteredTapahtumat.forEach(t => {
       const markerIcon = L.icon({
         iconUrl: `../../assets/img/markers/place2-location-pointer.png`,
         iconSize: [14, 14], // size of the icon
@@ -80,11 +80,12 @@ export class MapComponent implements OnInit, AfterViewInit {
         popupAnchor: [0, 0] // point from which the popup should open relative to the iconAnchor
       });
 
-      const marker = L.marker([t.sijaintiLeveys, t.sijaintiPituus], {  
+      const marker = L.marker([t.sijaintiLeveys, t.sijaintiPituus], {
         icon: markerIcon
       })
-      .bindPopup(`<a href="${t.homesite}" target="_blank"><b class="text-cyan-600">${t.nimi}</b></a><br><b class="lowercase">${t.luokka}</b>`)
-      .addTo(this.map);
+        .bindPopup(`<a href="${t.homesite}" target="_blank"><b class="text-cyan-600">${t.nimi}</b></a><br><b class="lowercase">${t.luokka}</b>`)
+        .addTo(this.map);
       this.markers.push(marker)
     })
   }
+}
