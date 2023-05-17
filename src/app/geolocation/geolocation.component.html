@@ -26,8 +26,8 @@
   Not found coordinates. Allow your browser location data.
 </p>-->
 <p class="mb-2" *ngIf="addressResult">
- <span class="font-semibold"> Osoite:</span> {{ addressResult }}<br>
- <span class="font-semibold"> lat: </span> {{latitude}} <span class="font-semibold"> & long:</span> {{longitude}}
+{{ addressResult }}<br>
+<!-- <span class="font-semibold"> lat: </span> {{latitude}} <span class="font-semibold"> & long:</span> {{longitude}}-->
 </p>
 
 <button class="bg-cyan-500 rounded-lg my-1 p-3 text-white drop-shadow-lg hover:bg-orange-500" (click)="refreshCurrentCoords()">
@@ -44,6 +44,8 @@
 ></fa-icon>
 Käytä oman sijainnin paikannusta 
 </button>
-
+<p class="mt-1 font-semibold" *ngIf="geolocOff"> 
+ <span class="text-orange-500 font-extrabold">!</span> {{geolocOff}}
+</p>
 </div>
 

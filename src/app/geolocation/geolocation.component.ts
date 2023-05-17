@@ -16,6 +16,7 @@ export class GeolocationComponent implements OnInit {
   address: string = '';
   addressCoords = [];
   addressResult: string = '';
+  geolocOff = '';
 
   private map!: L.Map;
 
@@ -45,7 +46,7 @@ export class GeolocationComponent implements OnInit {
       .then(lat => this.latitude = addressArr[0].lat)
       .then(lon => this.longitude = addressArr[0].lon)
       .then(log => this.addressResult = addressArr[0].display_name)
-      .catch(err => console.log(err));
+      .catch(err => this.addressResult = "Sijaintia ei löytynyt Uudenmaan alueelta");
   }
 
   refreshCurrentCoords(){
@@ -67,7 +68,13 @@ export class GeolocationComponent implements OnInit {
 
 
         this.places.setCoords(position.coords.latitude, position.coords.longitude);   
+      }, (error) => {
+        if (error.code === 1) {
+          this.geolocOff = "Et ole antanut lupaa sijaintitietojesi käyttöön.";
+        }
+        else this.geolocOff = "Paikannus ei tällä hetkellä toimi";
       });
+      
       
   }
     
